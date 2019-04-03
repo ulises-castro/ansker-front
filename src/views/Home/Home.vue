@@ -11,12 +11,12 @@
           has-bg-facebook
           has-text-white
           flex
-          flex-middle
           flex-center
+          flex-middle
           p-10
           is-pointer
         ">
-        <icon scale="1.5" name="brands/facebook"/>
+        <icon scale="1.8" class="m-r-15" name="brands/facebook"/>
         <span class="is-size-5">
           Continuar con facebook
         </span>

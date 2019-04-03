@@ -48,6 +48,7 @@ $sides: (top, bottom, left, right); // Leave this variable alone
     .p-#{str-slice($side, 0, 1)}-#{$space} {
       padding-#{$side}: #{$space}px !important;
     }
+
   }
 
   // General paddings
