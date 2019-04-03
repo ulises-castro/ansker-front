@@ -65,6 +65,10 @@ $sides: (top, bottom, left, right); // Leave this variable alone
   cursor: pointer;
 }
 
+.flex {
+  display: flex;
+}
+
 .flex-middle {
   align-items: center;
 }
