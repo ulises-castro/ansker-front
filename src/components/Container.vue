@@ -1,5 +1,5 @@
 <template lang="html">
-  <div class="parent-container">
+  <div class="parent-container p-15">
     <HeaderComponent></HeaderComponent>
       <slot></slot>
     <FooterComponent></FooterComponent>

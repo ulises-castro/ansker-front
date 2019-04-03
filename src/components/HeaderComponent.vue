@@ -1,7 +1,7 @@
 <template lang="html">
   <section class="">
     <div class="logo has-text-white">
-      Ansker
+      Ansker:)
     </div>
   </section>
 </template>
@@ -17,7 +17,8 @@ export default {
 
 <style lang="scss" scoped>
   .logo {
-    font-size: 60px;
+    font-size: 70px;
+    font-weight: bold;
     font-family: 'Marck Script', cursive;
   }
 </style>

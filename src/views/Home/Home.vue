@@ -1,14 +1,26 @@
 <template lang="html">
   <container>
-    <section class="container">
-      sadfasdf
-      <div @click="checkLoginState" class="">
-        Login with facebook
+    <section class="container is-fluid">
+      <div  class="is-size-4 has-text-white">
+        Comparte lo que piensas de forma anónima.
       </div>
 
-      <font-awesome
-        :icon="['fas', 'abacus']">
-      </font-awesome>
+      <div
+        @click="checkLoginState"
+        class="
+          has-bg-facebook
+          has-text-white
+          flex
+          flex-middle
+          flex-center
+          p-10
+          is-pointer
+        ">
+        <icon scale="1.5" name="brands/facebook"/>
+        <span class="is-size-5">
+          Continuar con facebook
+        </span>
+      </div>
 
     </section>
   </container>

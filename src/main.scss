@@ -4,6 +4,10 @@
 // Set your colors
 $primary: #54a0c0;
 $primary-invert: findColorInvert($primary);
+
+// Socials colors
+$facebook: #4267b2;
+$facebook-invert: findColorInvert($facebook);
 $twitter: #4099FF;
 $twitter-invert: findColorInvert($twitter);
 
@@ -25,6 +29,49 @@ $colors: (
 $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
+
+// Customs classes
+.has-bg-facebook {
+  background: $facebook;
+}
+
+// Creating personally spaces
+$spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100); // Adjust this to include the pixel amounts you need.
+$sides: (top, bottom, left, right); // Leave this variable alone
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .m-#{str-slice($side, 0, 1)}-#{$space} {
+      margin-#{$side}: #{$space}px !important;
+    }
+
+    .p-#{str-slice($side, 0, 1)}-#{$space} {
+      padding-#{$side}: #{$space}px !important;
+    }
+  }
+
+  // General paddings
+  .m-#{$space} {
+    margin: #{$space}px !important;
+  }
+
+  .p-#{$space} {
+    padding: #{$space}px !important;
+  }
+}
+
+// Customs
+.is-pointer {
+  cursor: pointer;
+}
+
+.flex-middle {
+  align-items: center;
+}
+
+.flex-center {
+  justify-content: center;
+}
 
 // Import Bulma and Buefy styles
 @import "~bulma";
