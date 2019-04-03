@@ -1,17 +1,24 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
     <fb:login-button
       scope="public_profile,email"
       onlogin="checkLoginState();">
-    </fb:login-button>
+    </fb:login-button> -->
     <router-view/>
   </div>
 </template>
-<style>
+<style lang="scss">
+@import '@/main.scss';
+
+html, body, #app {
+  height: 100%;
+  width: 100%;
+}
+
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

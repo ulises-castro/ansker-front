@@ -1,16 +1,18 @@
 <template lang="html">
-  <section>
-    sadfasdf
-    <div @click="checkLoginState" class="">
-      Login with facebook
-    </div>
-    <!-- <fb:login-button
-      scope="public_profile,email"
-      onlogin="checkLoginState();">
-    </fb:login-button> -->
-  </section>
-</template>
+  <container>
+    <section class="container">
+      sadfasdf
+      <div @click="checkLoginState" class="">
+        Login with facebook
+      </div>
 
+      <font-awesome
+        :icon="['fas', 'abacus']">
+      </font-awesome>
+
+    </section>
+  </container>
+</template>
 <script>
 export default {
   name: 'Home',
@@ -30,6 +32,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped
 
-<style lang="scss" scoped>
+  .facebook-f {
+  }
+
 </style>

@@ -4,11 +4,22 @@ import Vue from 'vue';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
 
+// FontAwesome
+import 'vue-awesome/icons'
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
 
-Vue.use(Buefy);
+// Import global components
+import './components';
+
+Vue.component('icon', FontAwesome);
+
+Vue.use(Buefy, {
+  defaultIconPack: 'fa',
+  defaultIconComponent: Vue.component('font-awesome'),
+});
 
 Vue.config.productionTip = false;
 
