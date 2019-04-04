@@ -22,29 +22,62 @@
         </span>
       </aside>
 
-      <aside class="p-t-10">
-        <a class="is-inverted" to="#"> Ver más </a>
+      <aside
+        class="flex flex-center flex-middle p-t-100">
+        <a
+          class="
+          button is-white is-pointer
+          has-text-weight-bold has-text-primary has-background-secondary is-rounded
+          p-20 is-size
+          "
+          @click="goToAboutAnsker">
+          ¿Qué es Ansker.me?
+        </a>
       </aside>
 
+      <aside v-if="aboutAnskerMe" class="">
+        <HomeAboutAnsker/>
+      </aside>
     </section>
   </container>
 </template>
 <script>
+import HomeAboutAnsker from './HomeAboutAnsker';
+
 export default {
   name: 'Home',
+  components: {
+    HomeAboutAnsker,
+  },
   data() {
     return {
-
+      aboutAnskerMe: false,
     }
   },
   methods: {
     checkLoginState() {
+      const self = this;
       FB.getLoginStatus(function(response) {
         console.log(response, 'hola');
         // statusChangeCallback(response);
-        // FB.login();
+        self.openLoginFB();
       });
-    }
+    },
+    openLoginFB() {
+      FB.login((response) => {
+        if (response.authResponse) {
+         console.log('Welcome!  Fetching your information.... ');
+        } else {
+         console.log('User cancelled login or did not fully authorize.');
+        }
+      },
+      {
+        scope: 'email, user_friends'
+      });
+    },
+    goToAboutAnsker() {
+      this.aboutAnskerMe = true;
+    },
   }
 }
 </script>

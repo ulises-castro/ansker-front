@@ -4,7 +4,7 @@ import Vue from 'vue';
 import Buefy from 'buefy';
 import 'buefy/dist/buefy.css';
 import VueI18n from 'vue-i18n';
-import language from './languages';
+import { language } from './languages';
 
 // FontAwesome
 import 'vue-awesome/icons'
