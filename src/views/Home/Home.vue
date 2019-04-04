@@ -54,6 +54,9 @@ export default {
       aboutAnskerMe: false,
     }
   },
+  created() {
+    console.log(process.env.VUE_APP_API, 'hola');
+  },
   methods: {
     checkLoginState() {
       const self = this;
