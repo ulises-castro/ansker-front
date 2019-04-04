@@ -19,7 +19,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-@import '@/main.scss';
+@import '@/styles/main.scss';
 
   .parent-container {
     height: 100%;

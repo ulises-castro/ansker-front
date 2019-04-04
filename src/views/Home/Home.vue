@@ -1,11 +1,11 @@
 <template lang="html">
   <container>
-    <section class="container is-fluid">
-      <div  class="is-size-4 has-text-white">
-        Comparte lo que piensas de forma anónima.
-      </div>
+    <section class="container is-fluid p-t-20">
+      <aside class="is-size-4 has-text-white p-b-20">
+        Comparte secretos de forma anónima.
+      </aside>
 
-      <div
+      <aside
         @click="checkLoginState"
         class="
           has-bg-facebook
@@ -20,7 +20,11 @@
         <span class="is-size-5">
           Continuar con facebook
         </span>
-      </div>
+      </aside>
+
+      <aside class="p-t-10">
+        <a class="is-inverted" to="#"> Ver más </a>
+      </aside>
 
     </section>
   </container>
@@ -36,9 +40,9 @@ export default {
   methods: {
     checkLoginState() {
       FB.getLoginStatus(function(response) {
-        console.log(response);
+        console.log(response, 'hola');
         // statusChangeCallback(response);
-        FB.login();
+        // FB.login();
       });
     }
   }

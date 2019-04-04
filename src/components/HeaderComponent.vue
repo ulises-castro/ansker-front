@@ -1,6 +1,6 @@
 <template lang="html">
   <section class="">
-    <div class="logo has-text-white">
+    <div class="logo has-text-white p-t-50">
       Ansker:)
     </div>
   </section>
