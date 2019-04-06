@@ -13,7 +13,6 @@
     "@fortawesome/vue-fontawesome": "^0.1.6",
     "buefy": "^0.7.3",
     "core-js": "^2.6.5",
-    "mongoose": "^5.4.22",
     "vue": "^2.6.6",
     "vue-awesome": "^3.5.1",
     "vue-i18n": "^8.10.0",
