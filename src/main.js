@@ -11,8 +11,9 @@ import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 
 import App from './App.vue';
-import router from './router';
-import store from './store';
+
+import router from '@/router';
+import store from '@/store';
 
 // Import global components
 import './components';
