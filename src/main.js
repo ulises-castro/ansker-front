@@ -2,7 +2,6 @@ import Vue from 'vue';
 
 // Including vue packages
 import Buefy from 'buefy';
-import 'buefy/dist/buefy.css';
 import VueI18n from 'vue-i18n';
 import { language } from './languages';
 
