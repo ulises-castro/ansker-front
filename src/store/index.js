@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-  userData: localStorage.userData ? JSON.parse(localStorage.userData) || {}
+  userData: localStorage.userData ? JSON.parse(localStorage.userData) : {}
   // userRegionName: localStorage.userRegionName
   //   || "",
   // userRegionCode: localStorage.userRegionCode
@@ -23,22 +23,22 @@ const mutations = {
 
     localStorage.userData = JSON.stringify(data);
   }
-}
+};
 
 const actions = {
   async SAVE_USER_DATA({ commit }, payloadObj) {
     await commit('SAVE_USER_DATA', payloadObj);
   }
-}
+};
 
 const getters = {
   userData() {
     return state.userData;
   }
-}
+};
 
 export default new Vuex.Store({
-  state
+  state,
   mutations,
   actions,
   getters,

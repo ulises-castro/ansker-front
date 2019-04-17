@@ -4,6 +4,7 @@
   </div>
 </template>
 <script type="text/javascript">
+/* eslint-disable */ 
 export default {
   name: 'App',
   created() {

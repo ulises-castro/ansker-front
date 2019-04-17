@@ -43,6 +43,7 @@
 </template>
 <script>
 import HomeAboutAnsker from './HomeAboutAnsker';
+import axios from 'axios';
 
 export default {
   name: 'Home',
@@ -69,7 +70,21 @@ export default {
     openLoginFB() {
       FB.login((response) => {
         if (response.authResponse) {
-         console.log('Welcome!  Fetching your information.... ');
+          const tokenFB = response.authResponse.access_token
+
+          // console.log(response, access_token);
+
+          const data = {
+              tokenFB,
+          };
+
+          axios.post('http://localhost:3000/api/login',
+          data)
+          .then((res) => {
+            console.log(res);
+          });
+
+          console.log('Welcome!  Fetching your information.... ');
         } else {
          console.log('User cancelled login or did not fully authorize.');
         }
