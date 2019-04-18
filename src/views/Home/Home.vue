@@ -23,8 +23,12 @@
               args: { name: 'facebook' }
             }"
           class="is-size-5">
+
         </span>
+        <spinner :isLoading="login.isLoading" />
       </aside>
+
+
 
       <aside
         class="flex flex-center flex-middle p-t-100">
@@ -57,6 +61,9 @@ export default {
   data() {
     return {
       aboutAnskerMe: false,
+      login: {
+        isLoading: false,
+      }
     }
   },
   created() {
@@ -65,6 +72,7 @@ export default {
   methods: {
     checkLoginState() {
       const self = this;
+
       FB.getLoginStatus(function(response) {
         console.log(response, 'hola');
         // statusChangeCallback(response);
@@ -73,6 +81,8 @@ export default {
     },
     openLoginFB() {
       FB.login((response) => {
+        this.login.isLoading = true;
+
         if (response.authResponse) {
           const tokenFB = response.authResponse.accessToken
 
@@ -80,25 +90,42 @@ export default {
             tokenFB,
           };
 
-          axios.post('http://localhost:3000/api/login',
-          data)
-          .then((res) => {
-            console.log(res);
+          this.callUserLogin(data);
 
-            this.$toast.open({
-              message: 'Something happened correctly!',
-              type: 'is-success'
-            });
-          });
-
-          console.log('Welcome!  Fetching your information.... ');
         } else {
-         console.log('User cancelled login or did not fully authorize.');
+          this.login.isLoading = false;
+
+          this.$toast.open({
+              duration: 3000,
+              message: this.$t('user_cancel_login'),
+              position: 'is-top',
+              type: 'is-danger'
+          });
         }
       },
       {
         scope: 'email, user_friends'
       });
+    },
+    async callUserLogin(data) {
+      const response = await axios.post('http://localhost:3000/api/login',
+      data)
+
+      this.login.isLoading = false;
+
+      console.log(response, "response");
+      if (response && response.log) {
+        this.login.isLoading = false;
+        this.$router.push({ name: 'Discover' });
+      } else {
+        this.$toast.open({
+          duration: 3000,
+          message: this.$t('failed_token'),
+          position: 'is-top',
+          type: 'is-danger'
+        });
+      }
+
     },
     goToAboutAnsker() {
       this.aboutAnskerMe = true;
