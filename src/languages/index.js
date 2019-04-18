@@ -6,12 +6,12 @@ import en from './en';
 
 const messages = {
   es,
-  en,
+  // en,
 };
 
 Vue.use(VueI18n);
 
-export const language = new VueI18n({
+export const i18n = new VueI18n({
   locale: 'es',
   messages,
 });

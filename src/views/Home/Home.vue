@@ -2,7 +2,7 @@
   <container>
     <section class="container is-fluid p-t-20">
       <aside class="is-size-4 has-text-white p-b-20">
-        Comparte secretos de forma anónima.
+        <h3 v-t="'home.welcome_message'"></h3>
       </aside>
 
       <aside
@@ -17,8 +17,12 @@
           is-pointer
         ">
         <icon scale="1.8" class="m-r-15" name="brands/facebook"/>
-        <span class="is-size-5">
-          Continuar con facebook
+        <span
+          v-t="{
+              path: 'login.social_button',
+              args: { name: 'facebook' }
+            }"
+          class="is-size-5">
         </span>
       </aside>
 
@@ -31,7 +35,7 @@
           p-20 is-size
           "
           @click="goToAboutAnsker">
-          ¿Qué es Ansker.me?
+          <span v-t="'home.what_is_ansker'"> </span>
         </a>
       </aside>
 
@@ -70,18 +74,21 @@ export default {
     openLoginFB() {
       FB.login((response) => {
         if (response.authResponse) {
-          const tokenFB = response.authResponse.access_token
-
-          // console.log(response, access_token);
+          const tokenFB = response.authResponse.accessToken
 
           const data = {
-              tokenFB,
+            tokenFB,
           };
 
           axios.post('http://localhost:3000/api/login',
           data)
           .then((res) => {
             console.log(res);
+
+            this.$toast.open({
+              message: 'Something happened correctly!',
+              type: 'is-success'
+            });
           });
 
           console.log('Welcome!  Fetching your information.... ');

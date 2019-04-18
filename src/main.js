@@ -2,8 +2,7 @@ import Vue from 'vue';
 
 // Including vue packages
 import Buefy from 'buefy';
-import VueI18n from 'vue-i18n';
-import { language } from './languages';
+import { i18n } from './languages';
 
 // FontAwesome
 import 'vue-awesome/icons'
@@ -29,5 +28,6 @@ Vue.config.productionTip = false;
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App),
 }).$mount('#app');

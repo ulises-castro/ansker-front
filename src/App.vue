@@ -1,12 +1,22 @@
 <template>
   <div id="app">
+    <b-loading
+      :is-full-page="true"
+      :active.sync="isLoading"
+      :can-cancel="false">
+    </b-loading>
     <router-view/>
   </div>
 </template>
 <script type="text/javascript">
-/* eslint-disable */ 
+/* eslint-disable */
 export default {
   name: 'App',
+  data() {
+    return {
+      isLoading : false
+    }
+  },
   created() {
     console.log('Console in created site');
 
@@ -39,6 +49,13 @@ export default {
 html, body, #app {
   height: 100%;
   width: 100%;
+}
+
+.loading-overlay .loading-icon:after {
+  border: 4px solid #54a0c0;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
 }
 
 #app {
