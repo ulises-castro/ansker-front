@@ -17,6 +17,8 @@ export default {
       isLoading : false
     }
   },
+  methods: {
+  },
   created() {
     console.log('Console in created site');
 

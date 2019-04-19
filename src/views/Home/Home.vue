@@ -28,8 +28,6 @@
         <spinner :isLoading="login.isLoading" />
       </aside>
 
-
-
       <aside
         class="flex flex-center flex-middle p-t-100">
         <a
@@ -51,7 +49,7 @@
 </template>
 <script>
 import HomeAboutAnsker from './HomeAboutAnsker';
-import axios from 'axios';
+import { post, get } from '@/api';
 
 export default {
   name: 'Home',
@@ -67,7 +65,7 @@ export default {
     }
   },
   created() {
-    console.log(process.env.VUE_APP_API, 'hola');
+    console.log(process.env.VUE_APP_API, 'API!');
   },
   methods: {
     checkLoginState() {
@@ -90,41 +88,41 @@ export default {
             tokenFB,
           };
 
-          this.callUserLogin(data);
-
+          this.handlerLoginRequest(data);
         } else {
           this.login.isLoading = false;
-
-          this.$toast.open({
-              duration: 3000,
-              message: this.$t('user_cancel_login'),
-              position: 'is-top',
-              type: 'is-danger'
-          });
+          this.showLoginError();
         }
       },
       {
         scope: 'email, user_friends'
       });
     },
+    handlerLoginRequest(data) {
+      this.login.isLoading = false;
+
+      this.callUserLogin(data)
+        .catch(() => this.showLoginError());
+    },
+    showLoginError() {
+      this.$toast.open({
+        duration: 3000,
+        message: this.$t('login.error.failed_token'),
+        position: 'is-top',
+        type: 'is-danger'
+      });
+    },
     async callUserLogin(data) {
-      const response = await axios.post('http://localhost:3000/api/login',
+      const response = await post('login',
       data)
+
+      console.log(response.data, "response!!!!!!!!!!!");
 
       this.login.isLoading = false;
 
-      console.log(response, "response");
-      if (response && response.log) {
-        this.login.isLoading = false;
-        this.$router.push({ name: 'Discover' });
-      } else {
-        this.$toast.open({
-          duration: 3000,
-          message: this.$t('failed_token'),
-          position: 'is-top',
-          type: 'is-danger'
-        });
-      }
+      this.$router.push({ name: 'Discover' });
+    },
+    handleCatchError() {
 
     },
     goToAboutAnsker() {
@@ -134,8 +132,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped
-
-  .facebook-f {
-  }
-
 </style>

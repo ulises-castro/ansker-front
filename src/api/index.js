@@ -1,18 +1,21 @@
 import axios from 'axios';
 
-const baseURL = process.env.BASE_URL;
+const baseURL = process.env.VUE_APP_API;
 
-export default {
-  get: async function(url, data) {
-    return axios.get(`${baseURL}/${url}`, data);
-  },
-  post: async function(url, data) {
-    return axios.post(`${baseURL}/${url}`, data);
-  },
-  put: async function(url) {
-    return axios.put(`${baseURL}/${url}`, data);
-  },
-  delete: async function(url) {
-    return axios.delete(`${baseURL}/${url}`, data);
-  }
-}
+const get = async function(resource, data) {
+  return axios.get(`${baseURL}/${resource}`, data);
+};
+
+const post = async function(resource, data) {
+  return axios.post(`${baseURL}/${resource}`, data);
+};
+
+const put = async function(resource, data) {
+  return axios.put(`${baseURL}/${resource}`, data);
+};
+
+const remove = async function(resource, data) {
+  return axios.delete(`${baseURL}/${resource}`, data);
+};
+
+export { get, post, put, remove };
