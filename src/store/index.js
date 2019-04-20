@@ -4,7 +4,9 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 const state = {
-  userData: localStorage.userData ? JSON.parse(localStorage.userData) : {}
+  userData: localStorage.userData ? JSON.parse(localStorage.userData) : {},
+  token: localStorage.token | '',
+  activedMenu: 1,
 };
 
 const mutations = {
@@ -13,28 +15,37 @@ const mutations = {
 
     localStorage.userData = JSON.stringify(data);
   },
-  saveData(state, data) {
+  SAVE_TOKEN(state, data) {
     state.token = data;
 
     localStorage.token = JSON.stringify(data);
+  },
+  UPDATE_MENU(state, data) {
+    state.token = data;
   }
 };
 
 const actions = {
-  async SAVE_USER_DATA({ commit }, payloadObj) {
+  async saveUserData({ commit }, payloadObj) {
     await commit('SAVE_USER_DATA', payloadObj);
   },
-  async SAVE_TOKEN({ commit }, payloadString) {
+  async saveToken({ commit }, payloadString) {
     await commit('SAVE_TOKEN', payloadString);
   },
+  async updateMenu({ commit }, payloadNumber) {
+    await commit('UPDATE_MENU', payloadNumber);
+  }
 };
 
 const getters = {
-  userData() {
+  userData(state) {
     return state.userData;
   },
-  token() {
+  token(state) {
     return state.token;
+  },
+  activedMenu(state) {
+    return state.activedMenu;
   }
 };
 

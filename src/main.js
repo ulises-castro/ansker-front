@@ -20,7 +20,6 @@ Vue.component('icon', Icon);
 
 Vue.use(Buefy, {
   defaultIconPack: 'fa',
-  // defaultIconComponent: Vue.component('font-awesome'),
 });
 
 Vue.config.productionTip = false;

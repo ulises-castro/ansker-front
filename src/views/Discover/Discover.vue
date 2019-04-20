@@ -1,7 +1,12 @@
 <template lang="html">
   <containerApp>
     <section class="container is-fluid p-t-20">
-      <span class="logo">Ansker:)</span>
+      <header>
+        <span class="logo">Ansker:)</span>
+      </header>
+      <aside class="width100">
+
+      </aside>
     </section>
   </containerApp>
 </template>
