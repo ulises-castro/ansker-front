@@ -59,6 +59,10 @@ $link-focus-border: $primary;
   border: none !important;
 }
 
+.height100 {
+  height: 100%;
+}
+
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
