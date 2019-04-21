@@ -1,7 +1,6 @@
 <template lang="html">
   <section>
     <div class="menu">
-
       <div @click="goMenu(1)" class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="2.2"
@@ -43,6 +42,7 @@ export default {
   methods: {
     goMenu(value) {
       console.log(value);
+      this.activedMenu = value;
       this.$store.dispatch('updateMenu', value);
     }
   },
@@ -63,13 +63,13 @@ export default {
 @import '@/styles/main.scss';
 
 .menu {
+  position: fixed;
   display: flex;
   width: 100%;
   background: white;
-  position: absolute;
   justify-content: space-evenly;
   bottom: 0;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
   .icon-link {
     padding: 10px 10px;
