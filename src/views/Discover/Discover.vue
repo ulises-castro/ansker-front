@@ -1,6 +1,6 @@
 <template lang="html">
   <containerApp>
-    <Modal :show="showPublishSecretModal">
+    <b-modal :active.sync="showPublishSecretModal" scroll="keep">
       <div class="card">
           <div class="card-content p-t-10 p-b-15">
             <div class="p-b-10">
@@ -8,19 +8,23 @@
             </div>
             <div class="width100">
               <textarea
+                ref="publishMessage"
                 class="message"
                 v-model="publishMessage"
                 placeholder="Escribe aquí"
                 name="name"></textarea>
             </div>
             <div class="width100">
-              <div class="width100 flex space-between">
+              <div class="width100 flex space-between flex-middle">
                 <small
                   class="has-text-weight-bold"
                   :class="{'has-text-danger' : publishMessage.length > '200'}">
                   {{ publishMessage.length }}/200
                 </small>
-                <b-button type="is-primary">Publicar</b-button>
+                <b-button
+                  type="is-primary" icon-right="delete">
+                  Publicar
+                </b-button>
               </div>
               <div class="p-t-10">
                 <small class="">La publicación será totalmente anónima.</small>
@@ -29,8 +33,8 @@
             </div>
           </div>
       </div>
-    </Modal>
-    <section class="container is-fluid height100">
+    </b-modal>
+    <section  ref="section" class="container is-fluid height100">
       <header class="header p-t-5">
         <span class="logo">Ansker:)</span>
       </header>
@@ -51,7 +55,6 @@
 <script>
 import Menu from '@/components/Menu';
 import Secret from '@/components/Secret';
-import Modal from '@/components/Modal';
 
 
 export default {
@@ -76,18 +79,18 @@ export default {
           message: 'No tengo idea de como contarle a mi maestra que me atrae',
         },
       ],
-      showPublishSecretModal: true,
+      showPublishSecretModal: false,
       publishMessage: '',
     }
   },
   components: {
     Menu,
     Secret,
-    Modal,
   },
   methods: {
     showPublishSecret() {
       console.log("Aqui");
+      // this.$refs.publishMessage.click();
       this.showPublishSecretModal = true;
     }
   }
@@ -131,6 +134,7 @@ export default {
   padding: 0 20px !important;
 
   .message {
+    color: #404040;
     width: 100%;
     height: 120px;
     padding: 10px;
@@ -138,6 +142,10 @@ export default {
   }
 
   .card-content {
+  }
+
+  button {
+    font-size: 15px;
   }
 }
 </style>

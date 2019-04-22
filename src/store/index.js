@@ -1,57 +1,83 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+// import Vue from 'vue';
+// import Vuex from 'vuex';
+//
+// Vue.use(Vuex);
+//
+// const state = {
+//   userData: localStorage.userData ? JSON.parse(localStorage.userData) : {},
+//   token: localStorage.token | '',
+//   activedMenu: 1,
+// };
+//
+// const mutations = {
+//   SAVE_USER_DATA(state, data) {
+//     state.userData = data;
+//
+//     localStorage.userData = JSON.stringify(data);
+//   },
+//   SAVE_TOKEN(state, data) {
+//     state.token = data;
+//
+//     localStorage.token = JSON.stringify(data);
+//   },
+//   UPDATE_MENU(state, data) {
+//     state.token = data;
+//   }
+// };
+//
+// const actions = {
+//   async saveUserData({ commit }, payloadObj) {
+//     await commit('SAVE_USER_DATA', payloadObj);
+//   },
+//   async saveToken({ commit }, payloadString) {
+//     await commit('SAVE_TOKEN', payloadString);
+//   },
+//   async updateMenu({ commit }, payloadNumber) {
+//     await commit('UPDATE_MENU', payloadNumber);
+//   }
+// };
+//
+// const getters = {
+//   userData(state) {
+//     return state.userData;
+//   },
+//   token(state) {
+//     return state.token;
+//   },
+//   activedMenu(state) {
+//     return state.activedMenu;
+//   }
+// };
+//
+// export default new Vuex.Store({
+//   state,
+//   mutations,
+//   actions,
+//   getters,
+// });
 
-Vue.use(Vuex);
+import Vue from 'vue'
+import Vuex from 'vuex'
+import VuexORM from '@vuex-orm/core'
+// import User from './User'
+import UserData from './models/UserData'
 
-const state = {
-  userData: localStorage.userData ? JSON.parse(localStorage.userData) : {},
-  token: localStorage.token | '',
-  activedMenu: 1,
-};
+// import secrets from './secrets'
 
-const mutations = {
-  SAVE_USER_DATA(state, data) {
-    state.userData = data;
+Vue.use(Vuex)
 
-    localStorage.userData = JSON.stringify(data);
-  },
-  SAVE_TOKEN(state, data) {
-    state.token = data;
+// Create new instance of Database.
+const database = new VuexORM.Database()
 
-    localStorage.token = JSON.stringify(data);
-  },
-  UPDATE_MENU(state, data) {
-    state.token = data;
-  }
-};
+// Register Model and Module. The first argument is the Model, and second
+// is the Module.
+// database.register(User, users)
+database.register(UserData)
+// database.register(Secret, secrets)
 
-const actions = {
-  async saveUserData({ commit }, payloadObj) {
-    await commit('SAVE_USER_DATA', payloadObj);
-  },
-  async saveToken({ commit }, payloadString) {
-    await commit('SAVE_TOKEN', payloadString);
-  },
-  async updateMenu({ commit }, payloadNumber) {
-    await commit('UPDATE_MENU', payloadNumber);
-  }
-};
+// Create Vuex Store and register database through Vuex ORM.
+const store = new Vuex.Store({
+  plugins: [VuexORM.install(database)]
+})
 
-const getters = {
-  userData(state) {
-    return state.userData;
-  },
-  token(state) {
-    return state.token;
-  },
-  activedMenu(state) {
-    return state.activedMenu;
-  }
-};
-
-export default new Vuex.Store({
-  state,
-  mutations,
-  actions,
-  getters,
-});
+export default store;
