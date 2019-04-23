@@ -3,8 +3,11 @@ import Vue from 'vue';
 // Including vue packages
 import Buefy from 'buefy';
 import { i18n } from './languages';
+import "@fortawesome/fontawesome-free/css/all.css";
+import "@fortawesome/fontawesome-free/css/fontawesome.css";
 
 // FontAwesome
+// TODO: Verify if you need this packages cause you already imported fontawesome 
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 
@@ -19,7 +22,8 @@ import './components';
 Vue.component('icon', Icon);
 
 Vue.use(Buefy, {
-  defaultIconPack: 'fa',
+  defaultIconPack: 'fas',
+  // defaultIconComponent: "font-awesome-icon",
 });
 
 Vue.config.productionTip = false;

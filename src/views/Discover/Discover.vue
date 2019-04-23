@@ -22,7 +22,7 @@
                   {{ publishMessage.length }}/200
                 </small>
                 <b-button
-                  type="is-primary" icon-right="delete">
+                  type="is-primary" icon-right="paper-plane" >
                   Publicar
                 </b-button>
               </div>

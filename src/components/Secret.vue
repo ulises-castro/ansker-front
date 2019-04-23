@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="secret">
-    <div class="secret-header">
+    <!-- <div class="secret-header">
       {{ secret.date }}
-    </div>
+    </div> -->
     <div class="secret-body">
       {{ secret.message }}
     </div>
@@ -62,6 +62,9 @@ export default {
 
   &-body {
     padding: 10px;
+    font-size: 25px;
+    color: white;
+    background: rgb(65, 108, 121);
   }
 
   &-actions {
