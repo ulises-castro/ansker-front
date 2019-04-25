@@ -1,6 +1,8 @@
 import { Model } from '@vuex-orm/core';
 
 const token = localStorage.token || '';
+
+
 export default class UserData extends Model {
   static entity = 'userData';
 

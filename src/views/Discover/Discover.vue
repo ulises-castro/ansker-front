@@ -1,6 +1,6 @@
 <template lang="html">
   <containerApp>
-    <b-modal :active.sync="showPublishSecretModal" scroll="keep">
+    <!-- <b-modal :active.sync="showPublishSecretModal" scroll="keep">
       <div class="card">
           <div class="card-content p-t-10 p-b-15">
             <div class="p-b-10">
@@ -33,7 +33,7 @@
             </div>
           </div>
       </div>
-    </b-modal>
+    </b-modal> -->
     <section  ref="section" class="container is-fluid height100">
       <header class="header p-t-5">
         <span class="logo">Ansker:)</span>
@@ -55,30 +55,13 @@
 <script>
 import Menu from '@/components/Menu';
 import Secret from '@/components/Secret';
-
+import { get } from '@/api';
 
 export default {
   name: 'Discover',
   data() {
     return {
-      secrets: [
-        {
-          date: 'Hace 3 minutos',
-          message: 'Estoy embaraza y no puedo mantenerlo, ¿alguien ha pasado por lo mismo?, no sé que hacer!',
-        },
-        {
-          date: 'Hace 5 minutos',
-          message: 'No quedé en la universidad no tengo idea de como lo tomarán mis papás estoy decepcionado de mí mismo',
-        },
-        {
-          date: 'Hace 8 minutos',
-          message: 'No tengo idea de como contarle a mi maestra que me atrae',
-        },
-        {
-          date: 'Hace 8 minutos',
-          message: 'No tengo idea de como contarle a mi maestra que me atrae',
-        },
-      ],
+      secrets: [],
       showPublishSecretModal: false,
       publishMessage: '',
     }
@@ -88,11 +71,23 @@ export default {
     Secret,
   },
   methods: {
+    async fetchSecrets() {
+      const { data } = await get('secret/allByCity');
+
+      this.secrets = data.secrets;
+    },
     showPublishSecret() {
-      console.log("Aqui");
+      // console.log("Aqui");
       // this.$refs.publishMessage.click();
-      this.showPublishSecretModal = true;
+      // this.showPublishSecretModal = true;
+      this.$router.push({ name: 'PublishSecret' });
     }
+  },
+  created() {
+    this.fetchSecrets();
+  },
+  mounted() {
+    console.log(this.$store.getters['entities/userData/all']());
   }
 }
 </script>

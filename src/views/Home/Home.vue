@@ -68,8 +68,11 @@ export default {
     console.log(process.env.VUE_APP_API, 'API!');
   },
   methods: {
+
     checkLoginState() {
       const self = this;
+
+      this.login.isLoading = true;
 
       FB.getLoginStatus(function(response) {
         console.log(response, 'hola');
@@ -79,7 +82,6 @@ export default {
     },
     openLoginFB() {
       FB.login((response) => {
-        this.login.isLoading = true;
 
         if (response.authResponse) {
           const tokenFB = response.authResponse.accessToken
@@ -112,12 +114,13 @@ export default {
         type: 'is-danger'
       });
     },
-    async callUserLogin(data) {
-      const response = await post('login',
-      data)
+    async callUserLogin(params) {
+      let { data } = await post('login', params);
 
-      console.log(response.data, "response!!!!!!!!!!!");
+      data = { ...data, ...data.userLocation };
+      localStorage.token = data.token;
 
+      this.$store.dispatch('entities/userData/create', { data });
       this.login.isLoading = false;
 
       this.$router.push({ name: 'Discover' });

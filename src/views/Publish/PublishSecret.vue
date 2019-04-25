@@ -9,10 +9,9 @@
         class="publishContainer"
         ref="publishArea"
         id="textarea"
-        @click="publish"
         placeholder="Escribe aquí"
         name="secret"
-        v-model="form.message">
+        v-model="form.content">
       </textarea>
 
       <div class="footer-icons flex space-between">
@@ -28,15 +27,25 @@
           </div>
         </div>
         <div class="flex flex-middle p0-10">
-          <span class="counter-text-lenght">{{ form.message.length }}/120</span>
+          <span class="counter-text-lenght">{{ form.content.length }}/120</span>
         </div>
-
+        <div
+          @click="publish"
+          class="icon-container pointer m-20">
+          <b-icon
+            type="is-white"
+            icon="paper-plane"
+            size="is-medium">
+          </b-icon>
+        </div>
       </div>
     </div>
 
   </section>
 </template>
 <script>
+import { post } from '@/api/';
+
 export default {
   name: 'PublishSecret',
   data() {
@@ -54,14 +63,29 @@ export default {
         '#666666',
         '#ff1493'],
       form: {
-        message: '',
+        content: '',
         backgroundSelected: 0,
       }
     }
   },
   methods: {
-    publish() {
-      console.log('hola, test');
+    async publish() {
+      const { content, backgroundSelected } = this.form;
+      const params = {
+        content,
+        backgroundColor: this.availableColours[backgroundSelected],
+      };
+
+      const { data } = await post('secret/publish', params);
+
+      const type = (data) ? 'is-success' : 'is-danger';
+
+      this.$toast.open({
+        duration: 3000,
+        message: this.$t('login.error.failed_token'),
+        position: 'is-top',
+        type: 'is-danger'
+      });
     },
     changeBgColor() {
       this.$refs.publishArea.focus();
@@ -84,7 +108,7 @@ export default {
       this.$refs.publishArea.click();
     }, 1000);
 
-     document.getElementById("textarea").focus();
+     // document.getElementById("textarea").focus();
 
     console.log(this.$refs, "refs");
   }

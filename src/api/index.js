@@ -2,6 +2,13 @@ import axios from 'axios';
 
 const baseURL = process.env.VUE_APP_API;
 
+const headers = {
+  // 'Authorization': 'Bearer ' + localStorage.token,
+};
+
+axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`
+// console.log(localStorage.token);
+
 const get = async function(resource, data) {
   return axios.get(`${baseURL}/${resource}`, data);
 };

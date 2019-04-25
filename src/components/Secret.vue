@@ -1,24 +1,29 @@
 <template lang="html">
-  <div class="secret">
+  <div class="secret"
+    :style="{'background-color': secret.backgroundColor}">
     <!-- <div class="secret-header">
       {{ secret.date }}
     </div> -->
-    <div class="secret-body">
-      {{ secret.message }}
+    <div
+      class="secret-body"
+      :style="{'background-color': secret.backgroundColor}">
+      {{ secret.content }}
     </div>
     <div class="secret-actions">
       <div class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="1.6"
             class="m-r-15"
-            name="comment"/>
+            name="comment"
+            :style="{ color: 'white' }"/>
         </router-link>
       </div>
       <div class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="1.6"
             class="m-r-15"
-            name="share"/>
+            name="share"
+            :style="{ color: 'white' }"/>
         </router-link>
       </div>
       <div class="icon-link" style="color: red !important">
@@ -26,7 +31,8 @@
           <icon scale="1.6"
           color="has-text-color-red"
             class="m-r-15"
-            name="heart"/>
+            name="heart"
+            :style="{ color: 'white' }"/>
         </router-link>
       </div>
     </div>
@@ -61,8 +67,10 @@ export default {
   }
 
   &-body {
-    padding: 10px;
     font-size: 25px;
+    height: 200px;
+    padding: 20px;
+    font-weight: bold;
     color: white;
     background: rgb(65, 108, 121);
   }
@@ -71,9 +79,8 @@ export default {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px 0;
+    padding: 20px 0;
     padding-bottom: 6px;
-    border-top: 1px solid #e4e4e4;
 
     .icon-link {
       display: flex;
