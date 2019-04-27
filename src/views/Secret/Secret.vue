@@ -1,19 +1,25 @@
 <template lang="html">
-  <containerApp>
+  <container-app>
     <section>
-      Hola a todos 
+      <secret :secret="secret" />
     </section>
-</containerApp>
+</container-app>
 </template>
-
 <script>
 export default {
   name: 'Secret',
   data() {
     return {}
+  },
+  created() {
+    this.fetchSecret();
+  },
+  methods: {
+    async fetchSecret() {
+      
+    }
   }
 }
 </script>
-
 <style lang="scss" scoped>
 </style>

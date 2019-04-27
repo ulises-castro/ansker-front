@@ -1,9 +1,7 @@
 <template lang="html">
-  <containerApp>
+  <container-app>
     <section :is-full-page="isLoading" ref="section" class="container is-fluid height100">
-      <header class="header p-t-5">
-        <span class="logo">Ansker:)</span>
-      </header>
+      <header-app></header-app>
       <aside
         class=""
         @click="showPublishSecret"
@@ -16,7 +14,7 @@
         </div>
       </aside>
     </section>
-  </containerApp>
+  </container-app>
 </template>
 <script>
 import Menu from '@/components/Menu';
@@ -85,12 +83,6 @@ export default {
 
 .secrets-container {
   padding-bottom: 150px;
-}
-
-.header {
-  // border-bottom: 2px solid #e4e4e4;
-  background: white;
-  border-bottom: 1px solid #e4e4e4;
 }
 
 .modal {

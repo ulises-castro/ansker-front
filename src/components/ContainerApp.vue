@@ -1,5 +1,6 @@
 <template lang="html">
   <section class="parent-container">
+    <HeaderApp></HeaderApp>
     <slot></slot>
     <Menu></Menu>
   </section>
@@ -7,14 +8,16 @@
 
 <script>
 import Menu from './Menu';
+import HeaderApp from './HeaderApp';
 
 export default {
-  name: 'ContainerApp',
+  name: 'container-app',
   data() {
     return {}
   },
   components: {
     Menu,
+    HeaderApp,
   }
 }
 </script>

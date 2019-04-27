@@ -30,7 +30,7 @@ const routes = [
     // which is lazy-loaded when the route is visited.
   },
   {
-    path: '/secret/:id',
+    path: '/secret/:secretId',
     name: 'Secret',
     component: Secret,
   }

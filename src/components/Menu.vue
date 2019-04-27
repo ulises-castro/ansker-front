@@ -10,14 +10,14 @@
         </router-link>
       </div>
 
-      <div @click="goMenu(2)" class="icon-link">
+      <!-- <div @click="goMenu(2)" class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="2.2"
             class="m-r-15 has-text-grey-lighter"
             :class="{'hast-text-grey-lighter' : (activedMenu !== 2) }"
             name="users"/>
         </router-link>
-      </div>
+      </div> -->
 
       <div @click="goMenu(3)" class="icon-link">
         <router-link :to="{ name: '', params: {} }">

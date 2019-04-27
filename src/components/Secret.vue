@@ -22,13 +22,48 @@
         <span class="indicator"> {{ secret.comments }} </span>
       </div>
       <div class="icon-link">
-        <router-link :to="{ name: '', params: {} }">
-          <icon scale="1.6"
-            class="m-r-10"
-            name="share"
-            :style="{ color: 'white' }"/>
-        </router-link>
-        <span class="indicator"> {{ secret.shares }} </span>
+
+        <b-dropdown aria-role="list">
+             <router-link
+             slot="trigger" :to="{ name: '', params: {} }">
+               <icon scale="1.6"
+                  class="m-r-10"
+                  name="share"
+                  :style="{ color: 'white' }"
+                />
+              </router-link>
+            <b-dropdown-item
+              class="has-text-dark is-size-5 flex flex-middle pointer"
+              target="_blank"
+              href='https://api.whatsapp.com/send?text=%20*YOURMESSAGE*'
+              aria-role="listitem">
+              <b-icon
+                class="has-text-green"
+                icon="whatsapp" pack="fab" />
+              Compartir via Whatsapp
+            </b-dropdown-item>
+            <b-dropdown-item
+             class="has-text-dark is-size-5 flex flex-middle pointer"
+             target="_blank"
+             href="https://twitter.com/intent/tweet?text=Hello%20world"
+             aria-role="listitem">
+             <b-icon
+               class="has-text-green"
+               icon="twitter" pack="fab" />
+              Compartir via Twitter
+            </b-dropdown-item>
+            <b-dropdown-item
+             class="has-text-dark is-size-5 flex flex-middle pointer"
+             :href="`https://www.facebook.com/sharer/sharer.php?u=https://ansker.me/secret/${secret.secretId}`"
+             target="_blank"
+             aria-role="listitem">
+             <b-icon
+               class="has-text-green"
+               icon="facebook" pack="fab" />
+              Compartir via Facebook
+            </b-dropdown-item>
+        </b-dropdown>
+        <!-- <span class="indicator"> {{ secret.shares }} </span> -->
       </div>
       <div
         @click="like"
@@ -74,6 +109,8 @@ export default {
       this.secret.likes += operation;
     },
     goSecret() {
+      const { secretId } = this.secret;
+
       this.$router.push({
         name: 'Secret',
         params: { secretId }
@@ -84,6 +121,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/styles/main.scss';
+
 .secret {
   background: white;
   border: 1px solid #e4e4e4;
