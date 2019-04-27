@@ -4,6 +4,7 @@ import Home from '@/views/Home';
 import Secret from '@/views/Secret';
 import Discover from '@/views/Discover';
 import PublishSecret from '@/views/Publish';
+import { Terms, Policies } from '@/views/Home'
 
 Vue.use(Router);
 
@@ -33,6 +34,16 @@ const routes = [
     path: '/secret/:secretId',
     name: 'Secret',
     component: Secret,
+  },
+  {
+    path: '/terms',
+    name: 'Terms',
+    component: Terms,
+  },
+  {
+    path: '/policies',
+    name: 'Policies',
+    component: Policies,
   }
 ];
 

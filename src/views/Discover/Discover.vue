@@ -1,7 +1,6 @@
 <template lang="html">
   <container-app>
     <section :is-full-page="isLoading" ref="section" class="container is-fluid height100">
-      <header-app></header-app>
       <aside
         class=""
         @click="showPublishSecret"
@@ -59,13 +58,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '@/styles/main.scss';
-
-.logo {
-  font-size: 30px;
-  color: $primary;
-  font-weight: bold;
-  font-family: 'Marck Script', cursive;
-}
 
 .publish-button-float {
   position: fixed;
