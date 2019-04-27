@@ -11,6 +11,7 @@
         id="textarea"
         placeholder="Escribe aquí"
         name="secret"
+        maxlength="120"
         v-model="form.content">
       </textarea>
 

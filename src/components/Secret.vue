@@ -10,7 +10,9 @@
       {{ secret.content }}
     </div>
     <div class="secret-actions">
-      <div class="icon-link">
+      <div
+        @click="goSecret(secret.id)"
+        class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="1.6"
             class="m-r-10"
@@ -35,8 +37,9 @@
           <icon scale="1.6"
             color="has-text-color-red"
             class="m-r-10"
+            :class="[{'liked' : secret.userLiked}]"
             name="heart"
-            :style="[{ color: 'white' }, { 'color: red' : true}]"/>
+          />
         </router-link>
         <span class="indicator"> {{ secret.likes }} </span>
       </div>
@@ -64,7 +67,17 @@ export default {
     async like() {
       const { secretId } = this.secret;
 
-      const response = await post('secret/liked', { secretId });
+      const { data } = await post('secret/liked', { secretId });
+
+      this.secret.userLiked = !this.secret.userLiked;
+      const operation = (!this.secret.userLiked) ? -1 : 1
+      this.secret.likes += operation;
+    },
+    goSecret() {
+      this.$router.push({
+        name: 'Secret',
+        params: { secretId }
+      });
     }
   }
 }
@@ -84,12 +97,17 @@ export default {
     color: white;
   }
 
+  .liked {
+    color: #ff0088;
+  }
+
   &-body {
     font-size: 25px;
     height: 200px;
     padding: 20px;
     font-weight: bold;
     color: white;
+    word-break: break-all;
     background: rgb(65, 108, 121);
   }
 
@@ -103,6 +121,10 @@ export default {
     .icon-link {
       display: flex;
       align-items: center;
+
+      a {
+        color: #fff;
+      }
     }
   }
 }

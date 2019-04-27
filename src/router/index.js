@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/views/Home';
+import Secret from '@/views/Secret';
 import Discover from '@/views/Discover';
 import PublishSecret from '@/views/Publish';
 
@@ -9,7 +10,7 @@ Vue.use(Router);
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: Home,
   },
   {
@@ -27,6 +28,11 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
+  },
+  {
+    path: '/secret/:id',
+    name: 'Secret',
+    component: Secret,
   }
 ];
 
