@@ -125,6 +125,7 @@ export default {
 
 .secret {
   background: white;
+  width: 100%;
   border: 1px solid #e4e4e4;
 
   &-header {

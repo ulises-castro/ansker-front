@@ -5,27 +5,28 @@
         <h3 v-t="'home.welcome_message'"></h3>
       </aside>
 
-      <aside
-        @click="checkLoginState"
-        class="
-          has-bg-facebook
-          has-text-white
-          flex
-          flex-center
-          flex-middle
-          p-10
-          is-pointer
-        ">
-        <icon scale="1.8" class="m-r-15" name="brands/facebook"/>
-        <span
-          v-t="{
-              path: 'login.social_button',
-              args: { name: 'facebook' }
-            }"
-          class="is-size-5">
-
-        </span>
-        <spinner :isLoading="login.isLoading" />
+      <aside class="">
+        <aside
+          @click="checkLoginState"
+          class="
+            has-bg-facebook
+            has-text-white
+            flex
+            flex-center
+            flex-middle
+            p-10
+            is-pointer
+          ">
+          <icon scale="1.8" class="m-r-15" name="brands/facebook"/>
+          <span
+            v-t="{
+                path: 'login.social_button',
+                args: { name: 'facebook' }
+              }"
+            class="is-size-5">
+          </span>
+          <spinner :isLoading="login.isLoading" />
+        </aside>
       </aside>
 
       <aside

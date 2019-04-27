@@ -1,5 +1,9 @@
 <template lang="html">
   <section class="parent-container">
+    <b-loading
+      :is-full-page="isFullPage"
+      :active.sync="isLoading">
+    </b-loading>
     <HeaderApp></HeaderApp>
     <slot></slot>
     <Menu></Menu>
@@ -14,6 +18,16 @@ export default {
   name: 'container-app',
   data() {
     return {}
+  },
+  props: {
+    isLoading: {
+      type: Boolean,
+      default: false,
+    },
+    isFullPage: {
+      type: Boolean,
+      default: false,
+    }
   },
   components: {
     Menu,

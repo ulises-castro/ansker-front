@@ -1,5 +1,5 @@
 <template lang="html">
-  <container-app>
+  <container-app :isLoading="isLoading">
     <section :is-full-page="isLoading" ref="section" class="container is-fluid height100">
       <aside
         class=""
