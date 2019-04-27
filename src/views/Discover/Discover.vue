@@ -1,40 +1,6 @@
 <template lang="html">
   <containerApp>
-    <!-- <b-modal :active.sync="showPublishSecretModal" scroll="keep">
-      <div class="card">
-          <div class="card-content p-t-10 p-b-15">
-            <div class="p-b-10">
-              <small>Guadalajara, Jal.</small>
-            </div>
-            <div class="width100">
-              <textarea
-                ref="publishMessage"
-                class="message"
-                v-model="publishMessage"
-                placeholder="Escribe aquí"
-                name="name"></textarea>
-            </div>
-            <div class="width100">
-              <div class="width100 flex space-between flex-middle">
-                <small
-                  class="has-text-weight-bold"
-                  :class="{'has-text-danger' : publishMessage.length > '200'}">
-                  {{ publishMessage.length }}/200
-                </small>
-                <b-button
-                  type="is-primary" icon-right="paper-plane" >
-                  Publicar
-                </b-button>
-              </div>
-              <div class="p-t-10">
-                <small class="">La publicación será totalmente anónima.</small>
-
-              </div>
-            </div>
-          </div>
-      </div>
-    </b-modal> -->
-    <section  ref="section" class="container is-fluid height100">
+    <section :is-full-page="isLoading" ref="section" class="container is-fluid height100">
       <header class="header p-t-5">
         <span class="logo">Ansker:)</span>
       </header>
@@ -62,6 +28,7 @@ export default {
   data() {
     return {
       secrets: [],
+      isLoading: true,
       showPublishSecretModal: false,
       publishMessage: '',
     }
@@ -74,6 +41,7 @@ export default {
     async fetchSecrets() {
       const { data } = await get('secret/allByCity');
 
+      this.isLoading = false;
       this.secrets = data.secrets;
     },
     showPublishSecret() {

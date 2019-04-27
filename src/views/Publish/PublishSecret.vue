@@ -80,12 +80,13 @@ export default {
 
       const type = (data) ? 'is-success' : 'is-danger';
 
-      this.$toast.open({
-        duration: 3000,
-        message: this.$t('login.error.failed_token'),
-        position: 'is-top',
-        type: 'is-danger'
-      });
+      // this.$toast.open({
+      //   duration: 3000,
+      //   message: this.$t('login.error.failed_token'),
+      //   position: 'is-top',
+      //   type,
+      // });
+      this.$router.push({ name: 'Discover' });
     },
     changeBgColor() {
       this.$refs.publishArea.focus();

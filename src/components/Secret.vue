@@ -13,33 +13,40 @@
       <div class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="1.6"
-            class="m-r-15"
+            class="m-r-10"
             name="comment"
             :style="{ color: 'white' }"/>
         </router-link>
+        <span class="indicator"> {{ secret.comments }} </span>
       </div>
       <div class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="1.6"
-            class="m-r-15"
+            class="m-r-10"
             name="share"
             :style="{ color: 'white' }"/>
         </router-link>
+        <span class="indicator"> {{ secret.shares }} </span>
       </div>
-      <div class="icon-link" style="color: red !important">
+      <div
+        @click="like"
+        class="icon-link" style="color: red !important">
         <router-link :to="{ name: '', params: {} }">
           <icon scale="1.6"
-          color="has-text-color-red"
-            class="m-r-15"
+            color="has-text-color-red"
+            class="m-r-10"
             name="heart"
-            :style="{ color: 'white' }"/>
+            :style="[{ color: 'white' }, { 'color: red' : true}]"/>
         </router-link>
+        <span class="indicator"> {{ secret.likes }} </span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { get, post } from '@/api';
+
 export default {
   name: 'Secret',
   props: {
@@ -51,6 +58,13 @@ export default {
   data() {
     return {
 
+    }
+  },
+  methods: {
+    async like() {
+      const { secretId } = this.secret;
+
+      const response = await post('secret/liked', { secretId });
     }
   }
 }
@@ -64,6 +78,10 @@ export default {
   &-header {
     padding: 10px;
     padding-bottom: 0;
+  }
+
+  .indicator {
+    color: white;
   }
 
   &-body {
