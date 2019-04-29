@@ -1,51 +1,32 @@
 <template lang="html">
   <container-app :isLoading="isLoading">
-    <section class="flex flex-wrap width100">
+    <section class="flex flex-wrap width100 p-b-100">
       <Secret :secret="secret" />
       <section class="flex flex-wrap width100">
         <div class="comment-title">
           Comentarios
         </div>
-        <article class="comment flex flex-wrap width100">
-          <div class="comment-header">
-
-          </div>
-          <div class="comment-body flex width100">
-
-            <div class="container-avatar">
-              <img src="@/assets/avatars/avatar1.png" alt="">
-            </div>
-            <div class="p0-15">
-              Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.
-            </div>
-          </div>
-          <div class="comment-footer flex flex-end width100 p-r-15 p-b-5">
-            Hace 3 minutos
-          </div>
-        </article>
-        <article class="comment flex flex-wrap width100">
-          <div class="comment-header">
-
-          </div>
-          <div class="comment-body flex width100">
-
-            <div class="container-avatar">
-              <img src="@/assets/avatars/avatar2.png" alt="">
-            </div>
-            <div class="p0-15">
-              Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.
-            </div>
-          </div>
-          <div class="comment-footer flex flex-end width100 p-r-15 p-b-5">
-            Hace 3 minutos
-          </div>
-        </article>
+        <Comment
+          v-for="comment in comments"
+          :comment="comment"
+        />
       </section>
+      <aside
+        class="flex flex-middle flex-center p-15 is-text-center width100 write-container">
+        <span class="flex flex-middle has-text-primary has-text-weight-bold">
+          Escribir un comentario
+          <b-icon
+            class="p-l-10"
+            icon="comment">
+          </b-icon>
+        </span>
+      </aside>
     </section>
 </container-app>
 </template>
 <script>
 import Secret from '@/components/Secret';
+import Comment from '@/components/Comment';
 import { get } from '@/api';
 
 export default {
@@ -54,10 +35,28 @@ export default {
     return {
       isLoading: true,
       secret: {},
+      comments: [
+        {
+          publishAt: new Date(),
+          content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
+          avatar: 1,
+        },
+        {
+          publishAt: new Date(),
+          content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
+          avatar: 2,
+        },
+        {
+          publishAt: new Date(),
+          content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
+          avatar: 2,
+        }
+      ],
     }
   },
   components: {
     Secret,
+    Comment
   },
   mounted() {
     this.fetchSecret();
@@ -87,28 +86,11 @@ export default {
     width: 100%;
     border: 1px solid #e8e8e8;
   }
+}
 
-  &-body {
-    width: 100%;
-    background: white;
-    padding: 10px;
-    font-size: 16px;
-  }
-
-  .container-avatar {
-
-    img {
-      background: #ac3232;
-      border-radius: 100%;
-      width: 150px;
-    }
-  }
-
-
-  &-footer {
-    background: white;
-    font-size: 14px;
-  }
-
+.write-container {
+  background: white;
+  position: fixed;
+  bottom: 63px;
 }
 </style>

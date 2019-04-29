@@ -124,7 +124,7 @@ export default {
       this.$store.dispatch('entities/userData/create', { data });
       this.login.isLoading = false;
 
-      this.$router.push({ name: 'Discover' });
+      this.$router.push({ name: 'Discover' })
     },
     handleCatchError() {
 
