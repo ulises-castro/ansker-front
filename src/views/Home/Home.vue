@@ -118,10 +118,13 @@ export default {
     async callUserLogin(params) {
       let { data } = await post('login', params);
 
-      data = { ...data, ...data.userLocation };
-      localStorage.token = data.token;
+      let user = { ...data, ...data.userLocation };
+      const { token } = data;
 
-      this.$store.dispatch('entities/userData/create', { data });
+      // Consider implement models with orm
+      // this.$store.dispatch('entities/userData/create', { data });
+
+      this.$store.dispatch('login', token, user);
       this.login.isLoading = false;
 
       this.$router.push({ name: 'Discover' })

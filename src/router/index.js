@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/store';
+
 import Home from '@/views/Home';
 import Secret from '@/views/Secret';
 import Discover from '@/views/Discover';
@@ -18,6 +20,9 @@ const routes = [
     path: '/discover',
     name: 'Discover',
     component: Discover,
+    meta: {
+      requiresAuth: true,
+    }
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -26,6 +31,9 @@ const routes = [
     path: '/publish',
     name: 'PublishSecret',
     component: PublishSecret,
+    meta: {
+      requiresAuth: true,
+    }
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
@@ -34,6 +42,9 @@ const routes = [
     path: '/secret/:secretId',
     name: 'Secret',
     component: Secret,
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/terms',
@@ -48,8 +59,23 @@ const routes = [
 ];
 
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes,
 });
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLogged) {
+      next();
+      return;
+    }
+
+    next('/');
+  } else {
+    next();
+  }
+});
+
+export default router;

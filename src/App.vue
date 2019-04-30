@@ -20,8 +20,7 @@ export default {
   methods: {
   },
   created() {
-    console.log('Console in created site');
-
+    // TODO: Check if useful this piece of code otherwise remove it
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '273084363581374',
@@ -42,6 +41,12 @@ export default {
        js.src = "https://connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
+
+     this.$http.interceptors.response.use(undefined, function (err) {
+       if (err.status === 401) {
+         this.$store.dispatch(logout);
+       }
+     });
   }
 }
 </script>

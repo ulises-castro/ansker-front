@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Axios from 'axios'
 
 // Including vue packages
 import Buefy from 'buefy';
@@ -7,7 +8,7 @@ import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/css/fontawesome.css";
 
 // FontAwesome
-// TODO: Verify if you need this packages cause you already imported fontawesome 
+// TODO: Verify if you need this packages cause you already imported fontawesome
 import 'vue-awesome/icons'
 import Icon from 'vue-awesome/components/Icon'
 
@@ -18,6 +19,13 @@ import store from '@/store';
 
 // Import global components
 import './components';
+
+Vue.prototype.$http = Axios;
+const token = localStorage.getItem('token');
+
+if (token) {
+  Vue.prototype.$http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
 
 Vue.component('icon', Icon);
 
