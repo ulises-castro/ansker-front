@@ -42,9 +42,12 @@ export default {
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
-     this.$http.interceptors.response.use(undefined, function (err) {
-       if (err.status === 401) {
-         this.$store.dispatch(logout);
+     this.$http.interceptors.response.use(undefined, (err) => {
+       // console.log(err, err.status,"err");
+       if (err) {
+         this.$store.dispatch('logout');
+
+         this.$router.push({ name: 'Home' });
        }
      });
   }

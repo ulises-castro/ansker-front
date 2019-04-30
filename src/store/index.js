@@ -19,7 +19,7 @@ const database = new VuexORM.Database();
 database.register(UserData);
 // database.register(Secret, secrets)
 const state = {
-  authToken: localStorage.token || '',
+  token: localStorage.token || '',
   user: localStorage.user
     ? JSON.parse(localStorage.user) : {},
 }
@@ -31,9 +31,11 @@ const actions = {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   },
-  login({ commit }, token, user) {
+  login({ commit }, dataObj) {
+    const { token, user } = dataObj;
+
     commit('authSuccess', token, user);
-    localStorage.user = user;
+    localStorage.user = JSON.stringify(user);
     localStorage.token = token;
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -42,8 +44,8 @@ const actions = {
 
 const mutations = {
   authSuccess(state, token, user) {
-    state.authToken = token;
-    state.user = userl;
+    state.token = token;
+    state.user = user;
   },
   // TODO: Check this to thinking in how to do it
   authError() {},

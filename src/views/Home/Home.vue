@@ -105,7 +105,10 @@ export default {
       this.login.isLoading = false;
 
       this.callUserLogin(data)
-        .catch(() => this.showLoginError());
+        .catch((err) => {
+          this.showLoginError();
+          console.log(err);
+      });
     },
     showLoginError() {
       this.$toast.open({
@@ -118,13 +121,13 @@ export default {
     async callUserLogin(params) {
       let { data } = await post('login', params);
 
-      let user = { ...data, ...data.userLocation };
+      let user = { ...data };
       const { token } = data;
 
       // Consider implement models with orm
       // this.$store.dispatch('entities/userData/create', { data });
 
-      this.$store.dispatch('login', token, user);
+      this.$store.dispatch('login', { token, user });
       this.login.isLoading = false;
 
       this.$router.push({ name: 'Discover' })
@@ -133,7 +136,7 @@ export default {
 
     },
     goToAboutAnsker() {
-      this.aboutAnskerMe = true;
+      // this.aboutAnskerMe = true;
     },
   }
 }
