@@ -22,6 +22,8 @@ const state = {
   token: localStorage.token || '',
   user: localStorage.user
     ? JSON.parse(localStorage.user) : {},
+  hideShareAdvice: localStorage.hideShareAdvice
+  ? JSON.parse(localStorage.hideShareAdvice) : false,
 }
 
 const actions = {
@@ -39,6 +41,11 @@ const actions = {
     localStorage.token = token;
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },
+  hideShareAdvice({ commit }) {
+    commit('hideShareAdvice');
+
+    localStorage.hideShareAdvice = 'true';
   }
 };
 
@@ -46,6 +53,9 @@ const mutations = {
   authSuccess(state, token, user) {
     state.token = token;
     state.user = user;
+  },
+  hideShareAdvice(state) {
+    state.hideShareAdvice = true;
   },
   // TODO: Check this to thinking in how to do it
   authError() {},
@@ -57,6 +67,7 @@ const mutations = {
 
 const getters = {
   isLogged: state => !!state.token,
+  showShareAdvice: state => !state.hideShareAdvice,
 }
 
 // Create Vuex Store and register database through Vuex ORM.

@@ -42,6 +42,7 @@ export default {
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
+     // TODO: B Create 401 | 403 response middlare
      this.$http.interceptors.response.use(undefined, (err) => {
        // console.log(err, err.status,"err");
        if (err) {

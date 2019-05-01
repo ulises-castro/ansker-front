@@ -32,4 +32,17 @@ $sides: ('', '-top', '-bottom', '-left', '-right'); // Leave this variable alone
   .p#{$space}-0 {
     padding: #{$space}px 0 !important;
   }
+
+  .p0-#{$space} {
+    padding: 0 #{$space}px !important;
+  }
+
+  // General paddings
+  .m#{$space} {
+    margin: #{$space}px !important;
+  }
+
+  .p#{$space} {
+    padding: #{$space}px !important;
+  }
 }

@@ -7,7 +7,37 @@
         :class="{'publish-button-float' : true}">
         <icon scale="1.5" name="feather-alt" />
       </aside>
-      <aside class="secrets-container width100">
+
+      <div
+        v-if="showShareAdvice"
+        class="shareus has-text-white-bis flex width100 has-background-primary">
+        <div class="width100 p10 p15-0">
+          <h3 class="is-size-4 width100 has-text-weight-bold">
+            Comparte con tus amigos
+          </h3>
+          <span class="is-size-5 p15">
+            Dandole clic en compartir
+          </span>
+          <div class="flex" style="width: 80%; max-width: 450px">
+            <share
+              text="Comparte secretos de forma anónima">
+              <b-button
+                slot="trigger"
+                type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
+                Compartir
+              </b-button>
+            </share>
+            <b-button
+              @click="closeShareAdvice"
+              type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
+              Cerrar
+            </b-button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="secrets-container width100"
+      :style="[{ 'padding-bottom: 0px !important': !secrets.length }]">
         <div class="secret" v-for="secret in secrets">
           <Secret :secret="secret" />
         </div>
@@ -28,6 +58,7 @@ export default {
       isLoading: true,
       showPublishSecretModal: false,
       publishMessage: '',
+      showShareAdvice: this.$store.getters.showShareAdvice,
     }
   },
   components: {
@@ -42,10 +73,11 @@ export default {
       this.secrets = data.secrets;
     },
     showPublishSecret() {
-      // console.log("Aqui");
-      // this.$refs.publishMessage.click();
-      // this.showPublishSecretModal = true;
       this.$router.push({ name: 'PublishSecret' });
+    },
+    closeShareAdvice() {
+      this.$store.dispatch('hideShareAdvice');
+      this.showShareAdvice = false;
     }
   },
   created() {
@@ -71,6 +103,10 @@ export default {
   color: $primary;
   background: white;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.shareus {
+  // height: calc(100vh - 150px);
 }
 
 .secrets-container {
