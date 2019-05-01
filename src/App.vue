@@ -71,15 +71,16 @@ export default {
       },
       {
         property: 'og:site_name',
-        content: 'Ansker'
+        content
+      : 'Ansker'
       },
-      // The list of types is available here: http://ogp.me/#types
-      {property: 'og:type', content: 'website'},
-      // Should the the same as your canonical link, see below.
-      {property: 'og:url', content: 'https://ansker.me'},
       {
-        property: 'og:image',
-        content: 'https://www.my-site.com/my-special-image.jpg'
+        property: 'og:type',
+        content: 'website'
+      },
+      {
+        property: 'og:url',
+        content: 'https://ansker.me'
       },
       {
         property: 'og:description',
@@ -111,6 +112,7 @@ html, body, #app {
   text-align: center;
   color: #2c3e50;
 }
+
 #nav {
   padding: 30px;
 }
