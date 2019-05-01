@@ -51,6 +51,41 @@ export default {
          this.$router.push({ name: 'Home' });
        }
      });
+  },
+  metaInfo: {
+    // Children can override the title.
+    title: 'Ansker',
+    // Result: My Page Title ← My Site
+    // If a child changes the title to "My Other Page Title",
+    // it will become: My Other Page Title ← My Site
+    titleTemplate: '%s ~ Ansker',
+    // Define meta tags here.
+    meta: [
+      {
+        name: 'description',
+        content: 'Comparte secretos con tus amigos o en tu ciudad de forma anónima.'
+      },
+      {
+        property: 'og:title',
+        content: 'Ansker - Comparte secretos anónimamente'
+      },
+      {
+        property: 'og:site_name',
+        content: 'Ansker'
+      },
+      // The list of types is available here: http://ogp.me/#types
+      {property: 'og:type', content: 'website'},
+      // Should the the same as your canonical link, see below.
+      {property: 'og:url', content: 'https://ansker.me'},
+      {
+        property: 'og:image',
+        content: 'https://www.my-site.com/my-special-image.jpg'
+      },
+      {
+        property: 'og:description',
+        content: 'Comparte secretos con tus amigos o en tu ciudad de forma anónima.'
+      }
+    ],
   }
 }
 </script>

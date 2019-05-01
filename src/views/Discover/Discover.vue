@@ -13,20 +13,21 @@
         class="shareus has-text-white-bis flex width100 has-background-primary">
         <div class="width100 p10 p15-0">
           <h3 class="is-size-4 width100 has-text-weight-bold">
-            Comparte con tus amigos
+            Comparte y difúndenos
           </h3>
           <span class="is-size-5 p15">
-            Dandole clic en compartir
+            Comparte en tus redes sociales!
           </span>
           <div class="flex" style="width: 80%; max-width: 450px">
-            <share
-              text="Comparte secretos de forma anónima">
+            <social-share
+              text="Comparte secretos de forma anónima en https://ansker.me">
               <b-button
                 slot="trigger"
                 type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
                 Compartir
               </b-button>
-            </share>
+              ]asdasdf
+            </social-share>
             <b-button
               @click="closeShareAdvice"
               type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
@@ -85,6 +86,10 @@ export default {
   },
   mounted() {
     console.log(this.$store.getters['entities/userData/all']());
+  },
+  metaInfo: {
+    // Children can override the title.
+    title: 'Secretos en tu ciudad',
   }
 }
 </script>

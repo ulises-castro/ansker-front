@@ -1,8 +1,9 @@
 import Vue from 'vue';
 import Axios from 'axios'
+import Buefy from 'buefy';
+import Meta from 'vue-meta';
 
 // Including vue packages
-import Buefy from 'buefy';
 import { i18n } from './languages';
 import "@fortawesome/fontawesome-free/css/all.css";
 import "@fortawesome/fontawesome-free/css/fontawesome.css";
@@ -33,6 +34,8 @@ Vue.use(Buefy, {
   defaultIconPack: 'fas',
   // defaultIconComponent: "font-awesome-icon",
 });
+
+Vue.use(Meta);
 
 Vue.config.productionTip = false;
 

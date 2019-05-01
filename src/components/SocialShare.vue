@@ -1,7 +1,7 @@
 <template lang="html">
   <section>
-  <b-dropdown aria-role="list">
     <slot></slot>
+  <!-- <b-dropdown aria-role="list">
     <b-dropdown-item
       class="has-text-dark is-size-5 flex flex-middle pointer"
       target="_blank"
@@ -32,24 +32,27 @@
        icon="facebook" pack="fab" />
       Compartir via Facebook
     </b-dropdown-item>
-  </b-dropdown>
-</section>
+  </b-dropdown> -->
+  </section>
 </template>
 <script>
 export default {
-  name: 'Share',
+  name: 'SocialShare',
+  props: {
+    url: {
+      type: String,
+    },
+    text: {
+      type: String,
+      required: true,
+    },
+    hashtags: {
+      type: String,
+    }
+  },
   data() {
     return {
-      url: {
-        type: String,
-      },
-      text: {
-        type: String,
-        required: true,
-      },
-      hashtags: {
-        type: String,
-      }
+
     }
   },
   mounted() {

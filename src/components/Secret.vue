@@ -22,7 +22,7 @@
         <span class="indicator"> {{ secret.comments }} </span>
       </div>
       <div class="icon-link">
-        <share>
+        <social-share>
           <router-link
             slot="trigger"
             :to="{ name: '', params: {} }">
@@ -32,7 +32,7 @@
                :style="{ color: 'white' }"
              />
            </router-link>
-        </share>
+        </social-share>
         <!-- <span class="indicator"> {{ secret.shares }} </span> -->
       </div>
       <div
