@@ -98,7 +98,7 @@ export default {
         }
       },
       {
-        scope: 'email, user_friends'
+        scope: 'email'
       });
     },
     handlerLoginRequest(data) {
