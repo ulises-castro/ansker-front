@@ -24,7 +24,7 @@ const state = {
     ? JSON.parse(localStorage.user) : {},
   hideShareAdvice: localStorage.hideShareAdvice
   ? JSON.parse(localStorage.hideShareAdvice) : false,
-}
+};
 
 const actions = {
   logout({ commit }) {
@@ -37,8 +37,7 @@ const actions = {
     const { token, user } = dataObj;
 
     commit('authSuccess', token, user);
-    localStorage.user = JSON.stringify(user);
-    localStorage.token = token;
+    commit('updateUser', user);
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
   },
@@ -46,29 +45,40 @@ const actions = {
     commit('hideShareAdvice');
 
     localStorage.hideShareAdvice = 'true';
-  }
+  },
+  userLocation({ commit, state }, locationObj) {
+    const user = state.user;
+    user.location = locationObj;
+
+    commit('updateUser', user);
+  },
 };
 
 const mutations = {
-  authSuccess(state, token, user) {
+  authSuccess({ state }, token) {
+    localStorage.token = token;
     state.token = token;
-    state.user = user;
   },
   hideShareAdvice(state) {
     state.hideShareAdvice = true;
   },
-  // TODO: Check this to thinking in how to do it
-  authError() {},
   logout(state) {
     state.authStatus = '';
     state.token = '';
-  }
+  },
+  updateUser(state, user) {
+    localStorage.user = JSON.stringify(user);
+    state.user = user;
+  },
+  // TODO: Check this to thinking in how to do it
+  authError() {},
 };
 
 const getters = {
   isLogged: state => !!state.token,
   showShareAdvice: state => !state.hideShareAdvice,
-}
+  userLocation: state => state.user.location,
+};
 
 // Create Vuex Store and register database through Vuex ORM.
 const store = new Vuex.Store({

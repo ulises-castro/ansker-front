@@ -60,6 +60,7 @@ export default {
       showPublishSecretModal: false,
       publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,
+      requestLocationPermission: this.$store.getters.location
     }
   },
   components: {
@@ -67,8 +68,13 @@ export default {
     Secret,
   },
   methods: {
-    async fetchSecrets() {
-      const { data } = await get('secret/allByCity');
+    async fetchSecrets(latitude, longitude) {
+      const params = {
+        latitude,
+        longitude
+      };
+
+      const { data } = await get('secret/allByCity', { params });
 
       this.isLoading = false;
       this.secrets = data.secrets;
@@ -79,10 +85,35 @@ export default {
     closeShareAdvice() {
       this.$store.dispatch('hideShareAdvice');
       this.showShareAdvice = false;
+    },
+    getUserPosition(position) {
+      const { latitude, longitude } = position.coords;
+
+      const location = {
+        latitude,
+        longitude,
+      };
+      console.log(latitude, longitude);
+
+      this.$store.dispatch('userLocation', location);
+
+      this.fetchSecrets(latitude, longitude);
+    },
+    showError() {
+      this.$toast.open({
+        duration: 3000,
+        message: this.$t('user.location_permission.denied'),
+        position: 'is-top',
+        type: 'is-danger',
+      });
     }
-  },
+ },
   created() {
-    this.fetchSecrets();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.getUserPosition, this.showError);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
   },
   mounted() {
     console.log(this.$store.getters['entities/userData/all']());

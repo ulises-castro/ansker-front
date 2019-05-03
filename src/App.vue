@@ -46,9 +46,9 @@ export default {
      this.$http.interceptors.response.use(undefined, (err) => {
        // console.log(err, err.status,"err");
        if (err) {
-         this.$store.dispatch('logout');
+        //  this.$store.dispatch('logout');
 
-         this.$router.push({ name: 'Home' });
+        //  this.$router.push({ name: 'Home' });
        }
      });
   },
