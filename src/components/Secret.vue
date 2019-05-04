@@ -22,9 +22,10 @@
         <span class="indicator"> {{ secret.comments }} </span>
       </div>
       <div class="icon-link">
-        <social-share>
+        <social-share
+          :text='`"${secret.content}" - secreto publicado en `'
+          :url="`https://ansker.me/secret/${secret.secretId}`">
           <router-link
-            slot="trigger"
             :to="{ name: '', params: {} }">
             <icon scale="1.6"
                class="m-r-10"
@@ -117,7 +118,6 @@ export default {
     padding: 20px;
     font-weight: bold;
     color: white;
-    word-break: break-all;
     background: rgb(65, 108, 121);
   }
 
