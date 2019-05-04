@@ -55,7 +55,7 @@ const actions = {
 };
 
 const mutations = {
-  authSuccess({ state }, token) {
+  authSuccess(state, token) {
     localStorage.token = token;
     state.token = token;
   },
