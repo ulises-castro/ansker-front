@@ -23,8 +23,9 @@
       </div>
       <div class="icon-link">
         <social-share
+          quote='Comparte secretos con tu alrededor de forma anónima'
           :text='`"${secret.content}" - secreto publicado en `'
-          :url="`https://ansker.me/secret/${secret.secretId}`">
+          :url="`https://ansker.me`">
           <router-link
             :to="{ name: '', params: {} }">
             <icon scale="1.6"

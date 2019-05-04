@@ -18,20 +18,19 @@
           <span class="is-size-5 p15">
             Comparte en tus redes sociales!
           </span>
-          <div class="flex" style="width: 80%; max-width: 450px">
+          <div class="flex width100 p-t-10" style="max-width: 450px">
             <social-share
-              text="Comparte secretos de forma anónima en https://ansker.me">
+              quote='Comparte secretos con tu alrededor de forma anónima'
+              text="Comparte secretos con tu alrededor de forma anónima en https://ansker.me">
               <b-button
-                slot="trigger"
                 type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
                 Compartir
               </b-button>
-              ]asdasdf
             </social-share>
             <b-button
               @click="closeShareAdvice"
               type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
-              Cerrar
+              Ocultar
             </b-button>
           </div>
         </div>

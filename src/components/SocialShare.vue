@@ -26,7 +26,7 @@
       </b-dropdown-item>
       <b-dropdown-item
       class="has-text-dark is-size-5 flex flex-middle pointer"
-      :href="`https://www.facebook.com/sharer/sharer.php?u=https://ansker.me/`"
+      :href="`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${quote}`"
       target="_blank"
       aria-role="listitem">
       <b-icon
@@ -46,6 +46,7 @@ export default {
   props: {
     url: {
       type: String,
+      default: '',
     },
     text: {
       type: String,
@@ -53,6 +54,10 @@ export default {
     },
     hashtags: {
       type: String,
+    },
+    quote: {
+      type: String,
+      default: '',
     }
   },
   mounted() {

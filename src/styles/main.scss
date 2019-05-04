@@ -67,6 +67,10 @@ $link-focus-border: $primary;
   justify-content: space-between;
 }
 
+.space-around {
+  justify-content: space-around;
+}
+
 .is-borderless {
   border: none !important;
 }
