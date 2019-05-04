@@ -66,27 +66,29 @@ export default {
       form: {
         content: '',
         backgroundSelected: 0,
+        longitude: '',
+        latitude: '',
       }
     }
   },
   methods: {
     async publish() {
-      const { content, backgroundSelected } = this.form;
+      const {
+        content, backgroundSelected,
+        longitude, latitude,
+      } = this.form;
+
       const params = {
         content,
         backgroundColor: this.availableColours[backgroundSelected],
+        longitude,
+        latitude,
       };
 
       const { data } = await post('secret/publish', params);
 
       const type = (data) ? 'is-success' : 'is-danger';
 
-      // this.$toast.open({
-      //   duration: 3000,
-      //   message: this.$t('login.error.failed_token'),
-      //   position: 'is-top',
-      //   type,
-      // });
       this.$router.push({ name: 'Discover' });
     },
     changeBgColor() {
@@ -99,10 +101,28 @@ export default {
           form.backgroundSelected = 0;
       else
         form.backgroundSelected++;
+    },
+    showError() {
+      this.$toast.open({
+        duration: 3000,
+        message: this.$t('user.location_permission.denied'),
+        position: 'is-top',
+        type: 'is-danger',
+      });
+    },
+    updateUserLocation(position) {
+      const { latitude, longitude } = position.coords;
+
+      this.form.latitude = latitude;
+      this.form.longitude = longitude;
     }
   },
   created() {
-
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(this.updateUserLocation, this.showError);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
   },
   mounted() {
     setTimeout(() => {
