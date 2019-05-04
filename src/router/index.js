@@ -2,11 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from '@/store';
 
-import Home from '@/views/Home';
+import Home, { Terms, Policies } from '@/views/Home';
 import Secret from '@/views/Secret';
 import Discover from '@/views/Discover';
+import More from '@/views/More';
 import PublishSecret from '@/views/Publish';
-import { Terms, Policies } from '@/views/Home'
 
 Vue.use(Router);
 
@@ -42,6 +42,11 @@ const routes = [
     meta: {
       requiresAuth: true,
     }
+  },
+  {
+    path: '/more',
+    name: 'More',
+    component: More,
   },
   {
     path: '/terms',

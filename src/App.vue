@@ -42,28 +42,23 @@ export default {
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
 
-     // TODO: B Create 401 | 403 response middlare
+     // TODO: B Create 401 | 403 response middlare, BUG: Because whatever response code exists you will get out
      this.$http.interceptors.response.use(undefined, (err) => {
        // console.log(err, err.status,"err");
        if (err) {
-        //  this.$store.dispatch('logout');
+         this.$store.dispatch('logout');
 
-        //  this.$router.push({ name: 'Home' });
+         this.$router.push({ name: 'Home' });
        }
      });
   },
   metaInfo: {
-    // Children can override the title.
     title: 'Ansker',
-    // Result: My Page Title ← My Site
-    // If a child changes the title to "My Other Page Title",
-    // it will become: My Other Page Title ← My Site
     titleTemplate: '%s ~ Ansker',
-    // Define meta tags here.
     meta: [
       {
         name: 'description',
-        content: 'Comparte secretos con tus amigos o en tu ciudad de forma anónima.'
+        content: 'Comparte secretos con tu alrededor de forma anónima.'
       },
       {
         property: 'og:title',
@@ -84,7 +79,7 @@ export default {
       },
       {
         property: 'og:description',
-        content: 'Comparte secretos con tus amigos o en tu ciudad de forma anónima.'
+        content: 'Comparte secretos con tu alrededor de forma anónima.'
       }
     ],
   }

@@ -13,12 +13,12 @@
         class="shareus has-text-white-bis flex width100 has-background-primary">
         <div class="width100 p10 p15-0">
           <h3 class="is-size-4 width100 has-text-weight-bold">
-            Comparte y difúndenos
+            Ayudanos a difundir
           </h3>
           <span class="is-size-5 p15">
-            Comparte en tus redes sociales!
+            Comparte en tus redes sociales
           </span>
-          <div class="flex width100 p-t-10" style="max-width: 450px">
+          <div class="flex width100 space-around p-t-10" style="max-width: 450px">
             <social-share
               quote='Comparte secretos con tu alrededor de forma anónima'
               text="Comparte secretos con tu alrededor de forma anónima en https://ansker.me">

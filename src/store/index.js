@@ -24,6 +24,7 @@ const state = {
     ? JSON.parse(localStorage.user) : {},
   hideShareAdvice: localStorage.hideShareAdvice
   ? JSON.parse(localStorage.hideShareAdvice) : false,
+  currentView: 1,
 };
 
 const actions = {
@@ -40,6 +41,9 @@ const actions = {
     commit('updateUser', user);
 
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },
+  changeView({ commit }, viewNumber) {
+    commit('updateCurrentView', viewNumber);
   },
   hideShareAdvice({ commit }) {
     commit('hideShareAdvice');
@@ -70,6 +74,9 @@ const mutations = {
     localStorage.user = JSON.stringify(user);
     state.user = user;
   },
+  updateCurrentView(state, view) {
+    state.currentView = view;
+  },
   // TODO: Check this to thinking in how to do it
   authError() {},
 };
@@ -78,6 +85,7 @@ const getters = {
   isLogged: state => !!state.token,
   showShareAdvice: state => !state.hideShareAdvice,
   userLocation: state => state.user.location,
+  currentView: state => state.currentView,
 };
 
 // Create Vuex Store and register database through Vuex ORM.

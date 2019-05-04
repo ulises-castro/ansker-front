@@ -2,7 +2,7 @@
   <section>
     <div class="menu">
       <div @click="goMenu(1)" class="icon-link">
-        <router-link :to="{ name: '', params: {} }">
+        <router-link :to="{ name: 'Discover', params: {} }">
           <icon scale="2.2"
             class="m-r-15"
             :class="{'hast-text-grey-lighter' : (activedMenu !== 1) }"
@@ -20,7 +20,9 @@
       </div> -->
 
       <div @click="goMenu(3)" class="icon-link">
-        <router-link :to="{ name: '', params: {} }">
+        <router-link :to="{
+            name: 'More', params: {}
+          }">
           <icon scale="1.8"
             class="m-r-15 has-text-grey-lighter"
             :class="{'hast-text-grey-lighter' : (activedMenu !== 3) }"
@@ -43,7 +45,7 @@ export default {
     goMenu(value) {
       console.log(value);
       this.activedMenu = value;
-      this.$store.dispatch('updateMenu', value);
+      this.$store.dispatch('changeView', value);
     }
   },
   watch: {
