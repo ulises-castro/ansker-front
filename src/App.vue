@@ -58,11 +58,11 @@ export default {
     meta: [
       {
         name: 'description',
-        content: 'Comparte secretos con tu alrededor de forma anónima.'
+        content: 'Comparte lo que piensas con tu alrededor anónimamente.'
       },
       {
         property: 'og:title',
-        content: 'Ansker - Comparte secretos anónimamente'
+        content: 'Ansker - Comparte lo que piensas con tu alrededor anónimamente'
       },
       {
         property: 'og:site_name',
@@ -79,7 +79,7 @@ export default {
       },
       {
         property: 'og:description',
-        content: 'Comparte secretos con tu alrededor de forma anónima.'
+        content: 'Comparte lo que piensas con tu alrededor anónimamente'
       }
     ],
   }

@@ -3,10 +3,15 @@ import Router from 'vue-router';
 import store from '@/store';
 
 import Home, { Terms, Policies } from '@/views/Home';
-import Secret from '@/views/Secret';
 import Discover from '@/views/Discover';
 import More from '@/views/More';
 import PublishSecret from '@/views/Publish';
+
+import Secret from '@/views/Secret';
+
+function loadView(view) {
+  return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}`)
+}
 
 Vue.use(Router);
 
@@ -38,7 +43,7 @@ const routes = [
   {
     path: '/secret/:secretId',
     name: 'Secret',
-    component: Secret,
+    component: loadView('Secret'),
     meta: {
       requiresAuth: true,
     }

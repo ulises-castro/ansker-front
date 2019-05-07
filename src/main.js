@@ -3,6 +3,9 @@ import Axios from 'axios'
 import Buefy from 'buefy';
 import Meta from 'vue-meta';
 
+import VueSocketio from 'vue-socket.io-extended';
+import io from 'socket.io-client';
+
 // Including vue packages
 import { i18n } from './languages';
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -29,6 +32,8 @@ if (token) {
 }
 
 Vue.component('icon', Icon);
+
+Vue.use(VueSocketio, io('http://socketserver.com:1923'));
 
 Vue.use(Buefy, {
   defaultIconPack: 'fas',

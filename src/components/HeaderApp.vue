@@ -1,5 +1,14 @@
 <template lang="html">
   <header class="header p-t-5">
+    <div
+      @click="$router.go(-1)"
+      class="arrow-container">
+      <b-icon
+        icon="arrow-left"
+        type="is-primary"
+        pack="fas">
+      </b-icon>
+    </div>
     <span class="logo">Ansker:)</span>
     <div class="notifications-container">
       <b-dropdown
@@ -8,7 +17,6 @@
       <badge :number="0"></badge>
       <div slot="trigger" class="notifications">
       <b-icon
-        class="has-text-green"
         type="is-primary"
         icon="bell" pack="far" />
       </div>
@@ -52,6 +60,12 @@ export default {
   position: absolute;
   right: 10px;
   top: 13px;
+}
+
+.arrow-container {
+  position: absolute;
+  top: 13px;
+  left: 10px;
 }
 
 </style>
