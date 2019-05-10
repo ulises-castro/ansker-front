@@ -3,10 +3,15 @@
     <div class="menu">
       <div @click="goMenu(1)" class="icon-link">
         <router-link :to="{ name: 'Discover', params: {} }">
-          <icon scale="2.2"
+          <!-- <icon scale="2.2"
             class="m-r-15"
             :class="{'hast-text-grey-lighter' : (activedMenu !== 1) }"
-            name="theater-masks"/>
+            name="theater-masks"/> -->
+            <b-icon
+              pack="fas"
+              size="is-medium"
+              icon="theater-masks"
+            />
         </router-link>
       </div>
 
@@ -23,10 +28,15 @@
         <router-link :to="{
             name: 'More', params: {}
           }">
-          <icon scale="1.8"
+          <!-- <icon scale="1.8"
             class="m-r-15 has-text-grey-lighter"
             :class="{'hast-text-grey-lighter' : (activedMenu !== 3) }"
-            name="ellipsis-h"/>
+            name="ellipsis-h"/> -->
+            <b-icon
+              pack="fas"
+              size="is-medium"
+              icon="ellipsis-h">
+            </b-icon>
         </router-link>
       </div>
     </div>

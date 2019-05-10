@@ -5,7 +5,7 @@
         class=""
         @click="showPublishSecret"
         :class="{'publish-button-float' : true}">
-        <icon scale="1.5" name="feather-alt" />
+        <b-icon size="is-medium" icon="feather-alt" pack="fas" />
       </aside>
 
       <div

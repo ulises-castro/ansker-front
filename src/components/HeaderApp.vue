@@ -1,6 +1,7 @@
 <template lang="html">
   <header class="header p-t-5">
     <div
+      v-show="showBackButton"
       @click="$router.go(-1)"
       class="arrow-container">
       <b-icon
@@ -8,6 +9,7 @@
         type="is-primary"
         pack="fas">
       </b-icon>
+      
     </div>
     <span class="logo">Ansker:)</span>
     <div class="notifications-container">
@@ -37,6 +39,12 @@
 <script>
 export default {
   name: 'HeaderApp',
+  props: {
+    showBackButton: {
+      type: Boolean,
+      default: false,
+    }
+  }
 }
 </script>
 

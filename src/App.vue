@@ -120,4 +120,53 @@ html, body, #app {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
+// Creating personally spaces
+$spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100);
+
+$sides: ('', '-top', '-bottom', '-left', '-right'); // Leave this variable alone
+
+@each $space in $spaceamounts {
+  @each $side in $sides {
+    .m#{str-slice($side, 0, 2)}-#{$space} {
+      margin#{$side}: #{$space}px !important;
+    }
+
+    .p#{str-slice($side, 0, 2)}-#{$space} {
+      padding#{$side}: #{$space}px !important;
+    }
+  }
+
+  // Only left and right values
+  .m0-#{$space} {
+    margin: 0 #{$space}px !important;
+  }
+
+  .p0-#{$space} {
+    padding: 0 #{$space}px !important;
+  }
+
+  // Only top and bottom values
+  .m#{$space}-0 {
+    margin: #{$space}px 0 !important;
+  }
+
+  .p#{$space}-0 {
+    padding: #{$space}px 0 !important;
+  }
+
+  .p0-#{$space} {
+    padding: 0 #{$space}px !important;
+  }
+
+  // General paddings
+  .m#{$space} {
+    margin: #{$space}px !important;
+  }
+
+  .p#{$space} {
+    padding: #{$space}px !important;
+  }
+}
+
 </style>

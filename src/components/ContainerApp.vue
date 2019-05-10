@@ -4,7 +4,7 @@
       :is-full-page="isFullPage"
       :active.sync="isLoading">
     </b-loading>
-    <HeaderApp></HeaderApp>
+    <HeaderApp :showBackButton="showBackButton"></HeaderApp>
     <slot></slot>
     <Menu></Menu>
   </section>
@@ -25,6 +25,10 @@ export default {
       default: false,
     },
     isFullPage: {
+      type: Boolean,
+      default: false,
+    },
+    showBackButton: {
       type: Boolean,
       default: false,
     }

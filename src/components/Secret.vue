@@ -14,10 +14,16 @@
         @click="goSecret(secret.id)"
         class="icon-link">
         <router-link :to="{ name: '', params: {} }">
-          <icon scale="1.6"
+          <!-- <icon scale="1.6"
             class="m-r-10"
             name="comment"
-            :style="{ color: 'white' }"/>
+            :style="{ color: 'white' }"/> -->
+          <b-icon
+            icon="comment"
+            class="m-r-10"
+            :type="{ color : 'white' }"
+          />
+          </b-icon>
         </router-link>
         <span class="indicator"> {{ secret.comments }} </span>
       </div>
@@ -28,11 +34,17 @@
           :url="`https://ansker.me`">
           <router-link
             :to="{ name: '', params: {} }">
-            <icon scale="1.6"
+            <!-- <icon scale="1.6"
                class="m-r-10"
                name="share"
                :style="{ color: 'white' }"
-             />
+             /> -->
+            <b-icon
+              icon="share"
+              class="m-r-10"
+              :class="{ color : 'white' }"
+              name="heart"
+            />
            </router-link>
         </social-share>
         <!-- <span class="indicator"> {{ secret.shares }} </span> -->
@@ -41,8 +53,14 @@
         @click="like"
         class="icon-link" style="color: red !important">
         <router-link :to="{ name: '', params: {} }">
-          <icon scale="1.6"
+          <!-- <icon scale="1.6"
             color="has-text-color-red"
+            class="m-r-10"
+            :class="[{'liked' : secret.userLiked}]"
+            name="heart"
+          /> -->
+          <b-icon
+            icon="heart"
             class="m-r-10"
             :class="[{'liked' : secret.userLiked}]"
             name="heart"

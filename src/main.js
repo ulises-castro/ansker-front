@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Axios from 'axios'
+import Axios from 'axios';
 import Buefy from 'buefy';
 import Meta from 'vue-meta';
 
@@ -8,13 +8,11 @@ import io from 'socket.io-client';
 
 // Including vue packages
 import { i18n } from './languages';
-import "@fortawesome/fontawesome-free/css/all.css";
-import "@fortawesome/fontawesome-free/css/fontawesome.css";
+// import "@fortawesome/fontawesome-free/css/all.css";
+// import "@fortawesome/fontawesome-free/css/fontawesome.css";
 
 // FontAwesome
 // TODO: Verify if you need this packages cause you already imported fontawesome
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon'
 
 import App from './App.vue';
 
@@ -31,7 +29,6 @@ if (token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
-Vue.component('icon', Icon);
 
 Vue.use(VueSocketio, io('http://socketserver.com:1923'));
 

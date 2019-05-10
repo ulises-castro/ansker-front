@@ -17,7 +17,11 @@
             p-10
             is-pointer
           ">
-          <icon scale="1.8" class="m-r-15" name="brands/facebook"/>
+          <b-icon
+            class="m-r-15"
+            icon="facebook-f"
+            style="font-size: 20px"
+            pack="fab"/>
           <span
             v-t="{
                 path: 'login.social_button',
