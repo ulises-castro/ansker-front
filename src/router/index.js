@@ -82,7 +82,8 @@ router.beforeEach((to, from, next) => {
     next({ name: 'Home' });
   } else {
     if (store.getters.isLogged) {
-      return next({ name: 'Discover' });
+      next({ name: 'Discover' });
+      return;
     }
 
     next();

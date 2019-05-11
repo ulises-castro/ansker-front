@@ -4,9 +4,9 @@ const productionGzipExtensions = ['js', 'css']
 
 module.exports = {
   // Check this is insecure
-  // devServer: {
-  //   disableHostCheck: true
-  // }
+  devServer: {
+    port: 1297, // CHANGE YOUR PORT HERE!
+  }
   // mode: 'production'
   // devServer: {
   //   compress: true,
