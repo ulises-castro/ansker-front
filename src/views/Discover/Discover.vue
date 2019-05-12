@@ -20,8 +20,8 @@
           </span>
           <div class="flex width100 space-around p-t-10" style="max-width: 450px">
             <social-share
-              quote='Comparte secretos con tu alrededor de forma anónima'
-              text="Comparte secretos con tu alrededor de forma anónima en https://ansker.me">
+              quote='Comparte lo que piensas con tu alrededor de manera anónima'
+              text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me">
               <b-button
                 type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
                 Compartir
@@ -46,9 +46,10 @@
   </container-app>
 </template>
 <script>
+import axios from 'axios';
 import Menu from '@/components/Menu';
 import Secret from '@/components/Secret';
-import { get } from '@/api';
+import { get, post } from '@/api';
 
 export default {
   name: 'Discover',
@@ -66,14 +67,25 @@ export default {
     Menu,
     Secret,
   },
+  sockets: {
+    connect() {
+      console.log('socket connected')
+    },
+    customEmit(val) {
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+    }
+  },
   methods: {
-    async fetchSecrets(latitude, longitude) {
+    async fetchSecrets(latitude, longitude, userLocation) {
       const params = {
         latitude,
-        longitude
+        longitude,
+        ...userLocation
       };
 
-      const { data } = await get('secret/allByCity', { params });
+      console.log(params, userLocation);
+
+      const { data } = await post('secret/allByCity', params);
 
       this.isLoading = false;
       this.secrets = data.secrets;
@@ -84,6 +96,23 @@ export default {
     closeShareAdvice() {
       this.$store.dispatch('hideShareAdvice');
       this.showShareAdvice = false;
+    },
+    async fetchUserLocation(longitude, latitude) {
+      // TODO: Create a factoryFunction to reutilize code
+      const url = `https://utility.arcgis.com/usrsvcs/appservices/ALYmls905v3B6fIJ/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&featureTypes=&location=${longitude},${latitude}`;
+
+      const tokenSaved = axios.defaults.headers.common['Authorization'];
+
+      delete axios.defaults.headers.common['Authorization'];
+
+      const { data } = await axios.post(
+        url,
+        { longitude, latitude }
+      );
+
+      axios.defaults.headers.common['Authorization'] = `${tokenSaved}`;
+
+      this.fetchSecrets(latitude, longitude, data.address)
     },
     getUserPosition(position) {
       const { latitude, longitude } = position.coords;
@@ -96,7 +125,8 @@ export default {
 
       this.$store.dispatch('userLocation', location);
 
-      this.fetchSecrets(latitude, longitude);
+      const userLocation =
+      this.fetchUserLocation(longitude, latitude);
     },
     showError() {
       this.$toast.open({
@@ -119,7 +149,7 @@ export default {
   },
   metaInfo: {
     // Children can override the title.
-    title: 'Secretos en tu ciudad',
+    title: 'Publicaciones cerca de ti',
   }
 }
 </script>

@@ -46,6 +46,7 @@
 </template>
 <script>
 import { post } from '@/api/';
+import axios from 'axios';
 
 export default {
   name: 'PublishSecret',
@@ -68,6 +69,7 @@ export default {
         backgroundSelected: 0,
         longitude: '',
         latitude: '',
+        location: {},
       }
     }
   },
@@ -76,6 +78,7 @@ export default {
       const {
         content, backgroundSelected,
         longitude, latitude,
+        location,
       } = this.form;
 
       const params = {
@@ -83,6 +86,7 @@ export default {
         backgroundColor: this.availableColours[backgroundSelected],
         longitude,
         latitude,
+        ...location,
       };
 
       const { data } = await post('secret/publish', params);
@@ -110,11 +114,29 @@ export default {
         type: 'is-danger',
       });
     },
-    updateUserLocation(position) {
+    async getLocationUser() {
+
+    },
+    async updateUserLocation(position) {
       const { latitude, longitude } = position.coords;
 
       this.form.latitude = latitude;
       this.form.longitude = longitude;
+
+      const url = `https://utility.arcgis.com/usrsvcs/appservices/ALYmls905v3B6fIJ/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&featureTypes=&location=${longitude},${latitude}`;
+
+      const tokenSaved = axios.defaults.headers.common['Authorization'];
+
+      delete axios.defaults.headers.common['Authorization'];
+
+      const { data } = await axios.post(
+        url,
+        { longitude, latitude }
+      );
+
+      axios.defaults.headers.common['Authorization'] = `${tokenSaved}`;
+
+      this.form.location = data.address;
     }
   },
   created() {

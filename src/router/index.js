@@ -7,8 +7,6 @@ import Discover from '@/views/Discover';
 import More from '@/views/More';
 import PublishSecret from '@/views/Publish';
 
-import Secret from '@/views/Secret';
-
 function loadView(view) {
   return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}`)
 }
@@ -36,9 +34,6 @@ const routes = [
     meta: {
       requiresAuth: true,
     }
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
   },
   {
     path: '/secret/:secretId',

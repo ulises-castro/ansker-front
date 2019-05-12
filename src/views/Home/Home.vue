@@ -70,11 +70,6 @@ export default {
       }
     }
   },
-  created() {
-    console.log(process.env.VUE_APP_API, 'API!');
-
-    axios.get('https://utility.arcgis.com/usrsvcs/appservices/ALYmls905v3B6fIJ/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&featureTypes=&location=-103.23432423,34.34344').then(res => console.log(res)).catch(err => console.log(err));
-  },
   methods: {
 
     checkLoginState() {

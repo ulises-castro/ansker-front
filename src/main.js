@@ -30,7 +30,7 @@ if (token) {
 }
 
 
-Vue.use(VueSocketio, io('http://socketserver.com:1923'));
+Vue.use(VueSocketio, io('http://localhost:3000'));
 
 Vue.use(Buefy, {
   defaultIconPack: 'fas',

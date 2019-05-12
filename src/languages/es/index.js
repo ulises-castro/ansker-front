@@ -1,4 +1,13 @@
 const es = {
+  general: {
+    error: 'Ha ocurrido un error, por favor inténtalo más tarde.',
+    Unauthorized: 'Permisos insuficientes.',
+  },
+  secret: {
+    publish: {
+      error: 'Ocurrió un error desconocido',
+    }
+  },
   login: {
     error: {
       failed_token: 'Ha ocurrido un error, por favor inténtalo más tarde.',
