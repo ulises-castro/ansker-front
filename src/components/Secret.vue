@@ -29,7 +29,7 @@
       </div>
       <div class="icon-link">
         <social-share
-          quote='Comparte secretos con tu alrededor de forma anónima'
+          quote='Comparte lo que piensas con tu alrededor de manera anónima'
           :text='`"${secret.content}" - secreto publicado en `'
           :url="`https://ansker.me`">
           <router-link

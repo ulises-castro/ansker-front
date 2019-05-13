@@ -46,7 +46,7 @@
         </a>
       </aside>
 
-      <aside v-if="aboutAnskerMe" class="">
+      <aside v-show="aboutAnskerMe" class="">
         <HomeAboutAnsker/>
       </aside>
     </section>
@@ -71,7 +71,6 @@ export default {
     }
   },
   methods: {
-
     checkLoginState() {
       const self = this;
 
@@ -138,10 +137,12 @@ export default {
 
     },
     goToAboutAnsker() {
-      // this.aboutAnskerMe = true;
+      this.aboutAnskerMe = !this.aboutAnskerMe;
     },
   }
 }
 </script>
-<style lang="scss" scoped
+<style lang="scss" scoped>
+
+
 </style>

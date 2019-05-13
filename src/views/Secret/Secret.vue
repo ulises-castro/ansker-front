@@ -1,5 +1,7 @@
 <template lang="html">
-  <container-app :isLoading="isLoading">
+  <container-app
+    :isLoading="isLoading"
+    :showBackButton='true'>
     <section class="flex flex-wrap width100 p-b-100">
       <Secret :secret="secret" />
       <section class="flex flex-wrap width100">
@@ -11,7 +13,11 @@
           :comment="comment"
         />
       </section>
+      <div v-show="showPublishComment">
+        <textarea>Mirame</textarea>
+      </div>
       <aside
+        @click="showPublishComment = true"
         class="flex flex-middle flex-center p-15 is-text-center width100 write-container">
         <span class="flex flex-middle has-text-primary has-text-weight-bold">
           Escribir un comentario
@@ -35,6 +41,7 @@ export default {
     return {
       isLoading: true,
       secret: {},
+      showPublishComment: false,
       comments: [
         {
           publishAt: new Date(),

@@ -2,7 +2,7 @@
   <header class="header p-t-5">
     <div
       v-show="showBackButton"
-      @click="$router.go(-1)"
+      @click="$router.push({ name: 'Discover' })"
       class="arrow-container">
       <b-icon
         icon="arrow-left"
@@ -11,12 +11,16 @@
       </b-icon>
       
     </div>
-    <span class="logo">Ansker:)</span>
+    <span
+      @click="$router.push({ name: 'Discover' })"
+      class="logo">
+      Ansker:)
+    </span>
     <div class="notifications-container">
       <b-dropdown
         position="is-bottom-left"
         aria-role="menu">
-      <badge :number="0"></badge>
+      <!-- <badge :number="0"></badge> -->
       <div slot="trigger" class="notifications">
       <b-icon
         type="is-primary"
@@ -29,7 +33,7 @@
       </b-dropdown-item>
       <hr class="dropdown-divider">
       <b-dropdown-item has-link aria-role="menuitem">
-        Sin notificaciones nuevas
+        ¡Seguimos trabajando en el sistema de notificaciones!
       </b-dropdown-item>
     </b-dropdown>
     </div>

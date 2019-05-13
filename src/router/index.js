@@ -4,7 +4,6 @@ import store from '@/store';
 
 import Home, { Terms, Policies } from '@/views/Home';
 import Discover from '@/views/Discover';
-import More from '@/views/More';
 import PublishSecret from '@/views/Publish';
 
 function loadView(view) {
@@ -46,7 +45,10 @@ const routes = [
   {
     path: '/more',
     name: 'More',
-    component: More,
+    component: loadView('More'),
+    meta: {
+      requiresAuth: true,
+    }
   },
   {
     path: '/terms',
@@ -59,7 +61,6 @@ const routes = [
     component: Policies,
   }
 ];
-
 
 const router = new Router({
   mode: 'history',

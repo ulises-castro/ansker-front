@@ -6,6 +6,8 @@ module.exports = {
   // Check this is insecure
   devServer: {
     port: 1297, // CHANGE YOUR PORT HERE!
+    // https: true,
+    disableHostCheck: true,
   }
   // mode: 'production'
   // devServer: {

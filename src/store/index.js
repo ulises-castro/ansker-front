@@ -3,11 +3,8 @@ import Vuex from 'vuex';
 import VuexORM from '@vuex-orm/core';
 // import User from './User'
 import UserData from './models/UserData';
-
 import axios from 'axios';
-
 // import secrets from './secrets'
-
 Vue.use(Vuex);
 
 // Create new instance of Database.
@@ -24,6 +21,8 @@ const state = {
     ? JSON.parse(localStorage.user) : {},
   hideShareAdvice: localStorage.hideShareAdvice
   ? JSON.parse(localStorage.hideShareAdvice) : false,
+  authorizedGeolocation: localStorage.authorizedGeolocation
+    ? JSON.parse(localStorage.authorizedGeolocation) : false,
   currentView: 1,
 };
 
@@ -56,12 +55,20 @@ const actions = {
 
     commit('updateUser', user);
   },
+  authorizedGeolocation({ commit }, responseBoolean) {
+    commit('setAuthorizedGeolocation', responseBoolean);
+
+    localStorage.authorizedGeolocation = responseBoolean;
+  }
 };
 
 const mutations = {
   authSuccess(state, token) {
     localStorage.token = token;
     state.token = token;
+  },
+  setAuthorizedGeolocation(state, value) {
+    state.authorizedGeolocation = value;
   },
   hideShareAdvice(state) {
     state.hideShareAdvice = true;
@@ -86,6 +93,7 @@ const getters = {
   showShareAdvice: state => !state.hideShareAdvice,
   userLocation: state => state.user.location,
   currentView: state => state.currentView,
+  authorizedGeolocation: state => state.authorizedGeolocation,
 };
 
 // Create Vuex Store and register database through Vuex ORM.

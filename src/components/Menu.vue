@@ -2,7 +2,9 @@
   <section>
     <div class="menu">
       <div @click="goMenu(1)" class="icon-link">
-        <router-link :to="{ name: 'Discover', params: {} }">
+        <router-link
+          :to="{ name: 'Discover', params: {} }
+        ">
           <!-- <icon scale="2.2"
             class="m-r-15"
             :class="{'hast-text-grey-lighter' : (activedMenu !== 1) }"

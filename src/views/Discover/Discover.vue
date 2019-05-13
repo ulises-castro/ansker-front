@@ -2,6 +2,22 @@
   <container-app :isLoading="isLoading">
     <section :is-full-page="isLoading" ref="section" class="container is-fluid height100">
       <aside
+        v-if="!authorizedGeolocation" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
+        <p class="p-10">
+          Para poder mostrarte las publicaciones cercanas a ti, necesitamos acceder a tu ubicación.
+        </p>
+          <div class="flex flex-center width100">
+            <div class="flex width100 space-around p-t-10" style="max-width: 450px">
+              <b-button
+                @click="askForLocationPermission"
+                type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
+                Permitir acceso a ubicación
+              </b-button>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <aside
         class=""
         @click="showPublishSecret"
         :class="{'publish-button-float' : true}">
@@ -18,20 +34,23 @@
           <span class="is-size-5 p15">
             Comparte en tus redes sociales
           </span>
-          <div class="flex width100 space-around p-t-10" style="max-width: 450px">
-            <social-share
-              quote='Comparte lo que piensas con tu alrededor de manera anónima'
-              text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me">
+
+          <div class="flex flex-center width100">
+            <div class="flex width100 space-around p-t-10" style="max-width: 450px">
+              <social-share
+                quote='Comparte lo que piensas con tu alrededor de manera anónima'
+                text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me">
+                <b-button
+                  type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
+                  Compartir
+                </b-button>
+              </social-share>
               <b-button
+                @click="closeShareAdvice"
                 type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
-                Compartir
+                Ocultar
               </b-button>
-            </social-share>
-            <b-button
-              @click="closeShareAdvice"
-              type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
-              Ocultar
-            </b-button>
+            </div>
           </div>
         </div>
       </div>
@@ -60,7 +79,7 @@ export default {
       showPublishSecretModal: false,
       publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,
-      requestLocationPermission: this.$store.getters.location
+      authorizedGeolocation: this.$store.getters.authorizedGeolocation,
     }
   },
   components: {
@@ -72,7 +91,7 @@ export default {
       console.log('socket connected')
     },
     customEmit(val) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)')
+      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)', val);
     }
   },
   methods: {
@@ -121,7 +140,11 @@ export default {
         latitude,
         longitude,
       };
+
+      this.authorizedGeolocation = true;
       console.log(latitude, longitude);
+
+      this.$store.dispatch('authorizedGeolocation', true);
 
       this.$store.dispatch('userLocation', location);
 
@@ -130,18 +153,28 @@ export default {
     },
     showError() {
       this.$toast.open({
-        duration: 3000,
+        duration: 5000,
         message: this.$t('user.location_permission.denied'),
         position: 'is-top',
         type: 'is-danger',
       });
-    }
- },
-  created() {
-    if (navigator.geolocation) {
+
+      this.$store.dispatch('authorizedGeolocation', false);
+    },
+    askForLocationPermission() {
+      if (navigator.geolocation) {
+        this.getUserCoords();
+      } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+      }
+    },
+    getUserCoords() {
       navigator.geolocation.getCurrentPosition(this.getUserPosition, this.showError);
-    } else { 
-      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+   },
+  created() {
+    if (this.authorizedGeolocation) {
+      this.getUserCoords();
     }
   },
   mounted() {
