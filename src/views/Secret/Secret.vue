@@ -20,7 +20,7 @@
         @click="showPublishComment = true"
         class="flex flex-middle flex-center p-15 is-text-center width100 write-container">
         <span class="flex flex-middle has-text-primary has-text-weight-bold">
-          Escribir un comentario
+          Escribir comentario (Proximamente)
           <b-icon
             class="p-l-10"
             icon="comment">
@@ -43,21 +43,21 @@ export default {
       secret: {},
       showPublishComment: false,
       comments: [
-        {
-          publishAt: new Date(),
-          content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
-          avatar: 1,
-        },
-        {
-          publishAt: new Date(),
-          content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
-          avatar: 2,
-        },
-        {
-          publishAt: new Date(),
-          content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
-          avatar: 2,
-        }
+        // {
+        //   publishAt: new Date(),
+        //   content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
+        //   avatar: 1,
+        // },
+        // {
+        //   publishAt: new Date(),
+        //   content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
+        //   avatar: 2,
+        // },
+        // {
+        //   publishAt: new Date(),
+        //   content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
+        //   avatar: 2,
+        // }
       ],
     }
   },

@@ -17,6 +17,27 @@
           </div>
         </div>
       </aside>
+
+      <aside
+        v-if="!secrets.length" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
+        <p class="p-10">
+          Por el momento no hay publicaciones cerca de ti.
+        </p>
+        <p class="p-b-15">
+          ¡Se el primero en publicar!
+        </p>
+          <div class="flex flex-center width100">
+            <div class="flex width100 space-around p-t-10" style="max-width: 450px">
+              <b-button
+                @click="showPublishSecret"
+                type="is-light has-text-primary is-uppercase has-text-weight-bold is-size-6" rounded>
+                Publicar
+              </b-button>
+            </div>
+          </div>
+        </div>
+      </aside>
+
       <aside
         class=""
         @click="showPublishSecret"

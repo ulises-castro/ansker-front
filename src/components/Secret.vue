@@ -30,7 +30,7 @@
       <div class="icon-link">
         <social-share
           quote='Comparte lo que piensas con tu alrededor de manera anónima'
-          :text='`"${secret.content}" - secreto publicado en `'
+          :text='`"${secret.content}" - publicación publicada de manera anónima en `'
           :url="`https://ansker.me`">
           <router-link
             :to="{ name: '', params: {} }">
