@@ -43,7 +43,8 @@ export default {
 <style lang="scss">
 @import '@/styles/main.scss';
   .parent-container {
-    height: 100%;
+    min-height: 100%;
+    height: auto;
     width: 100%;
     background: #F7F7F7;
   }

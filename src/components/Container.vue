@@ -22,7 +22,7 @@ export default {
 @import '@/styles/main.scss';
 
   .parent-container {
-    height: 100%;
+    min-height: 100%;
     width: 100%;
     background: $primary;
     // background: #01b9ff;

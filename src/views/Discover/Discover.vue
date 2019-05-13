@@ -19,7 +19,7 @@
       </aside>
 
       <aside
-        v-if="!secrets.length" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
+        v-if="!secrets.length && !isLoading" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
         <p class="p-10">
           Por el momento no hay publicaciones cerca de ti.
         </p>
