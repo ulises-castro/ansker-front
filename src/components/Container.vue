@@ -2,7 +2,7 @@
   <div class="parent-container p-15">
     <HeaderComponent></HeaderComponent>
       <slot></slot>
-    <FooterComponent></FooterComponent>
+    <FooterComponent v-if="showFooter"></FooterComponent>
   </div>
 </template>
 
@@ -15,6 +15,12 @@ export default {
   components: {
     HeaderComponent,
     FooterComponent,
+  },
+  props: {
+    showFooter: {
+      type: Boolean,
+      default: true,
+    }
   }
 }
 </script>

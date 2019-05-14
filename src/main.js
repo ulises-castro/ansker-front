@@ -8,11 +8,6 @@ import io from 'socket.io-client';
 
 // Including vue packages
 import { i18n } from './languages';
-// import "@fortawesome/fontawesome-free/css/all.css";
-// import "@fortawesome/fontawesome-free/css/fontawesome.css";
-
-// FontAwesome
-// TODO: Verify if you need this packages cause you already imported fontawesome
 
 import App from './App.vue';
 
@@ -29,10 +24,9 @@ if (token) {
   Vue.prototype.$http.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 }
 
+Vue.use(VueSocketio, io(process.env.VUE_APP_SOCKET));
 
-Vue.use(VueSocketio, io('http://localhost:3000'));
-
-Vue.use(Buefy, {
+Vue.use(Buefy, {  
   defaultIconPack: 'fas',
   // defaultIconComponent: "font-awesome-icon",
 });

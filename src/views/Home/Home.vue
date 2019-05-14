@@ -1,5 +1,5 @@
 <template lang="html">
-  <container>
+  <container :showFooter="showFooter">
     <section class="container is-fluid p-t-20">
       <aside class="is-size-4 has-text-white p-b-20">
         <h3 v-t="'home.welcome_message'"></h3>
@@ -31,6 +31,7 @@
           </span>
           <spinner :isLoading="login.isLoading" />
         </aside>
+
       </aside>
 
       <aside
@@ -49,6 +50,7 @@
       <aside v-show="aboutAnskerMe" class="">
         <HomeAboutAnsker/>
       </aside>
+
     </section>
   </container>
 </template>
@@ -67,7 +69,8 @@ export default {
       aboutAnskerMe: false,
       login: {
         isLoading: false,
-      }
+      },
+      showFooter: true,
     }
   },
   methods: {
@@ -138,6 +141,7 @@ export default {
     },
     goToAboutAnsker() {
       this.aboutAnskerMe = !this.aboutAnskerMe;
+      this.showFooter = !this.showFooter;
     },
   }
 }
