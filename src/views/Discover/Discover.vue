@@ -61,7 +61,8 @@
               <social-share
                 quote='Comparte lo que piensas con tu alrededor de manera anónima'
                 text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me">
-                <b-button
+                url="https://www.ansker.me"
+		<b-button
                   type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
                   Compartir
                 </b-button>
