@@ -60,9 +60,9 @@
             <div class="flex width100 space-around p-t-10" style="max-width: 450px">
               <social-share
                 quote='Comparte lo que piensas con tu alrededor de manera anónima'
-                text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me">
-                url="https://www.ansker.me"
-		<b-button
+                text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me"
+                url="https://www.ansker.me">
+		            <b-button
                   type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
                   Compartir
                 </b-button>

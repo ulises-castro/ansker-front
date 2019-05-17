@@ -151,10 +151,6 @@ export default {
       this.$refs.publishArea.focus();
       this.$refs.publishArea.click();
     }, 1000);
-
-     // document.getElementById("textarea").focus();
-
-    console.log(this.$refs, "refs");
   }
 }
 </script>
