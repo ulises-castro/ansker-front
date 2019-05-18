@@ -158,6 +158,14 @@ a {
   color: $primary;
   font-weight: bold;
 }
+
+i {
+  &.icon-fb {
+    width: 10px;
+    counter-reset: white;
+    background: url('./assets/icons/facebook.svg');
+  }
+}
 // Creating personally spaces
 $spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100);
 

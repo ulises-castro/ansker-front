@@ -2,7 +2,7 @@
   <a
     class="button is-transparent is-borderless p0-20"
     :class="[{ 'is-loading' : isLoading }, customClass]"
-    style="background-color: #4267b2">
+    style="background-color: transparent">
   </a>
 </template>
 

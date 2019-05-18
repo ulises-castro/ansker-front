@@ -5,19 +5,7 @@
         <h3 v-t="'home.welcome_message'" class="is-size-6 has-text-weight-bold p0-10"></h3>
       </aside>
 
-
       <aside class="button-container-home columns is-multiline">
-        <!-- <div class="column is-full p-0 p-t-5 p-r-10 p-l-10">
-          <van-button
-            @click="showJoinUs = true"
-            round
-            type="main-button is-color-primary is-size-5 has-text-weight-bold"
-            size="large"
-            :loading="login.isLoading"
-            loading-text="Iniciando sesión...">
-            Iniciar sesión
-          </van-button>
-        </div> -->
         <div class="column is-full p-0 p-r-10 p-l-10">
           <van-button
             @click="showJoinUs = true"
@@ -74,34 +62,32 @@
       </div>
 
       <van-popup
-        class="social-container"
+        class="social-container flex flex-center flex-wrap p-t-15"
         v-model="showJoinUs"
         :overlay="true">
-        <h3 class="has-text-weight-bold p10 is-color-primary">
-        </h3>
-        <aside class="
-          columns
-          is-multiline
-          m-b-10">
+        <!-- <small class="has-text-weight-bold p10 is-color-darkens">
+          Nunca publicaremos algo sin tu permiso
+        </small> -->
           <aside
             @click="checkLoginState"
             class="
-              column
               has-bg-google
               has-text-white
               flex
-              flex-center
               flex-middle
               p-10
               is-pointer
               m-b-5
               border-5
             ">
-            <b-icon
-              class="m-r-15"
-              icon="facebook-f"
-              style="font-size: 20px"
-              pack="fab"/>
+            <div
+              v-if="!login.isLoading.google"
+              class="p0-10 p-r-15">
+              <i class="fab fa-google is-size-5 p-t-5"></i>
+            </div>
+            <spinner 
+              v-else
+              :isLoading="true" />
             <span
               v-t="{
                   path: 'login.social_button',
@@ -109,37 +95,37 @@
                 }"
               class="is-size-5">
             </span>
-            <spinner :isLoading="login.isLoading" />
           </aside>
           <aside
             @click="checkLoginState"
             class="
-              column
               has-bg-facebook
               has-text-white
               flex
-              flex-center
               flex-middle
               p-10
               is-pointer
               border-5
             ">
-            <b-icon
-              class="m-r-15"
-              icon="facebook-f"
-              style="font-size: 20px"
-              pack="fab"/>
+            <div
+              v-if="!login.isLoading.facebook"
+              class="p0-10 p-r-15">
+              <i class="fab fa-facebook-f is-size-4 p-t-5"></i>
+            </div>
+            <spinner 
+              v-else
+              :isLoading="true" />
             <span
+              v-if="!login.isLoading.facebook"
               v-t="{
                   path: 'login.social_button',
                   args: { name: 'Facebook' }
                 }"
               class="is-size-5">
             </span>
-            <spinner :isLoading="login.isLoading" />
           </aside>
           <aside
-            class="p-t-10" style="line-height: initial">
+            class="p10" style="line-height: initial">
             <small
               class="m-p-10"
               >
@@ -149,7 +135,6 @@
               <a>Políticas de privacidad</a>
             </small>
           </aside>
-        </aside>
       </van-popup>
     </section>
   </container>
