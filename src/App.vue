@@ -1,10 +1,10 @@
 <template>
   <div id="app">
-    <b-loading
+    <!-- <b-loading
       :is-full-page="true"
       :active.sync="isLoading"
       :can-cancel="false">
-    </b-loading>
+    </b-loading> -->
     <router-view/>
   </div>
 </template>
@@ -103,7 +103,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '@/styles/main.scss';
+@import '@/styles/variables.scss';
 
 html, body, #app {
   height: 100%;
@@ -130,7 +130,7 @@ html, body, #app {
 }
 
 #nav a {
-  font-weight: bold;
+font-weight: bold;
   color: #2c3e50;
 }
 
@@ -138,6 +138,26 @@ html, body, #app {
   color: #42b983;
 }
 
+a.has-text-primary:hover {
+  color: $primary !important;
+}
+
+.is-color-primary {
+  color: $primary !important;
+}
+
+.is-cursor-pointer {
+  cursor: pointer;
+}
+
+.is-underline {
+  text-decoration: underline;
+}
+
+a {
+  color: $primary;
+  font-weight: bold;
+}
 // Creating personally spaces
 $spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100);
 

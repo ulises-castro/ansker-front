@@ -1,74 +1,64 @@
 <template lang="html">
   <div class="secret"
+    style="background-image: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg')"
     :style="{'background-color': secret.backgroundColor}">
-    <!-- <div class="secret-header">
-      {{ secret.date }}
-    </div> -->
     <div
       class="secret-body"
+        style="background-image: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg')"
       :style="{'background-color': secret.backgroundColor}">
-      {{ secret.content }}
+      <span>
+        {{ secret.content }}
+      </span>
     </div>
     <div class="secret-actions">
       <div
         @click="goSecret(secret.id)"
-        class="icon-link">
+        class="icon-link has-background-white">
         <router-link :to="{ name: '', params: {} }">
-          <!-- <icon scale="1.6"
-            class="m-r-10"
-            name="comment"
-            :style="{ color: 'white' }"/> -->
-          <b-icon
-            icon="comment"
-            class="m-r-10"
-            :type="{ color : 'white' }"
-          />
-          </b-icon>
+          <van-icon name="clock-o"/>
         </router-link>
-        <span class="indicator"> {{ secret.comments }} </span>
+        <span class="indicator p-l-5 has-text-weight-bold">
+          1 hr
+        </span>
       </div>
-      <div class="icon-link">
-        <social-share
-          quote='Comparte lo que piensas con tu alrededor de manera anónima'
-          :text='`"${secret.content}" - publicación publicada de manera anónima en `'
-          :url="`https://ansker.me`">
-          <router-link
-            :to="{ name: '', params: {} }">
-            <!-- <icon scale="1.6"
-               class="m-r-10"
-               name="share"
-               :style="{ color: 'white' }"
-             /> -->
-            <b-icon
-              icon="share"
-              class="m-r-10"
-              :class="{ color : 'white' }"
-              name="heart"
-            />
-           </router-link>
-        </social-share>
-        <!-- <span class="indicator"> {{ secret.shares }} </span> -->
+      <div
+        @click="showOptions = true"
+        class="icon-link">
+        <van-icon name="ellipsis" class="is-size-4" />
+      </div>
+      <div
+        @click="goSecret(secret.id)"
+        class="icon-link">
+        <span class="indicator p-r-5"> {{ secret.comments }} </span>
+        <router-link :to="{ name: '', params: {} }">
+          <van-icon name="chat-o"></van-icon>
+        </router-link>
       </div>
       <div
         @click="like"
-        class="icon-link" style="color: red !important">
+        class="icon-link">
+        <span class="p-r-5 indicator">
+          {{ secret.likes }}
+        </span>
         <router-link :to="{ name: '', params: {} }">
-          <!-- <icon scale="1.6"
-            color="has-text-color-red"
-            class="m-r-10"
-            :class="[{'liked' : secret.userLiked}]"
-            name="heart"
-          /> -->
-          <b-icon
-            icon="heart"
-            class="m-r-10"
-            :class="[{'liked' : secret.userLiked}]"
-            name="heart"
-          />
+          <van-icon name="like-o" />
         </router-link>
-        <span class="indicator"> {{ secret.likes }} </span>
       </div>
     </div>
+    <van-actionsheet
+      v-model="showOptions"
+      title="Selecciona una opción"
+      :actions="actions"
+    />
+    <!-- <van-popup v-model="showOptions" position="bottom" :overlay="true">
+      <van-picker
+        show-toolbar
+        title="Opciones"
+        :columns="columns"
+        @cancel="onCancel"
+        @confirm="onConfirm"
+      />
+    </van-popup> -->
   </div>
 </template>
 
@@ -85,11 +75,42 @@ export default {
   },
   data() {
     return {
-
+      showOptions: false,
+      isUserLogged: this.$store.getters.isLogged,
+      userLogged: this.$store.getters.isLogged,
+      actions: [
+        {
+          name: 'Option'
+        },
+        {
+          name: 'Option',
+          description: 'Description'
+        },
+        {
+          loading: true
+        },
+        {
+          name: 'Disabled Option',
+          disabled: true
+        }
+      ]
     }
   },
+  mounted() {
+    this.showJoinUs();
+  },
   methods: {
+    showJoinUs() {
+      console.log('Hola perro');
+      if (!this.isUserLogged ) {
+        this.$emit('openShowJoinUs');
+        return true;
+      }
+
+      return false;
+    },
     async like() {
+      if (this.showJoinUs) return;
       const { secretId } = this.secret;
 
       const { data } = await post('secret/liked', { secretId });
@@ -113,6 +134,8 @@ export default {
 <style lang="scss" scoped>
 @import '@/styles/main.scss';
 
+$shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
+
 .secret {
   background: white;
   width: 100%;
@@ -125,6 +148,9 @@ export default {
 
   .indicator {
     color: white;
+    font-weight: bold;
+    text-shadow: $shadow-icons;
+
   }
 
   .liked {
@@ -132,12 +158,20 @@ export default {
   }
 
   &-body {
+    display: table;
     font-size: 25px;
+    text-align: center;
+    width: 100%;
     height: 200px;
     padding: 20px;
     font-weight: bold;
     color: white;
     background: rgb(65, 108, 121);
+
+    span {
+      display: table-cell;
+      vertical-align: middle;
+    }
   }
 
   &-actions {
@@ -150,6 +184,15 @@ export default {
     .icon-link {
       display: flex;
       align-items: center;
+      cursor: pointer;
+
+      i {
+        color: white;
+        font-weight: bold;
+        font-size: 1.3em;
+        text-shadow: $shadow-icons;
+
+      }
 
       a {
         color: #fff;

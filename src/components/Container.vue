@@ -1,8 +1,8 @@
 <template lang="html">
-  <div class="parent-container p-15">
+  <div class="parent-container p-15 p-t-0">
     <HeaderComponent></HeaderComponent>
       <slot></slot>
-    <FooterComponent v-if="showFooter"></FooterComponent>
+    <!-- <FooterComponent v-if="showFooter"></FooterComponent> -->
   </div>
 </template>
 
@@ -30,6 +30,7 @@ export default {
   .parent-container {
     min-height: 100%;
     width: 100%;
+    max-width: 100%;
     background: $primary;
     // background: #01b9ff;
   }

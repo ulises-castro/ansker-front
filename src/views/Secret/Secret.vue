@@ -42,23 +42,7 @@ export default {
       isLoading: true,
       secret: {},
       showPublishComment: false,
-      comments: [
-        // {
-        //   publishAt: new Date(),
-        //   content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
-        //   avatar: 1,
-        // },
-        // {
-        //   publishAt: new Date(),
-        //   content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
-        //   avatar: 2,
-        // },
-        // {
-        //   publishAt: new Date(),
-        //   content: 'Hola este es nu nuevo comentario, no entiendo ciertas cosas pero a veces siento que este comentario no tienen ningún sentido, sabes.',
-        //   avatar: 2,
-        // }
-      ],
+      comments: [],
     }
   },
   components: {

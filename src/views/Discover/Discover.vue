@@ -241,7 +241,7 @@ export default {
     width: 100%;
     height: 120px;
     padding: 10px;
-    border: 1px solid darken($light, 5%);
+    // border: 1px solid darken($light, 5%);
   }
 
   .card-content {
