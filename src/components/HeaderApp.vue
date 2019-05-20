@@ -9,7 +9,6 @@
         type="is-primary"
         pack="fas">
       </b-icon>
-      
     </div>
     <span
       @click="$router.push({ name: 'Discover' })"
@@ -59,13 +58,6 @@ export default {
   // border-bottom: 2px solid #e4e4e4;
   background: white;
   border-bottom: 1px solid #e4e4e4;
-}
-
-.logo {
-  font-size: 30px;
-  color: $primary;
-  font-weight: bold;
-  font-family: 'Marck Script', cursive;
 }
 
 .notifications-container {

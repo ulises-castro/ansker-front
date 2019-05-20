@@ -150,6 +150,10 @@ a.has-text-primary:hover {
   cursor: pointer;
 }
 
+.has-text-primary {
+  color: $primary !important;
+}
+
 .is-underline {
   text-decoration: underline;
 }
@@ -166,6 +170,15 @@ i {
     background: url('./assets/icons/facebook.svg');
   }
 }
+
+
+.logo {
+  font-size: 30px;
+  color: $primary;
+  font-weight: bold;
+  font-family: 'Marck Script', cursive;
+}
+
 // Creating personally spaces
 $spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100);
 

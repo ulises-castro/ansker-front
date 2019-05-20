@@ -10,7 +10,7 @@
         {{ secret.content }}
       </span>
     </div>
-    <div class="secret-actions">
+    <div @click="showJoinUs" class="secret-actions">
       <div
         @click="goSecret(secret.id)"
         class="icon-link has-background-white">
@@ -22,7 +22,7 @@
         </span>
       </div>
       <div
-        @click="showOptions = true"
+        @click="(isUserLogged) ? showOptions = true : ''"
         class="icon-link">
         <van-icon name="ellipsis" class="is-size-4" />
       </div>
@@ -97,11 +97,10 @@ export default {
     }
   },
   mounted() {
-    this.showJoinUs();
+    // this.showJoinUs();
   },
   methods: {
     showJoinUs() {
-      console.log('Hola perro');
       if (!this.isUserLogged ) {
         this.$emit('openShowJoinUs');
         return true;

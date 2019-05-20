@@ -21,7 +21,7 @@
         </div>
         <div
           @click="showJoinUs = true"
-          class="p-10 p-">
+          class="p-10" style="margin: 0 auto;">
           <h4 class="has-text-weight-bold is-text-underline has-text-white is-size-6 is-underline is-cursor-pointer has-text-centered">
             Ya tengo una cuenta
           </h4>
@@ -55,9 +55,10 @@
       </aside> -->
       <div class="columns is-multiline">
         <div
-          class="secret column is-full-mobile is-half-tablet p0" v-for="secret in secrets">
+          class="secret column is-full-mobile is-half-tablet is-one-quarter-desktop p0" v-for="secret in secrets">
             <Secret
-              @openShowJoinUs="openShowJoinUs" :secret="secret" />
+              @openShowJoinUs="openShowJoinUs" 
+              :secret="secret" />
         </div>
       </div>
 
@@ -65,10 +66,14 @@
         class="social-container flex flex-center flex-wrap p-t-15"
         v-model="showJoinUs"
         :overlay="true">
-        <!-- <small class="has-text-weight-bold p10 is-color-darkens">
-          Nunca publicaremos algo sin tu permiso
-        </small> -->
-          <aside
+        <h3 class="logo"> Ansker:) </h3>
+        <small
+          v-if=""
+          class="has-text-weight-bold p10 p-b-15 p-t-0 is-size-5" style="color: #363636">
+          Comparte con tu alrededor de forma anónima
+        </small>
+          <a
+            :href="googleUrl"
             @click="checkLoginState"
             class="
               has-bg-google
@@ -95,8 +100,9 @@
                 }"
               class="is-size-5">
             </span>
-          </aside>
-          <aside
+          </a>
+          <button
+            v-if="!isIphoneDevice"
             @click="checkLoginState"
             class="
               has-bg-facebook
@@ -123,16 +129,22 @@
                 }"
               class="is-size-5">
             </span>
-          </aside>
+          </button>
           <aside
-            class="p10" style="line-height: initial">
+            class="p15" style="line-height: initial">
             <small
               class="m-p-10"
               >
               Al unirte, aceptas nuestros 
               <br>
-              <a>Términos</a> y
-              <a>Políticas de privacidad</a>
+              <a
+                href="/terms" target="_blanket">
+                Términos
+              </a> y
+              <a
+                href="/policies" target="_blanket">
+                Políticas de privacidad
+              </a>
             </small>
           </aside>
       </van-popup>
@@ -162,9 +174,11 @@ export default {
         }
       },
       isLoadingSecrets: true,
+      googleUrl: `${process.env.VUE_APP_API}/request/gmail/auth`,
       showJoinUs: false,
       showFooter: true,
       secrets: [],
+      isIphoneDevice: !!navigator.platform.match(/iPhone|iPod|iPad/),
     }
   },
   mounted() {
@@ -268,6 +282,7 @@ export default {
 
   .has-bg-facebook, .has-bg-google {
     width: 90%;
+    border: none;
   }
 }
 
