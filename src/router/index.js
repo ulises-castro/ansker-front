@@ -51,6 +51,11 @@ const routes = [
     }
   },
   {
+    path: '/get-token/:token',
+    name: 'getToken',
+    component: loadView('getToken'),
+  },
+  {
     path: '/terms',
     name: 'Terms',
     component: Terms,
@@ -59,7 +64,7 @@ const routes = [
     path: '/policies',
     name: 'Policies',
     component: Policies,
-  }
+  },
 ];
 
 const router = new Router({
