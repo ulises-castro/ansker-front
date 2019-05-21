@@ -1,4 +1,9 @@
 <template>
+  <section>
+    <h3 class="logo">Ansker:)
+      
+    </h3>
+  </section>
 </template>
 <script>
 export default {
@@ -6,19 +11,25 @@ export default {
   data() {
     return {};
   },
-  mounted() {
-    console.log(this.$route.params, 'params');
-  },
+  // mounted() {
+  //   console.log(this.$route.params, 'params');
+  // },
   created() {
-    let user = { ...data };
-    const { token } = data;
+
+    if (true) {
+      this.$toast.loading({
+        mask: true,
+        message: 'Cargando...'
+      });
+    }
+
+    const { token } = this.$route.params;
 
     // Consider implement models with orm
     // this.$store.dispatch('entities/userData/create', { data });
 
+    const user = {};
     this.$store.dispatch('login', { token, user });
-    this.login.isLoading = false;
-
     this.$router.push({ name: 'Discover' });
   }
 }

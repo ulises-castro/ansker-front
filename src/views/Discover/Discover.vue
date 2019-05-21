@@ -1,6 +1,75 @@
 <template lang="html">
   <container-app :isLoading="isLoading">
-    <section :is-full-page="isLoading" ref="section" class="container is-fluid height100">
+    <!-- <div class="width100" style="height: 70px;">
+      <div>
+    <img style="height: 50px" src="@/assets/cities/mx_manzanillo.jpg" />
+      </div>
+    </div> -->
+
+    <section class="width100 flex flex-wrap p-l-15 p-t-5 p-b-5 p-r-15 space-between">
+      <small class="width100 p-b-5" style="font-weight: bold">
+        Ciudades hot
+      </small>
+      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+        <img 
+          style="width: 38px; height: 38px; border-radius: 50%;"
+          src="@/assets/cities/mx-manzanillo.jpg" />
+        <small class="width: 100%; is-size-7">
+          Manzanillo
+        </small>
+      </div>
+
+      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+        <img 
+          style="width: 38px; height: 38px; border-radius: 50%;"
+          src="@/assets/cities/mx-guadalajara.jpg" />
+        <small class="is-size-7">
+          Guadalajara
+        </small>
+      </div>
+
+      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+        <img 
+          style="width: 38px; height: 38px; border-radius: 50%;"
+          src="@/assets/cities/mx-tijuana.jpg" />
+        <small class="is-size-7">
+          Tijuana
+        </small>
+      </div>
+
+      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+        <img 
+          style="width: 38px; height: 38px; border-radius: 50%;"
+          src="@/assets/cities/mx-colima.jpg" />
+        <small class="is-size-7">
+          Colima
+        </small>
+      </div>
+
+      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+        <img 
+          style="width: 38px; height: 38px; border-radius: 50%;"
+          src="@/assets/cities/mx-guanajuato.jpg" />
+        <small class="is-size-7">
+          Guanajuato
+        </small>
+      </div>
+    </section>
+
+    <van-search
+      v-model="citySelected"
+      show-action
+      placeholder="Filtrar por ciudad"
+      shape="round"
+      @search="onSearchCity"
+    >
+      <div
+        slot="action"
+        @click="onSearchCity">Cancelar</div>
+    </van-search>
+
+    <!-- <section
+      :is-full-page="isLoading" ref="section" class="container is-fluid height100">
       <aside
         v-if="!authorizedGeolocation" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
         <p class="p-10">
@@ -16,9 +85,9 @@
             </div>
           </div>
         </div>
-      </aside>
+      </aside> -->
 
-      <aside
+      <!-- <aside
         v-if="!secrets.length && !isLoading" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
         <p class="p-10">
           Por el momento no hay publicaciones cerca de ti.
@@ -36,15 +105,15 @@
             </div>
           </div>
         </div>
-      </aside>
+      </aside> -->
 
-      <aside
+      <!-- <aside
         class=""
         @click="showPublishSecret"
         :class="{'publish-button-float' : true}">
         <b-icon size="is-medium" icon="feather-alt" pack="fas" />
-      </aside>
-
+      </aside> -->
+    <!-- 
       <div
         v-if="showShareAdvice"
         class="shareus has-text-white-bis flex width100 has-background-primary">
@@ -75,7 +144,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
 
       <aside class="secrets-container width100"
       :style="[{ 'padding-bottom: 0px !important': !secrets.length }]">
@@ -99,6 +168,7 @@ export default {
       secrets: [],
       isLoading: true,
       showPublishSecretModal: false,
+      citySelected: '',
       publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,
       authorizedGeolocation: this.$store.getters.authorizedGeolocation,
@@ -117,6 +187,9 @@ export default {
     }
   },
   methods: {
+    onSearchCity() {
+
+    },
     async fetchSecrets(latitude, longitude, userLocation) {
       const params = {
         latitude,
@@ -192,7 +265,13 @@ export default {
     },
     getUserCoords() {
       navigator.geolocation.getCurrentPosition(this.getUserPosition, this.showError);
-    }
+    },
+    async asyncFetchPublications() {
+      const { data } = await get('secret/allByCity', {});
+
+      this.isLoadingSecrets = false;
+      this.secrets = data.secrets;
+    },
    },
   created() {
     if (this.authorizedGeolocation) {
@@ -200,6 +279,7 @@ export default {
     }
   },
   mounted() {
+    this.asyncFetchPublications();
     console.log(this.$store.getters['entities/userData/all']());
   },
   metaInfo: {

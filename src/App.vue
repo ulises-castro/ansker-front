@@ -18,6 +18,31 @@ export default {
     }
   },
   methods: {
+    sendErrorsAndManagesUserLogin() {
+      this.$http.interceptors.response.use(undefined, (err) => {
+      console.log(err.response, err.status,"err");
+
+      // Handler error from backend
+      let errorMessage = 'general.error';
+      if (err.response && err.response.data) {
+        errorMessage = (!err.response.data.error)
+          ? 'general.' + err.response.data
+          : err.response.data.error;
+      }
+
+      this.$notify({
+        message: this.$t(errorMessage),
+        duration: 3000,
+      });
+
+      return;
+      if (err) {
+         this.$store.dispatch('logout');
+
+         this.$router.push({ name: 'Home' });
+       }
+     });
+    }
   },
   created() {
     // TODO: Check if useful this piece of code otherwise remove it
@@ -34,7 +59,7 @@ export default {
       window.FB = FB;
     };
 
-    (function(d, s, id){
+    (function(d, s, id) {
        var js, fjs = d.getElementsByTagName(s)[0];
        if (d.getElementById(id)) {return;}
        js = d.createElement(s); js.id = id;
@@ -43,31 +68,8 @@ export default {
      }(document, 'script', 'facebook-jssdk'));
 
      // TODO: B Create 401 | 403 response middlare, BUG: Because whatever response code exists you will get out
-     this.$http.interceptors.response.use(undefined, (err) => {
-      console.log(err.response, err.status,"err");
-
-      // Handler error from backend
-      let errorMessage = 'general.error';
-      if (err.response && err.response.data) {
-        errorMessage = (!err.response.data.error)
-          ? 'general.' + err.response.data
-          : err.response.data.error;
-      }
-
-      this.$toast.open({
-        duration: 3000,
-        message: this.$t(errorMessage),
-        position: 'is-top',
-        type: 'is-danger'
-      });
-
-      return;
-      if (err) {
-         this.$store.dispatch('logout');
-
-         this.$router.push({ name: 'Home' });
-       }
-     });
+     this.sendErrorsAndManagesUserLogin();
+ 
   },
   metaInfo: {
     title: 'Ansker',

@@ -1,12 +1,9 @@
 <template lang="html">
   <div class="secret"
-    style="background-image: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg')"
-    :style="{'background-color': secret.backgroundColor}">
+    style="background-image: url('https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi'); background-position: center">
     <div
-      class="secret-body"
-        style="background-image: url('https://cdn.pixabay.com/photo/2018/08/14/13/23/ocean-3605547__340.jpg')"
-      :style="{'background-color': secret.backgroundColor}">
-      <span>
+      class="secret-body">
+      <span style="text-shadow: 0px 0px 14px #9e9e9e;">
         {{ secret.content }}
       </span>
     </div>
@@ -165,7 +162,6 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     padding: 20px;
     font-weight: bold;
     color: white;
-    background: rgb(65, 108, 121);
 
     span {
       display: table-cell;

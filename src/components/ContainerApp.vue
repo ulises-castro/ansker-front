@@ -9,13 +9,16 @@
 
     <van-nav-bar
       :title="title"
-      left-text="Back"
       class="headerBar"
       right-text="Button"
       :left-arrow="showBackButton"
-      @click-left="onClickLeft"
-      @click-right="onClickRight"
       >
+      <div slot="left">
+        <van-icon
+        class="is-size-5 p-r-20"
+        name="bullhorn-o"
+        />
+      </div>
       <van-icon class="is-size-5" name="edit" slot="right" />
       <span slot="title"> Ansker:) </span>
       </van-nav-bar>
@@ -44,6 +47,8 @@ export default {
     }
   },
   mounted() {
+  },
+  methods: {
   },
   props: {
     isLoading: {
