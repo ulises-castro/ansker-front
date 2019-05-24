@@ -98,7 +98,7 @@
                   path: 'login.social_button',
                   args: { name: 'Google' }
                 }"
-              class="is-size-5">
+              class="is-size-5" style="font-weight: none !important">
             </span>
           </a>
           <button

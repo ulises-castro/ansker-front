@@ -45,7 +45,7 @@
           Colima
         </small>
       </div>
-
+<!-- 
       <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
         <img 
           style="width: 38px; height: 38px; border-radius: 50%;"
@@ -53,20 +53,26 @@
         <small class="is-size-7">
           Guanajuato
         </small>
-      </div>
+      </div> -->
     </section>
 
     <van-search
       v-model="citySelected"
-      show-action
       placeholder="Filtrar por ciudad"
       shape="round"
       @search="onSearchCity"
+      @keyup.native="onSearchCity"
     >
-      <div
+      <!-- <div
         slot="action"
-        @click="onSearchCity">Cancelar</div>
+        @click="onSearchCity">Buscar</div> -->
     </van-search>
+    <aside v-if="citiesSearchFound.length"
+      class="width100">
+      <div v-for="city in citiesSearchFound"
+        class="p10" style="background: white">
+        {{ city.name }} - {{ city.countryName }} {{ city.flag }}</div>
+    </aside>
 
     <!-- <section
       :is-full-page="isLoading" ref="section" class="container is-fluid height100">
@@ -169,6 +175,7 @@ export default {
       isLoading: true,
       showPublishSecretModal: false,
       citySelected: '',
+      citiesSearchFound: [],
       publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,
       authorizedGeolocation: this.$store.getters.authorizedGeolocation,
@@ -187,8 +194,14 @@ export default {
     }
   },
   methods: {
-    onSearchCity() {
+    async onSearchCity() {
+      const { citySelected } = this;
 
+      if (citySelected.length < 3) return;
+
+      const { data } = await get(`searchPlace/${citySelected}`);
+
+      this.citiesSearchFound = data.cities;
     },
     async fetchSecrets(latitude, longitude, userLocation) {
       const params = {
