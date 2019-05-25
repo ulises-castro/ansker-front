@@ -1,10 +1,5 @@
 <template lang="html">
   <container-app :isLoading="isLoading">
-    <!-- <div class="width100" style="height: 70px;">
-      <div>
-    <img style="height: 50px" src="@/assets/cities/mx_manzanillo.jpg" />
-      </div>
-    </div> -->
 
     <section class="width100 flex flex-wrap p-l-15 p-t-5 p-b-5 p-r-15 space-between">
       <small class="width100 p-b-5" style="font-weight: bold">
@@ -57,100 +52,38 @@
     </section>
 
     <van-search
-      v-model="citySelected"
+      v-model="citySearchValue"
       placeholder="Filtrar por ciudad"
       shape="round"
+      :show-action="citiesSearchFound.length"
+      @blur.native="citiesSearchFound = []"
       @search="onSearchCity"
       @keyup.native="onSearchCity"
     >
-      <!-- <div
+    <van-loading
+      size="18px"
+      color="#54a0c0"
+      style="margin-top: 3px"
+      v-if="isLoadingCities" slot="left-icon" />
+      <div
         slot="action"
-        @click="onSearchCity">Buscar</div> -->
+        @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
-    <aside v-if="citiesSearchFound.length"
+    <aside
+      v-if="citiesSearchFound.length"
       class="width100">
-      <div v-for="city in citiesSearchFound"
+      <div
+        v-for="(city, index) in citiesSearchFound"
+        :key="index"
+        @click="updateCitySelected(city)"
         class="p10" style="background: white">
-        {{ city.name }} - {{ city.countryName }} {{ city.flag }}</div>
+        {{ city.name }} -
+         {{ city.countryName }} {{ city.flag }}
+        </div>
     </aside>
 
-    <!-- <section
+    <section
       :is-full-page="isLoading" ref="section" class="container is-fluid height100">
-      <aside
-        v-if="!authorizedGeolocation" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
-        <p class="p-10">
-          Para poder mostrarte las publicaciones cercanas a ti, necesitamos acceder a tu ubicación.
-        </p>
-          <div class="flex flex-center width100">
-            <div class="flex width100 space-around p-t-10" style="max-width: 450px">
-              <b-button
-                @click="askForLocationPermission"
-                type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
-                Permitir acceso a ubicación
-              </b-button>
-            </div>
-          </div>
-        </div>
-      </aside> -->
-
-      <!-- <aside
-        v-if="!secrets.length && !isLoading" class="width100 height100 p-t-60 has-background-primary is-size-4 has-text-weight-bold has-text-white">
-        <p class="p-10">
-          Por el momento no hay publicaciones cerca de ti.
-        </p>
-        <p class="p-b-15">
-          ¡Se el primero en publicar!
-        </p>
-          <div class="flex flex-center width100">
-            <div class="flex width100 space-around p-t-10" style="max-width: 450px">
-              <b-button
-                @click="showPublishSecret"
-                type="is-light has-text-primary is-uppercase has-text-weight-bold is-size-6" rounded>
-                Publicar
-              </b-button>
-            </div>
-          </div>
-        </div>
-      </aside> -->
-
-      <!-- <aside
-        class=""
-        @click="showPublishSecret"
-        :class="{'publish-button-float' : true}">
-        <b-icon size="is-medium" icon="feather-alt" pack="fas" />
-      </aside> -->
-    <!-- 
-      <div
-        v-if="showShareAdvice"
-        class="shareus has-text-white-bis flex width100 has-background-primary">
-        <div class="width100 p10 p15-0">
-          <h3 class="is-size-4 width100 has-text-weight-bold">
-            Ayudanos a difundir
-          </h3>
-          <span class="is-size-5 p15">
-            Comparte en tus redes sociales
-          </span>
-
-          <div class="flex flex-center width100">
-            <div class="flex width100 space-around p-t-10" style="max-width: 450px">
-              <social-share
-                quote='Comparte lo que piensas con tu alrededor de manera anónima'
-                text="Comparte lo que piensas con tu alrededor de manera anónima en https://ansker.me"
-                url="https://www.ansker.me">
-		            <b-button
-                  type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
-                  Compartir
-                </b-button>
-              </social-share>
-              <b-button
-                @click="closeShareAdvice"
-                type="is-light has-text-primary has-text-weight-bold is-size-6" rounded>
-                Ocultar
-              </b-button>
-            </div>
-          </div>
-        </div>
-      </div> -->
 
       <aside class="secrets-container width100"
       :style="[{ 'padding-bottom: 0px !important': !secrets.length }]">
@@ -174,11 +107,14 @@ export default {
       secrets: [],
       isLoading: true,
       showPublishSecretModal: false,
-      citySelected: '',
+      citySearchValue: '',
+      citySelected: {},
+      isLoadingCities: false,
       citiesSearchFound: [],
       publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,
       authorizedGeolocation: this.$store.getters.authorizedGeolocation,
+      timerLoading: '',
     }
   },
   components: {
@@ -193,91 +129,35 @@ export default {
       console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)', val);
     }
   },
+  watch: {
+    citySearchValue(value) {
+      if (!value) {
+        this.citiesSearchFound = [];
+      }
+    }
+  },
   methods: {
     async onSearchCity() {
-      const { citySelected } = this;
+      const { citySearchValue } = this;
 
-      if (citySelected.length < 3) return;
+      if (citySearchValue.length < 3) return;
 
-      const { data } = await get(`searchPlace/${citySelected}`);
+      clearTimeout(this.timerLoading)
+      this.isLoadingCities = true;
+
+      const { data } = await get(`searchPlace/${citySearchValue}`);
 
       this.citiesSearchFound = data.cities;
+
+      this.timerLoading = setTimeout(() => this.isLoadingCities = false, 800);
     },
-    async fetchSecrets(latitude, longitude, userLocation) {
-      const params = {
-        latitude,
-        longitude,
-        ...userLocation
-      };
-
-      console.log(params, userLocation);
-
-      const { data } = await post('secret/allByCity', params);
-
-      this.isLoading = false;
-      this.secrets = data.secrets;
+    updateCitySelected(city) {
+      this.citySelected = city;
+      this.citySearchValue = city.name;
+      this.citiesSearchFound = [];
     },
     showPublishSecret() {
       this.$router.push({ name: 'PublishSecret' });
-    },
-    closeShareAdvice() {
-      this.$store.dispatch('hideShareAdvice');
-      this.showShareAdvice = false;
-    },
-    async fetchUserLocation(longitude, latitude) {
-      // TODO: Create a factoryFunction to reutilize code
-      const url = `https://utility.arcgis.com/usrsvcs/appservices/ALYmls905v3B6fIJ/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&featureTypes=&location=${longitude},${latitude}`;
-
-      const tokenSaved = axios.defaults.headers.common['Authorization'];
-
-      delete axios.defaults.headers.common['Authorization'];
-
-      const { data } = await axios.post(
-        url,
-        { longitude, latitude }
-      );
-
-      axios.defaults.headers.common['Authorization'] = `${tokenSaved}`;
-
-      this.fetchSecrets(latitude, longitude, data.address)
-    },
-    getUserPosition(position) {
-      const { latitude, longitude } = position.coords;
-
-      const location = {
-        latitude,
-        longitude,
-      };
-
-      this.authorizedGeolocation = true;
-      console.log(latitude, longitude);
-
-      this.$store.dispatch('authorizedGeolocation', true);
-
-      this.$store.dispatch('userLocation', location);
-
-      const userLocation =
-      this.fetchUserLocation(longitude, latitude);
-    },
-    showError() {
-      this.$toast.open({
-        duration: 5000,
-        message: this.$t('user.location_permission.denied'),
-        position: 'is-top',
-        type: 'is-danger',
-      });
-
-      this.$store.dispatch('authorizedGeolocation', false);
-    },
-    askForLocationPermission() {
-      if (navigator.geolocation) {
-        this.getUserCoords();
-      } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-      }
-    },
-    getUserCoords() {
-      navigator.geolocation.getCurrentPosition(this.getUserPosition, this.showError);
     },
     async asyncFetchPublications() {
       const { data } = await get('secret/allByCity', {});
@@ -287,9 +167,6 @@ export default {
     },
    },
   created() {
-    if (this.authorizedGeolocation) {
-      this.getUserCoords();
-    }
   },
   mounted() {
     this.asyncFetchPublications();
