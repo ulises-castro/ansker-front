@@ -16,20 +16,23 @@
       >
       <div v-if="!showBackButton" slot="left">
         <van-icon
-        class="is-size-5"
-        info="30"
-        name="bullhorn-o"
+          color="#49AFC4"
+          class="is-size-5"
+          info="30"
+          name="bullhorn-o"
         />
       </div>
       <div
         slot="right"
       >
         <van-icon
+          color="#49AFC4"
           v-if="showBackButton"
           class="is-size-5"
           name="bullhorn-o"
         />
         <van-icon
+          color="#49AFC4"
           v-else
           @click="goPublish"
           class="is-size-5" name="edit"

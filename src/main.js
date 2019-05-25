@@ -5,10 +5,16 @@ import Meta from 'vue-meta';
 import VueSocketio from 'vue-socket.io-extended';
 import io from 'socket.io-client';
 
-import Vant from 'vant';
+import Vant, {
+  Lazyload,
+  Collapse,
+  CollapseItem,
+} from 'vant';
 import 'vant/lib/index.css';
 
 Vue.use(Vant);
+Vue.use(Lazyload, {});
+Vue.use(Collapse).use(CollapseItem);
 
 import { Locale } from 'vant';
 import enUS from 'vant/lib/locale/lang/en-US';

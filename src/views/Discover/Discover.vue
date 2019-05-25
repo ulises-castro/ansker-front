@@ -1,61 +1,61 @@
 <template lang="html">
   <container-app :isLoading="isLoading">
 
-    <section class="width100 flex flex-wrap p-l-15 p-t-5 p-b-5 p-r-15 space-between">
-      <small class="width100 p-b-5" style="font-weight: bold">
-        Ciudades hot
-      </small>
-      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-        <img 
-          style="width: 38px; height: 38px; border-radius: 50%;"
-          src="@/assets/cities/mx-manzanillo.jpg" />
-        <small class="width: 100%; is-size-7">
-          Manzanillo
-        </small>
-      </div>
 
-      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-        <img 
-          style="width: 38px; height: 38px; border-radius: 50%;"
-          src="@/assets/cities/mx-guadalajara.jpg" />
-        <small class="is-size-7">
-          Guadalajara
-        </small>
-      </div>
+    <van-collapse
+      :border="false"
+      v-model="activeCitiesHot">
+      <van-collapse-item
+        :border="false"
+        title-class="has-text-weight-bold"
+        title="Ciudades hot" name="1">
 
-      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-        <img 
-          style="width: 38px; height: 38px; border-radius: 50%;"
-          src="@/assets/cities/mx-tijuana.jpg" />
-        <small class="is-size-7">
-          Tijuana
-        </small>
-      </div>
+        <aside
+          class="flex flex-wrap space-between">
+          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+            <img 
+              style="width: 38px; height: 38px; border-radius: 50%;"
+              src="@/assets/cities/mx-manzanillo.jpg" />
+            <small class="width: 100%; is-size-7">
+              Manzanillo
+            </small>
+          </div>
 
-      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-        <img 
-          style="width: 38px; height: 38px; border-radius: 50%;"
-          src="@/assets/cities/mx-colima.jpg" />
-        <small class="is-size-7">
-          Colima
-        </small>
-      </div>
-<!-- 
-      <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-        <img 
-          style="width: 38px; height: 38px; border-radius: 50%;"
-          src="@/assets/cities/mx-guanajuato.jpg" />
-        <small class="is-size-7">
-          Guanajuato
-        </small>
-      </div> -->
-    </section>
+          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+            <img 
+              style="width: 38px; height: 38px; border-radius: 50%;"
+              src="@/assets/cities/mx-guadalajara.jpg" />
+            <small class="is-size-7">
+              Guadalajara
+            </small>
+          </div>
+
+          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+            <img 
+              style="width: 38px; height: 38px; border-radius: 50%;"
+              src="@/assets/cities/mx-tijuana.jpg" />
+            <small class="is-size-7">
+              Tijuana
+            </small>
+          </div>
+
+          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+            <img 
+              style="width: 38px; height: 38px; border-radius: 50%;"
+              src="@/assets/cities/mx-colima.jpg" />
+            <small class="is-size-7">
+              Colima
+            </small>
+          </div>
+        </aside>
+      </van-collapse-item>
+    </van-collapse>
 
     <van-search
       v-model="citySearchValue"
       placeholder="Filtrar por ciudad"
       shape="round"
-      :show-action="citiesSearchFound.length"
+      :show-action="(citiesSearchFound.length)"
       @blur.native="citiesSearchFound = []"
       @search="onSearchCity"
       @keyup.native="onSearchCity"
@@ -110,6 +110,7 @@ export default {
       citySearchValue: '',
       citySelected: {},
       isLoadingCities: false,
+      activeCitiesHot: ['1'],
       citiesSearchFound: [],
       publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,

@@ -1,9 +1,12 @@
 <template lang="html">
   <section>
     <div class="menu">
-      <van-tabbar v-model="active">
+      <van-tabbar
+        class="has-text-weight-bolds"
+        active-color="#239bce"
+        v-model="active">
         <van-tabbar-item icon="home-o" info="10">
-          Incio
+          Inicio
         </van-tabbar-item>
         <!-- <van-tabbar-item
           icon="friends-o" info="5">Tab</van-tabbar-item> -->

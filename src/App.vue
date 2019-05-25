@@ -173,12 +173,24 @@ i {
   }
 }
 
-
 .logo {
   font-size: 30px;
   color: $primary;
   font-weight: bold;
   font-family: 'Marck Script', cursive;
+}
+
+.secret[lazy=loading] {
+  /*your style here*/
+  background: red;
+}
+.secret[lazy=error] {
+  /*your style here*/
+}
+.secret[lazy=loaded] {
+  /*your style here*/
+  // background-image: url('./assets/loadings/rings.svg') !important;
+
 }
 
 // Creating personally spaces

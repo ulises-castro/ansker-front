@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="secret"
-    style="background-image: url('https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi'); background-position: center">
+    v-lazy:background-image="'https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi'">
     <div
       class="secret-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
