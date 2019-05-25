@@ -10,16 +10,32 @@
     <van-nav-bar
       :title="title"
       class="headerBar"
-      right-text="Button"
+      left-text="Regresar"
+      @click-left="handlerActionLeft"
       :left-arrow="showBackButton"
       >
-      <div slot="left">
+      <div v-if="!showBackButton" slot="left">
         <van-icon
-        class="is-size-5 p-r-20"
+        class="is-size-5"
+        info="30"
         name="bullhorn-o"
         />
       </div>
-      <van-icon class="is-size-5" name="edit" slot="right" />
+      <div
+        slot="right"
+      >
+        <van-icon
+          v-if="showBackButton"
+          class="is-size-5"
+          name="bullhorn-o"
+        />
+        <van-icon
+          v-else
+          @click="goPublish"
+          class="is-size-5" name="edit"
+        />
+      </div>
+
       <span slot="title"> Ansker:) </span>
       </van-nav-bar>
     <slot></slot>
@@ -49,6 +65,17 @@ export default {
   mounted() {
   },
   methods: {
+    goPublish() {
+      
+    },
+    handlerActionLeft() {
+      const { showBackButton } = this;
+      if (showBackButton) {
+        return this.$router.go(-1);
+      }
+
+      // Show notifications
+    }
   },
   props: {
     isLoading: {
