@@ -4,6 +4,7 @@ import Meta from 'vue-meta';
 
 import VueSocketio from 'vue-socket.io-extended';
 import io from 'socket.io-client';
+import Croppa from 'vue-croppa';
 
 import Vant, {
   Lazyload,
@@ -14,8 +15,11 @@ import 'vant/lib/index.css';
 
 Vue.use(Vant);
 Vue.use(Lazyload, {});
+
+Vue.use(Croppa, { componentName: 'image-edit' });
 Vue.use(Collapse).use(CollapseItem);
 
+// Setting Vant to english language
 import { Locale } from 'vant';
 import enUS from 'vant/lib/locale/lang/en-US';
 

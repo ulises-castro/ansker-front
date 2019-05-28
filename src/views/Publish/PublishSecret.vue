@@ -1,7 +1,7 @@
 <template lang="html">
   <section
-    class="width100"
-    :style='`background-color: ${availableColours[form.backgroundSelected]}`'>
+    class="publish-container width100"
+    :style='`background: url(${background})`'>
 
     <van-nav-bar
       :title="title"
@@ -29,7 +29,11 @@
       </van-nav-bar>
 
     <div class="width100" style="overflow: hidden">
-
+      <image-edit
+        ref="image-edit"
+        @new-image-drawn="background = imageSelected.generateDataUrl()"
+        @move="background = imageSelected.generateDataUrl()"
+        v-model="imageSelected"></image-edit>
       <textarea
         class="publishContainer"
         ref="publishArea"
@@ -78,6 +82,8 @@ export default {
   data() {
     return {
       // TODO: Fetch data via endpoint
+      imageSelected: '',
+      background: '',
       availableColours: [
         '#0000ff',
         '#ffa500',
@@ -193,6 +199,10 @@ export default {
   .van-icon {
     color: white !important;
   }
+}
+
+.publish-container {
+  background-size: cover;
 }
 
 .publishContainer {
