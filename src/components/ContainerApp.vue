@@ -1,10 +1,5 @@
 <template lang="html">
   <section class="parent-container">
-    <!-- <b-loading
-      :is-full-page="isFullPage"
-      :active.sync="isLoading">
-    </b-loading>
-     -->
     <!-- <HeaderApp :showBackButton="showBackButton"></HeaderApp> -->
 
     <van-nav-bar
@@ -69,7 +64,7 @@ export default {
   },
   methods: {
     goPublish() {
-      
+      this.$router.push({ name: 'publish-secret' });
     },
     handlerActionLeft() {
       const { showBackButton } = this;

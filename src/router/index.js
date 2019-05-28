@@ -28,7 +28,7 @@ const routes = [
   },
   {
     path: '/publish',
-    name: 'PublishSecret',
+    name: 'publish-secret',
     component: PublishSecret,
     meta: {
       requiresAuth: true,

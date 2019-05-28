@@ -1,7 +1,32 @@
 <template lang="html">
   <section
-    class="flex height100 width100"
+    class="width100"
     :style='`background-color: ${availableColours[form.backgroundSelected]}`'>
+
+    <van-nav-bar
+      :title="title"
+      class="header-publish"
+      left-text="Regresar"
+      left-arrow
+      right-text="Publicar"
+      @click-left="handlerActionLeft"
+      >
+      <div slot="right" class="has-text-white">
+        <!-- <van-icon
+          color="#49AFC4"
+          class="is-size-5"
+          info="30"
+          name="bullhorn-o"
+        /> -->
+        <span>Publicar</span>
+        <i style="color: white"
+          class="fas fa-feather-alt"></i>
+      </div>
+      <div slot="title"
+        class="flex flex-center has-text-white">
+        <div><i class="fas fa-camera"></i></div>
+      </div>
+      </van-nav-bar>
 
     <div class="width100" style="overflow: hidden">
 
@@ -156,6 +181,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.header-publish {
+  background: transparent;
+  color: white !important;
+
+  .van-nav-bar__text {
+    color: white !important;
+  }
+
+  .van-icon {
+    color: white !important;
+  }
+}
+
 .publishContainer {
   background: none;
   color: white;

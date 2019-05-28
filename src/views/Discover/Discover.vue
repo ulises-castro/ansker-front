@@ -1,7 +1,6 @@
 <template lang="html">
   <container-app :isLoading="isLoading">
 
-
     <van-collapse
       :border="false"
       v-model="activeCitiesHot">
