@@ -2,7 +2,7 @@
   <section
     class="publish-container width100"
     :style='`background: url(${background})`'>
-
+    <van-loading v-if="isLoading" />
     <van-nav-bar
       :title="title"
       class="header-publish"
@@ -31,6 +31,9 @@
     <div class="width100" style="overflow: hidden">
       <image-edit
         ref="image-edit"
+        :prevent-white-space="true"
+        @loading-start="isLoading = true"
+        @loading-end="isLoading = false"
         @new-image-drawn="background = imageSelected.generateDataUrl()"
         @move="background = imageSelected.generateDataUrl()"
         v-model="imageSelected"></image-edit>
@@ -84,6 +87,7 @@ export default {
       // TODO: Fetch data via endpoint
       imageSelected: '',
       background: '',
+      isLoading: false,
       availableColours: [
         '#0000ff',
         '#ffa500',
