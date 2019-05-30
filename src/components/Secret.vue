@@ -158,7 +158,7 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     font-size: 25px;
     text-align: center;
     width: 100%;
-    height: 200px;
+    height: 204px;
     padding: 20px;
     font-weight: bold;
     color: white;

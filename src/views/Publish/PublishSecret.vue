@@ -1,9 +1,8 @@
 <template lang="html">
   <section
-    class="publish-container width100"
-    :style='`background: url(${background})`'>
+    class="section-publish-container flex flex-wrap">
     <van-loading v-if="isLoading" />
-    <van-nav-bar
+    <!-- <van-nav-bar
       :title="title"
       class="header-publish"
       left-text="Regresar"
@@ -12,12 +11,6 @@
       @click-left="handlerActionLeft"
       >
       <div slot="right" class="has-text-white">
-        <!-- <van-icon
-          color="#49AFC4"
-          class="is-size-5"
-          info="30"
-          name="bullhorn-o"
-        /> -->
         <span>Publicar</span>
         <i style="color: white"
           class="fas fa-feather-alt"></i>
@@ -26,17 +19,11 @@
         class="flex flex-center has-text-white">
         <div><i class="fas fa-camera"></i></div>
       </div>
-      </van-nav-bar>
+      </van-nav-bar> -->
 
-    <div class="width100" style="overflow: hidden">
-      <image-edit
-        ref="image-edit"
-        :prevent-white-space="true"
-        @loading-start="isLoading = true"
-        @loading-end="isLoading = false"
-        @new-image-drawn="background = imageSelected.generateDataUrl()"
-        @move="background = imageSelected.generateDataUrl()"
-        v-model="imageSelected"></image-edit>
+    <div
+      class="publish-container width100"
+      :style='`background: url(${background})`' style="overflow: hidden">
       <textarea
         class="publishContainer"
         ref="publishArea"
@@ -72,6 +59,40 @@
           </b-icon>
         </div>
       </div>
+
+    </div>
+
+    <div class="width100">
+<van-notice-bar
+  color="#1989fa"
+  background="#fff"
+  left-icon="info-o"
+  mode="closeable"
+>
+  Haz zoom (Utilizando dos dedos) o mueve la imagén (presionando y moviendo el mismo dedo), en la imagén de abajo
+</van-notice-bar>
+        <image-edit
+          ref="image-edit"
+          :width="this.screen.width"
+          :height="this.screen.height"
+          :quality="1"
+          :zoom-speed="10"
+          :disable-rotation="true"
+          :show-remove-button="false"
+          :prevent-white-space="true"
+          placeholder="Seleccionar imagén"
+          @file-choose="alert('file choose')"
+          @file-size-exceed="alert('file size exceeds')"
+          @file-type-mismatch="alert('file type mismatches')"
+          @new-image="alert('new image attatched')"
+          @image-remove="removeBackgroundImage"
+          @loading-start="isLoading = true"
+          @loading-end="isLoading = false"
+          @new-image-drawn="updateBackgroundImage"
+          @zoom="updateBackgroundImage"
+          @move="updateBackgroundImage"
+          v-model="imageSelected">
+        </image-edit>
     </div>
 
   </section>
@@ -105,7 +126,11 @@ export default {
         longitude: '',
         latitude: '',
         location: {},
-      }
+      },
+      screen: {
+        width: window.innerWidth,
+        height: window.innerHeight / 2,
+      },
     }
   },
   methods: {
@@ -129,6 +154,14 @@ export default {
       const type = (data) ? 'is-success' : 'is-danger';
 
       this.$router.push({ name: 'Discover' });
+    },
+    removeBackgroundImage() {
+      this.background = '';
+    },
+    updateBackgroundImage() {
+      this.$refs.publishArea.blur();
+      this.background =
+        this.imageSelected.generateDataUrl('image/jpeg', 0.8);
     },
     changeBgColor() {
       this.$refs.publishArea.focus();
@@ -184,13 +217,17 @@ export default {
   mounted() {
     setTimeout(() => {
       this.$refs.publishArea.focus();
-      this.$refs.publishArea.click();
+      // this.$refs.publishArea.click();
     }, 1000);
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+.section-publish-container {
+  height: 100vh;
+}
 
 .header-publish {
   background: transparent;
