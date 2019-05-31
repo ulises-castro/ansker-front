@@ -20,6 +20,7 @@ import Vant, {
   Lazyload,
   Collapse,
   CollapseItem,
+  ActionSheet,
 } from 'vant';
 
 import 'vant/lib/index.css';
@@ -27,8 +28,9 @@ import { i18n } from './languages';
 import App from './App.vue';
 
 Vue.use(Vant);
+Vue.use(Image);
+Vue.use(ActionSheet);
 Vue.use(Lazyload, {});
-Vue.Use(Image);
 Locale.use('en-US', enUS);
 
 Vue.use(Croppa, { componentName: 'image-edit' });

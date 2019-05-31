@@ -5,11 +5,11 @@
         lazy-load
         class="background-image"
         src="https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi"
-        alt="Nature"
-        :width="screenWidth + 300"
-        :height="800">
-      />
+        :width="screenWidth"
+        :height="300">
+      ></van-image>
     <div
+      @click="goSecret(secret.id)"
       class="secret-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
         {{ secret.content }}
@@ -50,7 +50,7 @@
         </router-link>
       </div>
     </div>
-    <van-actionsheet
+    <van-action-sheet
       v-model="showOptions"
       title="Selecciona una opción"
       :actions="actions"
@@ -141,14 +141,10 @@ export default {
 
 $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
 
-
-.background-image {
-  max-height: 400px;
-}
-
 .secret {
   background: white;
   position: relative;
+  height: 300px;
   width: 100%;
   border: 1px solid #e4e4e4;
 
@@ -173,7 +169,7 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     font-size: 25px;
     text-align: center;
     width: 100%;
-    height: 204px;
+    height: 250px;
     padding: 20px;
     font-weight: bold;
     color: white;
@@ -191,8 +187,7 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 20px 0;
-    padding-bottom: 6px;
+    padding: 10px 0;
 
     position: absolute;
     bottom: 0;

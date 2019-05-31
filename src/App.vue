@@ -180,18 +180,10 @@ i {
   font-family: 'Marck Script', cursive;
 }
 
-.secret[lazy=loading] {
-  /*your style here*/
-  background: red;
+.is-relative {
+  position: relative;
 }
-.secret[lazy=error] {
-  /*your style here*/
-}
-.secret[lazy=loaded] {
-  /*your style here*/
-  // background-image: url('./assets/loadings/rings.svg') !important;
 
-}
 
 // Creating personally spaces
 $spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100);
