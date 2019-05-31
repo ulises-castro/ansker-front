@@ -45,20 +45,19 @@
       <div class="footer-actions flex space-between">
         <div class="flex">
           <div
+            class="icon-container pointer is-size-4 m-20"
+            @click.prevent="changeBgColor">
+            <i class="fas fa-camera has-text-white"></i>
+          </div>
+          <div
           class="icon-container pointer is-size-4 m-20"
           @click.prevent="changeBgColor">
             <i class="fas fa-palette has-text-white"></i>
           </div>
-        </div>
         <div
           class="icon-container pointer is-size-4 m-20"
           @click.prevent="changeBgColor">
             <i class="fas fa-font has-text-white"></i>
-        </div>
-        <div
-          class="icon-container pointer is-size-4 m-20"
-          @click.prevent="changeBgColor">
-          <i class="fas fa-camera has-text-white"></i>
         </div>
         <div class="flex flex-middle p0-10">
           <span class="counter-text-lenght">{{ form.content.length }}/120</span>
@@ -73,6 +72,7 @@
           </b-icon>
         </div>
       </div>
+        </div>
 
     </div>
 
