@@ -84,7 +84,7 @@
     <section
       :is-full-page="isLoading" ref="section" class="container is-fluid height100">
 
-      <aside class="secrets-container width100"
+      <aside class="secrets-container"
       :style="[{ 'padding-bottom: 0px !important': !secrets.length }]">
         <div class="secret" v-for="secret in secrets">
           <Secret :secret="secret" />

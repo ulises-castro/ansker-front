@@ -1,6 +1,14 @@
 <template lang="html">
-  <div class="secret"
-    v-lazy:background-image="'https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi'">
+  <!-- <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen secret"> -->
+    <div class="secret">
+      <van-image
+        lazy-load
+        class="background-image"
+        src="https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi"
+        alt="Nature"
+        :width="screenWidth + 300"
+        :height="800">
+      />
     <div
       class="secret-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
@@ -90,7 +98,8 @@ export default {
           name: 'Disabled Option',
           disabled: true
         }
-      ]
+      ],
+      screenWidth: window.innerWidth,
     }
   },
   mounted() {
@@ -132,8 +141,14 @@ export default {
 
 $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
 
+
+.background-image {
+  max-height: 400px;
+}
+
 .secret {
   background: white;
+  position: relative;
   width: 100%;
   border: 1px solid #e4e4e4;
 
@@ -163,6 +178,9 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     font-weight: bold;
     color: white;
 
+    position: absolute;
+    top: 0;
+
     span {
       display: table-cell;
       vertical-align: middle;
@@ -176,6 +194,10 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     padding: 20px 0;
     padding-bottom: 6px;
 
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+
     .icon-link {
       display: flex;
       align-items: center;
@@ -186,7 +208,6 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
         font-weight: bold;
         font-size: 1.3em;
         text-shadow: $shadow-icons;
-
       }
 
       a {
