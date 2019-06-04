@@ -87,6 +87,7 @@
       </van-notice-bar>
       <image-edit
         ref="image-edit"
+        v-model="imageSelected"
         :width="this.screen.width"
         :height="200"
         :quality="2"
@@ -104,8 +105,8 @@
         @loading-end="isLoading = false"
         @new-image-drawn="updateBackgroundImage"
         @zoom="updateBackgroundImage"
-        @move="updateBackgroundImage"
-        v-model="imageSelected">
+        @move="updateBackgroundImage">
+        <span>hola</span>|
       </image-edit>
     </div>
 
@@ -233,11 +234,14 @@ export default {
       this.$refs.publishArea.focus();
       // this.$refs.publishArea.click();
     }, 1000);
+
   }
 }
 </script>
 
 <style lang="scss" scoped>
+
+$text-shadow-actions: 0px 0px 3px #696969;
 
 .section-publish-container {
   height: 100vh;
@@ -253,6 +257,7 @@ export default {
 
   .van-icon {
     color: white !important;
+    
   }
 }
 
@@ -301,11 +306,17 @@ export default {
   font-weight: bold;
   font-size: 20px;
   color: white;
+  text-shadow: $text-shadow-actions;
 }
 
 .footer-actions {
   position: absolute;
   bottom: 0;
   width: 100%;
+
+  i {
+    // text-shadow: 0px 0px 3px #969696;
+    text-shadow: $text-shadow-actions;
+  }
 }
 </style>

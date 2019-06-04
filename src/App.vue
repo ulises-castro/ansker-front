@@ -20,7 +20,6 @@ export default {
   methods: {
     sendErrorsAndManagesUserLogin() {
       this.$http.interceptors.response.use(undefined, (err) => {
-      console.log(err.response, err.status,"err");
 
       // Handler error from backend
       let errorMessage = 'general.error';

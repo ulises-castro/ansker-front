@@ -200,8 +200,6 @@ export default {
       this.login.isLoading = true;
 
       FB.getLoginStatus(function(response) {
-        console.log(response, 'hola');
-        // statusChangeCallback(response);
         self.openLoginFB();
       });
     },
@@ -231,7 +229,6 @@ export default {
       this.callUserLogin(data)
         .catch((err) => {
           this.showLoginError();
-          console.log(err);
       });
     },
     showLoginError() {
