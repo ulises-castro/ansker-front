@@ -93,7 +93,7 @@
         :quality="2"
         :zoom-speed="10"
         :disable-rotation="true"
-        :show-remove-button="false"
+        :show-remove-button="!false"
         :prevent-white-space="true"
         placeholder="Seleccionar imagén"
         @file-choose="alert('file choose')"
@@ -106,10 +106,10 @@
         @new-image-drawn="updateBackgroundImage"
         @zoom="updateBackgroundImage"
         @move="updateBackgroundImage">
-        <span>hola</span>|
+        <!-- <div @click="check" style="font-size: 2em; color:white; position: relative; top: -100px">This is a interesting test about canvas
+        </div> -->
       </image-edit>
     </div>
-
   </section>
 </template>
 <script>
@@ -170,6 +170,37 @@ export default {
 
       this.$router.push({ name: 'Discover' });
     },
+    drawTextInImage() {
+      this.croppaImageMetaData = this.imageSelected.getMetadata()
+
+      let ctx = this.imageSelected.getContext();
+      // ctx.clearRect(0, 0, this.canvasSize, this.canvasSize);
+
+      // console.log(this.imageSelected.$refs.canvas.getContext());
+
+      // ctx.fillText('My text', 100, 50);
+      // console.log('Check');
+      // ctx.fillStyle = "white";
+      // ctx.font = "bold 50px Arial";
+      // let publication = this.form.content;
+      // ctx.fillText(publication, (this.imageSelected.width / 2) - 17, (this.imageSelected.height / 2) + 8);
+
+      this.multilinesCanvas(
+        "Please could you stop the noise, I'm trying to get some",
+        {
+          rect: {
+            x: 0,
+            y: 0,
+            width: 500,
+            height: this.imageSelected.height - 20
+          },
+          verbose: true,
+          lineHeight: 1.4,
+          minFontSize: 50,
+          maxFontSize: 120,
+        }
+      );
+    },
     removeBackgroundImage() {
       this.background = '';
     },
@@ -177,6 +208,8 @@ export default {
       this.$refs.publishArea.blur();
       this.background =
         this.imageSelected.generateDataUrl('image/jpeg', 0.8);
+      
+      setTimeout(() => this.drawTextInImage(), 500);
     },
     changeBgColor() {
       this.$refs.publishArea.focus();
@@ -220,7 +253,94 @@ export default {
       axios.defaults.headers.common['Authorization'] = `${tokenSaved}`;
 
       this.form.location = data.address;
-    }
+    },
+    multilinesCanvas(text, opts) {
+        let ctx = this.imageSelected.getContext('2d');
+        // Default options 
+        if(!opts)
+          opts = {}
+        if (!opts.font)
+          opts.font = 'sans-serif'
+        if (typeof opts.stroke == 'undefined')
+          opts.stroke = false
+        if (typeof opts.verbose == 'undefined')
+          opts.verbose = false
+        if (!opts.rect)
+          opts.rect = {
+            x: 0,
+            y: 0,
+            width: ctx.canvas.width,
+            height: ctx.canvas.height
+          }
+        if (!opts.lineHeight)
+          opts.lineHeight = 1.1
+        if (!opts.minFontSize)
+          opts.minFontSize = 30
+        if (!opts.maxFontSize)
+          opts.maxFontSize = 100
+        // Default log function is console.log - Note: if verbose il false, nothing will be logged anyway
+        if (!opts.logFunction)
+          opts.logFunction = function(message) { console.log(message) }
+
+
+        const words = require('words-array')(text)
+        if (opts.verbose) opts.logFunction('Text contains ' + words.length + ' words')
+        var lines = []
+
+        // Finds max font size  which can be used to print whole text in opts.rec
+        for (var fontSize = opts.minFontSize; fontSize <= opts.maxFontSize; fontSize++) {
+
+          // Line height
+          var lineHeight = fontSize * opts.lineHeight
+
+          // Set font for testing with measureText()
+          ctx.font = ' ' + fontSize + 'px ' + opts.font
+
+          // Start
+          var x = opts.rect.x
+          var y = opts.rect.y + fontSize // It's the bottom line of the letters
+          lines = []
+          var line = ''
+
+          // Cycles on words
+          for (var word of words) {
+            // Add next word to line
+            var linePlus = line + word + ' '
+            // If added word exceeds rect width...
+            if (ctx.measureText(linePlus).width > (opts.rect.width)) {
+              // ..."prints" (save) the line without last word
+              lines.push({ text: line, x: x, y: y })
+              // New line with ctx last word
+              line = word + ' '
+              y += lineHeight
+            } else {
+              // ...continues appending words
+              line = linePlus
+            }
+          }
+
+          // "Print" (save) last line
+          lines.push({ text: line, x: x, y: y })
+
+          // If bottom of rect is reached then breaks "fontSize" cycle
+          if (y > opts.rect.height)
+            break
+
+        }
+
+        if (opts.verbose) opts.logFunction('Font used: ' + ctx.font)
+
+        // Print lines
+        for (var line of lines)
+          // Fill or stroke
+          if (opts.stroke)
+            ctx.strokeText(line.text.trim(), line.x, line.y)
+          else
+            ctx.fillText(line.text.trim(), line.x, line.y)
+
+        // Returns font size
+        return fontSize
+      }
   },
   created() {
     if (navigator.geolocation) {
@@ -319,4 +439,5 @@ $text-shadow-actions: 0px 0px 3px #696969;
     text-shadow: $text-shadow-actions;
   }
 }
+
 </style>
