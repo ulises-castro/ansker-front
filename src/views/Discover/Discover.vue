@@ -94,39 +94,42 @@
   </container-app>
 </template>
 <script>
-import axios from 'axios';
-import Menu from '@/components/Menu';
-import Secret from '@/components/Secret';
-import { get, post } from '@/api';
+import axios from "axios";
+import Menu from "@/components/Menu";
+import Secret from "@/components/Secret";
+import { get, post } from "@/api";
 
 export default {
-  name: 'Discover',
+  name: "Discover",
   data() {
     return {
       secrets: [],
       isLoading: true,
       showPublishSecretModal: false,
-      citySearchValue: '',
+      citySearchValue: "",
       citySelected: {},
       isLoadingCities: false,
-      activeCitiesHot: ['1'],
+      activeCitiesHot: ["1"],
       citiesSearchFound: [],
-      publishMessage: '',
+      publishMessage: "",
       showShareAdvice: this.$store.getters.showShareAdvice,
       authorizedGeolocation: this.$store.getters.authorizedGeolocation,
-      timerLoading: '',
-    }
+      timerLoading: ""
+    };
   },
   components: {
     Menu,
-    Secret,
+    Secret
   },
   sockets: {
     connect() {
-      console.log('socket connected');
+      console.log("socket connected");
     },
     customEmit(val) {
-      console.log('this method was fired by the socket server. eg: io.emit("customEmit", data)', val);
+      console.log(
+        'this method was fired by the socket server. eg: io.emit("customEmit", data)',
+        val
+      );
     }
   },
   watch: {
@@ -142,14 +145,14 @@ export default {
 
       if (citySearchValue.length < 3) return;
 
-      clearTimeout(this.timerLoading)
+      clearTimeout(this.timerLoading);
       this.isLoadingCities = true;
 
       const { data } = await get(`searchPlace/${citySearchValue}`);
 
       this.citiesSearchFound = data.cities;
 
-      this.timerLoading = setTimeout(() => this.isLoadingCities = false, 800);
+      this.timerLoading = setTimeout(() => (this.isLoadingCities = false), 800);
     },
     updateCitySelected(city) {
       this.citySelected = city;
@@ -157,29 +160,28 @@ export default {
       this.citiesSearchFound = [];
     },
     showPublishSecret() {
-      this.$router.push({ name: 'PublishSecret' });
+      this.$router.push({ name: "PublishSecret" });
     },
     async asyncFetchPublications() {
-      const { data } = await get('secret/allByCity', {});
+      const { data } = await get("secret/allByCity", {});
 
       this.isLoadingSecrets = false;
       this.secrets = data.secrets;
-    },
-   },
-  created() {
+    }
   },
+  created() {},
   mounted() {
     this.asyncFetchPublications();
-    console.log(this.$store.getters['entities/userData/all']());
+    console.log(this.$store.getters["entities/userData/all"]());
   },
   metaInfo: {
     // Children can override the title.
-    title: 'Publicaciones cerca de ti',
+    title: "Publicaciones cerca de ti"
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-@import '@/styles/main.scss';
+@import "@/styles/main.scss";
 
 .publish-button-float {
   position: fixed;
@@ -192,7 +194,7 @@ export default {
   border-radius: 100%;
   color: $primary;
   background: white;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .shareus {
