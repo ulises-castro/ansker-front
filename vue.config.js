@@ -8,7 +8,18 @@ module.exports = {
     port: 1297, // CHANGE YOUR PORT HERE!
     // https: true,
     disableHostCheck: true,
-  }
+  },
+  pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'src/service-worker.js',
+      exclude: [
+        /\.map$/, 
+        /manifest\.json$/ 
+      ],
+    },
+    themeColor: '#1da025'
+  },
   // mode: 'production'
   // devServer: {
   //   compress: true,

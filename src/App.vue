@@ -5,6 +5,9 @@
       :active.sync="isLoading"
       :can-cancel="false">
     </b-loading> -->
+    <div @click="install()" :style="{'display' : installAlert}">
+      Install
+    </div>
     <router-view/>
   </div>
 </template>
@@ -14,7 +17,9 @@ export default {
   name: 'App',
   data() {
     return {
-      isLoading : false
+      isLoading : false,
+      installAlert: "none",
+      installer: undefined
     }
   },
   methods: {
@@ -45,6 +50,29 @@ export default {
   },
   created() {
     // TODO: Check if useful this piece of code otherwise remove it
+    let installPrompt;
+
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault()
+      installPrompt = e
+      this.installAlert = "block"
+    })
+
+    this.installer = () => {
+      this.installAlert = 'none'
+      installPrompt.prompt()
+
+      installPrompt.userChoice.then(result => {
+        if (result.outcome === 'accepted') {
+          console.log('user accepted')
+        } else {
+          console.log('user denied')
+        }
+
+        installPrompt = false
+      })
+    }
+
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '273084363581374',
@@ -68,7 +96,6 @@ export default {
 
      // TODO: B Create 401 | 403 response middlare, BUG: Because whatever response code exists you will get out
      this.sendErrorsAndManagesUserLogin();
- 
   },
   metaInfo: {
     title: 'Ansker',
