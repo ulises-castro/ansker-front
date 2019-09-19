@@ -4,18 +4,25 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "serve-https": "vue-cli-service serve --https",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "capacitor-copy": "vue-cli-service capacitor-copy",
+    "capacitor-init": "vue-cli-service capacitor-init",
+    "capacitor-open": "vue-cli-service capacitor-open",
+    "capacitor-update": "vue-cli-service capacitor-update",
+    "serve-https": "vue-cli-service serve --https"
   },
   "dependencies": {
+    "@capacitor/cli": "^1.0.0-alpha.38",
+    "@capacitor/core": "^1.0.0-alpha.38",
     "@vuex-orm/core": "^0.31.9",
     "@vuex-orm/plugin-axios": "^0.5.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "buefy": "^0.7.4",
     "canvas-multiline-text": "^1.0.3",
     "core-js": "^2.6.5",
     "moment": "^2.24.0",
+    "register-service-worker": "^1.6.2",
     "socket.io-client": "^2.2.0",
     "vant": "^2.0.0-beta.2",
     "vue": "^2.6.6",
@@ -29,6 +36,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-eslint": "^3.5.0",
+    "@vue/cli-plugin-pwa": "^3.11.0",
     "@vue/cli-service": "^3.6.0",
     "@vue/eslint-config-airbnb": "^4.0.0",
     "babel-eslint": "^10.0.1",
@@ -38,6 +46,7 @@
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "vue-cli-plugin-pwa": "^1.0.0-alpha.1",
     "vue-template-compiler": "^2.5.21"
   }
 }

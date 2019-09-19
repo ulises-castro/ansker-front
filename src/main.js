@@ -26,6 +26,7 @@ import Vant, {
 import 'vant/lib/index.css';
 import { i18n } from './languages';
 import App from './App.vue';
+import './registerServiceWorker'
 
 Vue.use(Vant);
 Vue.use(Image);
