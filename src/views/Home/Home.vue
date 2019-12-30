@@ -49,7 +49,6 @@
       <h3 class="has-text-weight-bold has-text-white is-size-4 p20-0 p30-0">
         Últimas publicaciones
       </h3>
-<!-- 
       <aside class="secrets-container width100"
       :style="[{ 'padding-bottom: 0px !important': !secrets.length }]">
       </aside> -->
@@ -151,11 +150,9 @@
   </container>
 </template>
 <script>
-import HomeAboutAnsker from './HomeAboutAnsker';
+import HomeAboutAnsker from './HomeAboutAnsker.vue';
+import Secret from '@/components/Secret.vue';
 import { post, get } from '@/api';
-import Secret from '@/components/Secret';
-
-import axios from 'axios';
 
 export default {
   name: 'Home',
