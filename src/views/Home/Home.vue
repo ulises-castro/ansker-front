@@ -68,7 +68,6 @@
         :overlay="true">
         <h3 class="logo"> Ansker:) </h3>
         <small
-          v-if=""
           class="has-text-weight-bold p10 p-b-15 p-t-0 is-size-5" style="color: #363636">
           Comparte con tu alrededor de forma anónima
         </small>

@@ -4,19 +4,25 @@ import store from '@/store';
 
 import Home, { Terms, Policies } from '@/views/Home';
 import Discover from '@/views/Discover';
+import CountTimer from '@/views/CountTimer'
 import PublishSecret from '@/views/Publish';
 
 function loadView(view) {
-  return () => import(/* webpackChunkName: "view-[request]" */ `@/views/${view}`)
+  return () => import(`@/views/${view}`)
 }
 
 Vue.use(Router);
 
 const routes = [
+  // {
+  //   path: '/',
+  //   name: 'Home',
+  //   component: Home,
+  // },
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    name: 'CountTimer',
+    component: CountTimer,
   },
   {
     path: '/discover',

@@ -12,7 +12,7 @@
         <aside
           class="flex flex-wrap space-between">
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-            <img 
+            <img
               style="width: 38px; height: 38px; border-radius: 50%;"
               src="@/assets/cities/mx-manzanillo.jpg" />
             <small class="width: 100%; is-size-7">
@@ -21,7 +21,7 @@
           </div>
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-            <img 
+            <img
               style="width: 38px; height: 38px; border-radius: 50%;"
               src="@/assets/cities/mx-guadalajara.jpg" />
             <small class="is-size-7">
