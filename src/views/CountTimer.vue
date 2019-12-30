@@ -7,9 +7,9 @@
       label-position="begin"
       :end-text="'Event ended!'"
       :day-txt="'dias'"
-      :hour-txt="'horas'"
-      :minutes-txt="'minutos'"
-      :seconds-txt="'segundos'"
+      :hour-txt="'hrs'"
+      :minutes-txt="'mins'"
+      :seconds-txt="'segs'"
     >
       <template slot="countdown" slot-scope="scope">
         <small class="has-text-weight-bold p10 p-b-15 p-t-0 is-size-5" style="color: #363636">
@@ -38,20 +38,35 @@
       Cuenta regresiva para el lanzamiento oficial
     </h3>
     <div class="flex flex-center p30-0" style="width: 100%">
-        <van-icon :name="`${publicPathSocialIcons}/twitter.png`" size="43" class-prefix="social-icon" />
-        <van-icon :name="`${publicPathSocialIcons}/facebook.png`" size="43" class-prefix="social-icon" />
+      <van-icon
+        @click="openSocial('twitter')"
+        :name="`${publicPathSocialIcons}/twitter.png`"
+        size="43"
+        class-prefix="social-icon"
+      />
+      <van-icon
+        @click="openSocial('facebook')"
+        :name="`${publicPathSocialIcons}/facebook.png`"
+        size="43"
+        class-prefix="social-icon"
+      />
     </div>
   </container>
 </template>
 <script>
 export default {
-  name: 'CountTimer',
+  name: "CountTimer",
   data() {
     return {
-      publicPathSocialIcons: `${process.env.VUE_APP_BASE_URL}/img/icons/social`,
-    }
+      publicPathSocialIcons: `${process.env.VUE_APP_BASE_URL}/img/icons/social`
+    };
   },
   mounted() {},
+  methods: {
+    openSocial(social) {
+      window.open(`https://${social}.com/anskerme`, "_blank");
+    }
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -64,7 +79,7 @@ export default {
   }
 
   & > small {
-    font-size: .9em;
+    font-size: 0.9em;
     text-transform: capitalize;
     font-weight: lighter;
   }
