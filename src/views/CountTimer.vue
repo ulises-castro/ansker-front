@@ -55,18 +55,18 @@
 </template>
 <script>
 export default {
-  name: "CountTimer",
+  name: 'CountTimer',
   data() {
     return {
-      publicPathSocialIcons: `${process.env.VUE_APP_BASE_URL}/img/icons/social`
+      publicPathSocialIcons: `${process.env.VUE_APP_BASE_URL}/img/icons/social`,
     };
   },
   mounted() {},
   methods: {
     openSocial(social) {
-      window.open(`https://${social}.com/anskerme`, "_blank");
-    }
-  }
+      window.open(`https://${social}.com/anskerme`, '_blank');
+    },
+  },
 };
 </script>
 <style lang="scss" scoped>

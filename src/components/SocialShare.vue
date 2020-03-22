@@ -41,7 +41,7 @@
 export default {
   name: 'SocialShare',
   data() {
-    return {}
+    return {};
   },
   props: {
     url: {
@@ -58,12 +58,12 @@ export default {
     quote: {
       type: String,
       default: '',
-    }
+    },
   },
   mounted() {
     console.log('Mounted Social');
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss" scoped>

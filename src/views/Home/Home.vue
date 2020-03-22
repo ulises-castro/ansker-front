@@ -56,7 +56,7 @@
         <div
           class="secret column is-full-mobile is-half-tablet is-one-quarter-desktop p0" v-for="secret in secrets">
             <Secret
-              @openShowJoinUs="openShowJoinUs" 
+              @openShowJoinUs="openShowJoinUs"
               :secret="secret" />
         </div>
       </div>
@@ -88,7 +88,7 @@
               class="p0-10 p-r-15">
               <i class="fab fa-google is-size-5 p-t-5"></i>
             </div>
-            <spinner 
+            <spinner
               v-else
               :isLoading="true" />
             <span
@@ -116,7 +116,7 @@
               class="p0-10 p-r-15">
               <i class="fab fa-facebook-f is-size-4 p-t-5"></i>
             </div>
-            <spinner 
+            <spinner
               v-else
               :isLoading="true" />
             <span
@@ -133,7 +133,7 @@
             <small
               class="m-p-10"
               >
-              Al unirte, aceptas nuestros 
+              Al unirte, aceptas nuestros
               <br>
               <a
                 href="/terms" target="_blanket">
@@ -150,9 +150,9 @@
   </container>
 </template>
 <script>
-import HomeAboutAnsker from './HomeAboutAnsker.vue';
 import Secret from '@/components/Secret.vue';
 import { post, get } from '@/api';
+import HomeAboutAnsker from './HomeAboutAnsker.vue';
 
 export default {
   name: 'Home',
@@ -167,7 +167,7 @@ export default {
         isLoading: {
           google: false,
           facebook: false,
-        }
+        },
       },
       isLoadingSecrets: true,
       googleUrl: `${process.env.VUE_APP_API}/request/gmail/auth`,
@@ -175,7 +175,7 @@ export default {
       showFooter: true,
       secrets: [],
       isIphoneDevice: !!navigator.platform.match(/iPhone|iPod|iPad/),
-    }
+    };
   },
   mounted() {
     this.asyncFetchPublications();
@@ -195,15 +195,14 @@ export default {
 
       this.login.isLoading = true;
 
-      FB.getLoginStatus(function(response) {
+      FB.getLoginStatus((response) => {
         self.openLoginFB();
       });
     },
     openLoginFB() {
       FB.login((response) => {
-
         if (response.authResponse) {
-          const tokenFB = response.authResponse.accessToken
+          const tokenFB = response.authResponse.accessToken;
 
           const data = {
             tokenFB,
@@ -216,7 +215,7 @@ export default {
         }
       },
       {
-        scope: 'email'
+        scope: 'email',
       });
     },
     handlerLoginRequest(data) {
@@ -232,13 +231,13 @@ export default {
         duration: 3000,
         message: this.$t('login.error.failed_token'),
         position: 'is-top',
-        type: 'is-danger'
+        type: 'is-danger',
       });
     },
     async callUserLogin(params) {
-      let { data } = await post('login', params);
+      const { data } = await post('login', params);
 
-      let user = { ...data };
+      const user = { ...data };
       const { token } = data;
 
       // Consider implement models with orm
@@ -247,7 +246,7 @@ export default {
       this.$store.dispatch('login', { token, user });
       this.login.isLoading = false;
 
-      this.$router.push({ name: 'Discover' })
+      this.$router.push({ name: 'Discover' });
     },
     handleCatchError() {
 
@@ -256,8 +255,8 @@ export default {
       this.aboutAnskerMe = !this.aboutAnskerMe;
       this.showFooter = !this.showFooter;
     },
-  }
-}
+  },
+};
 </script>
 <style lang="scss" scoped>
 

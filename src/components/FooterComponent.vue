@@ -7,7 +7,7 @@
         class="has-text-white has-text-weight-bold"
         target="_blank"
         href="https://www.ansker.me/terms">
-        Términos y Condiciones y 
+        Términos y Condiciones y
       </a>
       <a
         class="has-text-white has-text-weight-bold"
@@ -21,7 +21,7 @@
 <script>
 export default {
   name: 'FooterComponent',
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -71,9 +71,9 @@
 export default {
   name: 'Terms',
   data() {
-    return {}
-  }
-}
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>

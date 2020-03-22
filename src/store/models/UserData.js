@@ -15,6 +15,6 @@ export default class UserData extends Model {
       regionCode: this.string(''),
       regionName: this.string(''),
       city: this.string(''),
-    }
+    };
   }
 }

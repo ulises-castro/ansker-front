@@ -6,8 +6,8 @@ const es = {
   secret: {
     publish: {
       error: 'Ocurrió un error desconocido',
-      invalid: 'La pulicación no puede estar vacia.'
-    }
+      invalid: 'La pulicación no puede estar vacia.',
+    },
   },
   login: {
     error: {
@@ -23,8 +23,8 @@ const es = {
   user: {
     location_permission: {
       denied: 'Parar mostrarte las publicaciones a tu alrededor necesitamos acceder a tu ubicación, <b>procura tener el GPS prendido</b>.',
-    }
-  }
+    },
+  },
 };
 
 export default es;

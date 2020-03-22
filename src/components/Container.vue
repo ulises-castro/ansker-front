@@ -20,9 +20,9 @@ export default {
     showFooter: {
       type: Boolean,
       default: true,
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 @import '@/styles/main.scss';

@@ -76,7 +76,7 @@ export default {
     secret: {
       type: Object,
       required: true,
-    }
+    },
   },
   data() {
     return {
@@ -85,29 +85,29 @@ export default {
       userLogged: this.$store.getters.isLogged,
       actions: [
         {
-          name: 'Option'
+          name: 'Option',
         },
         {
           name: 'Option',
-          description: 'Description'
+          description: 'Description',
         },
         {
-          loading: true
+          loading: true,
         },
         {
           name: 'Disabled Option',
-          disabled: true
-        }
+          disabled: true,
+        },
       ],
       screenWidth: window.innerWidth,
-    }
+    };
   },
   mounted() {
     // this.showJoinUs();
   },
   methods: {
     showJoinUs() {
-      if (!this.isUserLogged ) {
+      if (!this.isUserLogged) {
         this.$emit('openShowJoinUs');
         return true;
       }
@@ -121,7 +121,7 @@ export default {
       const { data } = await post('secret/liked', { secretId });
 
       this.secret.userLiked = !this.secret.userLiked;
-      const operation = (!this.secret.userLiked) ? -1 : 1
+      const operation = (!this.secret.userLiked) ? -1 : 1;
       this.secret.likes += operation;
     },
     goSecret() {
@@ -129,11 +129,11 @@ export default {
 
       this.$router.push({
         name: 'Secret',
-        params: { secretId }
+        params: { secretId },
       });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>

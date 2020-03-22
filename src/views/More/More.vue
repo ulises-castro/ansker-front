@@ -53,13 +53,12 @@ export default {
       this.$store.dispatch('logout');
 
       this.$router.push({ name: 'Home' });
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 .shareus {
   height: 200px;
 }
 </style>
-

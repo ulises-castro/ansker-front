@@ -8,6 +8,6 @@ export default class User extends Model {
       id: this.attr(null),
       name: this.attr(''),
       email: this.attr(''),
-    }
+    };
   }
 }

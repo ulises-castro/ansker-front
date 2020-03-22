@@ -1,7 +1,7 @@
 <template>
   <section>
     <h3 class="logo">Ansker:)
-      
+
     </h3>
   </section>
 </template>
@@ -12,11 +12,10 @@ export default {
     return {};
   },
   created() {
-
     if (true) {
       this.$toast.loading({
         mask: true,
-        message: 'Cargando...'
+        message: 'Cargando...',
       });
     }
 
@@ -28,8 +27,8 @@ export default {
     const user = {};
     this.$store.dispatch('login', { token, user });
     this.$router.push({ name: 'Discover' });
-  }
-}
+  },
+};
 </script>
 <style lang="scss" scoped>
 

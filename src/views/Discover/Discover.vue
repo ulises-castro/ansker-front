@@ -30,7 +30,7 @@
           </div>
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-            <img 
+            <img
               style="width: 38px; height: 38px; border-radius: 50%;"
               src="@/assets/cities/mx-tijuana.jpg" />
             <small class="is-size-7">
@@ -39,7 +39,7 @@
           </div>
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-            <img 
+            <img
               style="width: 38px; height: 38px; border-radius: 50%;"
               src="@/assets/cities/mx-colima.jpg" />
             <small class="is-size-7">
@@ -94,50 +94,50 @@
   </container-app>
 </template>
 <script>
-import axios from "axios";
-import Menu from "@/components/Menu";
-import Secret from "@/components/Secret";
-import { get, post } from "@/api";
+import axios from 'axios';
+import Menu from '@/components/Menu';
+import Secret from '@/components/Secret';
+import { get, post } from '@/api';
 
 export default {
-  name: "Discover",
+  name: 'Discover',
   data() {
     return {
       secrets: [],
       isLoading: true,
       showPublishSecretModal: false,
-      citySearchValue: "",
+      citySearchValue: '',
       citySelected: {},
       isLoadingCities: false,
-      activeCitiesHot: ["1"],
+      activeCitiesHot: ['1'],
       citiesSearchFound: [],
-      publishMessage: "",
+      publishMessage: '',
       showShareAdvice: this.$store.getters.showShareAdvice,
       authorizedGeolocation: this.$store.getters.authorizedGeolocation,
-      timerLoading: ""
+      timerLoading: '',
     };
   },
   components: {
     Menu,
-    Secret
+    Secret,
   },
   sockets: {
     connect() {
-      console.log("socket connected");
+      console.log('socket connected');
     },
     customEmit(val) {
       console.log(
         'this method was fired by the socket server. eg: io.emit("customEmit", data)',
-        val
+        val,
       );
-    }
+    },
   },
   watch: {
     citySearchValue(value) {
       if (!value) {
         this.citiesSearchFound = [];
       }
-    }
+    },
   },
   methods: {
     async onSearchCity() {
@@ -160,24 +160,24 @@ export default {
       this.citiesSearchFound = [];
     },
     showPublishSecret() {
-      this.$router.push({ name: "PublishSecret" });
+      this.$router.push({ name: 'PublishSecret' });
     },
     async asyncFetchPublications() {
-      const { data } = await get("secret/allByCity", {});
+      const { data } = await get('secret/allByCity', {});
 
       this.isLoadingSecrets = false;
       this.secrets = data.secrets;
-    }
+    },
   },
   created() {},
   mounted() {
     this.asyncFetchPublications();
-    console.log(this.$store.getters["entities/userData/all"]());
+    console.log(this.$store.getters['entities/userData/all']());
   },
   metaInfo: {
     // Children can override the title.
-    title: "Publicaciones cerca de ti"
-  }
+    title: 'Publicaciones cerca de ti',
+  },
 };
 </script>
 <style lang="scss" scoped>

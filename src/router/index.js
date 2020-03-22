@@ -4,11 +4,11 @@ import store from '@/store';
 
 import Home, { Terms, Policies } from '@/views/Home';
 import Discover from '@/views/Discover';
-import CountTimer from '@/views/CountTimer'
+import CountTimer from '@/views/CountTimer';
 import PublishSecret from '@/views/Publish';
 
 function loadView(view) {
-  return () => import(`@/views/${view}`)
+  return () => import(`@/views/${view}`);
 }
 
 Vue.use(Router);
@@ -30,7 +30,7 @@ const routes = [
     component: Discover,
     meta: {
       requiresAuth: true,
-    }
+    },
   },
   {
     path: '/publish',
@@ -38,7 +38,7 @@ const routes = [
     component: PublishSecret,
     meta: {
       requiresAuth: true,
-    }
+    },
   },
   {
     path: '/secret/:secretId',
@@ -46,7 +46,7 @@ const routes = [
     component: loadView('Secret'),
     meta: {
       requiresAuth: true,
-    }
+    },
   },
   {
     path: '/more',
@@ -54,7 +54,7 @@ const routes = [
     component: loadView('More'),
     meta: {
       requiresAuth: true,
-    }
+    },
   },
   {
     path: '/get-token/:token',

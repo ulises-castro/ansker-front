@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VuexORM from '@vuex-orm/core';
 // import User from './User'
-import UserData from './models/UserData';
 import axios from 'axios';
+import UserData from './models/UserData';
 // import secrets from './secrets'
 Vue.use(Vuex);
 
@@ -29,7 +29,7 @@ const state = {
 const actions = {
   logout({ commit }) {
     commit('logout');
-    delete axios.defaults.headers.common['Authorization'];
+    delete axios.defaults.headers.common.Authorization;
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   },
@@ -39,7 +39,7 @@ const actions = {
     commit('authSuccess', token, user);
     commit('updateUser', user);
 
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   },
   changeView({ commit }, viewNumber) {
     commit('updateCurrentView', viewNumber);
@@ -50,7 +50,7 @@ const actions = {
     localStorage.hideShareAdvice = 'true';
   },
   userLocation({ commit, state }, locationObj) {
-    const user = state.user;
+    const { user } = state;
     user.location = locationObj;
 
     commit('updateUser', user);
@@ -59,7 +59,7 @@ const actions = {
     commit('setAuthorizedGeolocation', responseBoolean);
 
     localStorage.authorizedGeolocation = responseBoolean;
-  }
+  },
 };
 
 const mutations = {

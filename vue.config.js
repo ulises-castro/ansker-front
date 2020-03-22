@@ -1,5 +1,6 @@
-const CompressionWebpackPlugin = require('compression-webpack-plugin')
-const productionGzipExtensions = ['js', 'css']
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
+
+const productionGzipExtensions = ['js', 'css'];
 
 
 module.exports = {
@@ -9,17 +10,7 @@ module.exports = {
     // https: true,
     disableHostCheck: true,
   },
-  pwa: {
-    workboxPluginMode: 'InjectManifest',
-    workboxOptions: {
-      swSrc: 'src/service-worker.js',
-      exclude: [
-        /\.map$/, 
-        /manifest\.json$/ 
-      ],
-    },
-    themeColor: '#1da025'
-  },
+
   // mode: 'production'
   // devServer: {
   //   compress: true,
@@ -44,6 +35,26 @@ module.exports = {
   //     })
   //   ]
   // }
-}
+  pwa: {
+    workboxPluginMode: 'InjectManifest',
+    workboxOptions: {
+      swSrc: 'src/service-worker.js',
+      exclude: [
+        /\.map$/,
+        /manifest\.json$/,
+      ],
+    },
+    themeColor: '#1da025',
+  },
 
+  pluginOptions: {
+    quasar: {
+      importStrategy: 'kebab',
+      rtlSupport: true,
+    },
+  },
 
+  transpileDependencies: [
+    'quasar',
+  ],
+};

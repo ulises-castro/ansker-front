@@ -48,17 +48,17 @@ import HeaderApp from './HeaderApp';
 export default {
   name: 'container-app',
   data() {
-    return {}
+    return {};
   },
   watch: {
     isLoading() {
       if (this.isLoading) {
         this.$toast.loading({
           mask: true,
-          message: 'Cargando...'
+          message: 'Cargando...',
         });
       }
-    }
+    },
   },
   mounted() {
   },
@@ -73,7 +73,7 @@ export default {
       }
 
       // Show notifications
-    }
+    },
   },
   props: {
     isLoading: {
@@ -95,8 +95,8 @@ export default {
   components: {
     Menu,
     HeaderApp,
-  }
-}
+  },
+};
 </script>
 
 <style lang="scss">

@@ -43,11 +43,11 @@ export default {
       secret: {},
       showPublishComment: false,
       comments: [],
-    }
+    };
   },
   components: {
     Secret,
-    Comment
+    Comment,
   },
   mounted() {
     this.fetchSecret();
@@ -56,13 +56,13 @@ export default {
     async fetchSecret() {
       const { secretId } = this.$route.params;
 
-      const { data } = await get('secret/' + secretId);
+      const { data } = await get(`secret/${ secretId}`);
       this.isLoading = false;
-      console.log(data, "La data aquí");
+      console.log(data, 'La data aquí');
       return this.secret = data.secret;
-    }
-  }
-}
+    },
+  },
+};
 </script>
 <style lang="scss" scoped>
 @import '@/styles/main.scss';

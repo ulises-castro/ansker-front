@@ -1,266 +1,103 @@
 <template>
-  <div id="app">
-    <!-- <b-loading
-      :is-full-page="true"
-      :active.sync="isLoading"
-      :can-cancel="false">
-    </b-loading> -->
-    <div @click="install()" :style="{'display' : installAlert}">
-      Install
-    </div>
-    <router-view/>
-  </div>
+  <q-layout view="lHh Lpr lFf">
+    <q-header elevated class="glossy">
+      <q-toolbar>
+        <q-btn
+          flat
+          dense
+          round
+          @click="leftDrawerOpen = !leftDrawerOpen"
+          aria-label="Menu"
+          icon="menu"
+        />
+
+        <q-toolbar-title>
+          Quasar App
+        </q-toolbar-title>
+
+        <div>Quasar v{{ $q.version }}</div>
+      </q-toolbar>
+    </q-header>
+
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      content-class="bg-grey-2"
+    >
+      <q-list>
+        <q-item-label header>Essential Links</q-item-label>
+        <q-item clickable tag="a" target="_blank" href="https://quasar.dev">
+          <q-item-section avatar>
+            <q-icon name="school" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Docs</q-item-label>
+            <q-item-label caption>quasar.dev</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable tag="a" target="_blank" href="https://github.com/quasarframework/">
+          <q-item-section avatar>
+            <q-icon name="code" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Github</q-item-label>
+            <q-item-label caption>github.com/quasarframework</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable tag="a" target="_blank" href="https://chat.quasar.dev">
+          <q-item-section avatar>
+            <q-icon name="chat" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Discord Chat Channel</q-item-label>
+            <q-item-label caption>chat.quasar.dev</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable tag="a" target="_blank" href="https://forum.quasar.dev">
+          <q-item-section avatar>
+            <q-icon name="forum" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Forum</q-item-label>
+            <q-item-label caption>forum.quasar.dev</q-item-label>
+          </q-item-section>
+        </q-item>
+        <q-item clickable tag="a" target="_blank" href="https://twitter.com/quasarframework">
+          <q-item-section avatar>
+            <q-icon name="rss_feed" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label>Twitter</q-item-label>
+            <q-item-label caption>@quasarframework</q-item-label>
+          </q-item-section>
+        </q-item>
+      </q-list>
+    </q-drawer>
+
+    <q-page-container>
+      <HelloWorld />
+    </q-page-container>
+  </q-layout>
 </template>
-<script type="text/javascript">
-/* eslint-disable */
+
+<script>
+import HelloWorld from './components/HelloWorld.vue';
+
 export default {
-  name: 'App',
+  name: 'LayoutDefault',
+
+  components: {
+    HelloWorld,
+  },
+
   data() {
     return {
-      isLoading : false,
-      installAlert: "none",
-      installer: undefined
-    }
-  },
-  methods: {
-    sendErrorsAndManagesUserLogin() {
-      this.$http.interceptors.response.use(undefined, (err) => {
-
-      // Handler error from backend
-      let errorMessage = 'general.error';
-      if (err.response && err.response.data) {
-        errorMessage = (!err.response.data.error)
-          ? 'general.' + err.response.data
-          : err.response.data.error;
-      }
-
-      this.$notify({
-        message: this.$t(errorMessage),
-        duration: 3000,
-      });
-
-      return;
-      if (err) {
-         this.$store.dispatch('logout');
-
-         this.$router.push({ name: 'Home' });
-       }
-     });
-    }
-  },
-  created() {
-    // TODO: Check if useful this piece of code otherwise remove it
-    let installPrompt;
-
-    window.addEventListener('beforeinstallprompt', e => {
-      e.preventDefault()
-      installPrompt = e
-      this.installAlert = "block"
-    })
-
-    this.installer = () => {
-      this.installAlert = 'none'
-      installPrompt.prompt()
-
-      installPrompt.userChoice.then(result => {
-        if (result.outcome === 'accepted') {
-          console.log('user accepted')
-        } else {
-          console.log('user denied')
-        }
-
-        installPrompt = false
-      })
-    }
-
-    window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '273084363581374',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v3.2'
-      });
-
-      FB.AppEvents.logPageView();
-
-      window.FB = FB;
+      leftDrawerOpen: false,
     };
-
-    (function(d, s, id) {
-       var js, fjs = d.getElementsByTagName(s)[0];
-       if (d.getElementById(id)) {return;}
-       js = d.createElement(s); js.id = id;
-       js.src = "https://connect.facebook.net/en_US/sdk.js";
-       fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));
-
-     // TODO: B Create 401 | 403 response middlare, BUG: Because whatever response code exists you will get out
-     this.sendErrorsAndManagesUserLogin();
   },
-  metaInfo: {
-    title: 'Ansker',
-    titleTemplate: '%s ~ Ansker',
-    meta: [
-      {
-        name: 'description',
-        content: 'Comparte lo que piensas con tu alrededor anónimamente.'
-      },
-      {
-        property: 'og:title',
-        content: 'Ansker - Comparte lo que piensas con tu alrededor anónimamente'
-      },
-      {
-        property: 'og:site_name',
-        content
-      : 'Ansker'
-      },
-      {
-        property: 'og:type',
-        content: 'website'
-      },
-      {
-        property: 'og:url',
-        content: 'https://ansker.me'
-      },
-      {
-        property: 'og:description',
-        content: 'Comparte lo que piensas con tu alrededor anónimamente'
-      }
-    ],
-  }
-}
+};
 </script>
-<style lang="scss">
-@import '@/styles/variables.scss';
 
-html, body, #app {
-  height: 100%;
-  width: 100%;
-}
-
-.loading-overlay .loading-icon:after {
-  border: 4px solid #54a0c0;
-  border-radius: 290486px;
-  border-right-color: transparent;
-  border-top-color: transparent;
-}
-
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-
-a.has-text-primary:hover {
-  color: $primary !important;
-}
-
-.is-color-primary {
-  color: $primary !important;
-}
-
-.is-cursor-pointer {
-  cursor: pointer;
-}
-
-.has-text-primary {
-  color: $primary !important;
-}
-
-.is-underline {
-  text-decoration: underline;
-}
-
-a {
-  color: $primary;
-  font-weight: bold;
-}
-
-i {
-  &.icon-fb {
-    width: 10px;
-    counter-reset: white;
-    background: url('./assets/icons/facebook.svg');
-  }
-}
-
-.logo {
-  font-size: 30px;
-  color: $primary;
-  font-weight: bold;
-  font-family: 'Marck Script', cursive;
-}
-
-.is-relative {
-  position: relative;
-}
-
-
-canvas::after {
-  content: "Cavas";
-}
-
-// Creating personally spaces
-$spaceamounts: (0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 60, 70, 80, 90, 100);
-
-$sides: ('', '-top', '-bottom', '-left', '-right'); // Leave this variable alone
-
-@each $space in $spaceamounts {
-  @each $side in $sides {
-    .m#{str-slice($side, 0, 2)}-#{$space} {
-      margin#{$side}: #{$space}px !important;
-    }
-
-    .p#{str-slice($side, 0, 2)}-#{$space} {
-      padding#{$side}: #{$space}px !important;
-    }
-  }
-
-  // Only left and right values
-  .m0-#{$space} {
-    margin: 0 #{$space}px !important;
-  }
-
-  .p0-#{$space} {
-    padding: 0 #{$space}px !important;
-  }
-
-  // Only top and bottom values
-  .m#{$space}-0 {
-    margin: #{$space}px 0 !important;
-  }
-
-  .p#{$space}-0 {
-    padding: #{$space}px 0 !important;
-  }
-
-  .p0-#{$space} {
-    padding: 0 #{$space}px !important;
-  }
-
-  // General paddings
-  .m#{$space} {
-    margin: #{$space}px !important;
-  }
-
-  .p#{$space} {
-    padding: #{$space}px !important;
-  }
-}
-
+<style>
 </style>

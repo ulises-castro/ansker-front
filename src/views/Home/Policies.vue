@@ -72,9 +72,9 @@
 export default {
   name: 'Policies',
   data() {
-    return {}
-  }
-}
+    return {};
+  },
+};
 </script>
 
 <style lang="scss" scoped>
