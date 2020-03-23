@@ -11,51 +11,34 @@
  **/
 import Vue from 'vue'
 import './import-quasar.js'
-import enUS from "vant/lib/locale/lang/en-US";
 
-import Vant, {
-  Image,
-  Button,
-  Locale,
-  Lazyload,
-  Collapse,
-  CollapseItem,
-  ActionSheet
-} from "vant";
+
 
 import App from 'app/src/App.vue'
+
 
 import createStore from 'app/src/store/index'
 
 import createRouter from 'app/src/router/index'
 
-Vue.use(Vant);
-Vue.use(Image);
-Vue.use(ActionSheet);
-Vue.use(Lazyload, {});
-Vue.use(Button);
 
-Locale.use("en-US", enUS);
+
+
 
 export default async function () {
   // create store and router instances
-
-  const store = typeof createStore === 'function' ?
-    await createStore({
-      Vue
-    }) :
-    createStore
-
-  const router = typeof createRouter === 'function' ?
-    await createRouter({
-      Vue,
-      store
-    }) :
-    createRouter
-
+  
+  const store = typeof createStore === 'function'
+    ? await createStore({Vue})
+    : createStore
+  
+  const router = typeof createRouter === 'function'
+    ? await createRouter({Vue, store})
+    : createRouter
+  
   // make router instance available in store
   store.$router = router
-
+  
 
   // Create the app instantiation Object.
   // Here we inject the router, store to all child components,
@@ -67,7 +50,7 @@ export default async function () {
     render: h => h(App)
   }
 
-
+  
 
   // expose the app, the router and the store.
   // note we are not mounting the app here, since bootstrapping will be
