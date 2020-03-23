@@ -22,55 +22,45 @@
         <span class="text-h5 text-weight-bolder">Unirme</span>
       </van-button>
     </section>
-    <van-popup class v-model="showJoinUs" :overlay="true">
-      <h3 class="logo-font text-primary text-weight-bolder">Ansker:)</h3>
+    <van-popup
+      round
+      position="bottom"
+      :style="{ height: '30%' }"
+      class="row wrap justify-center"
+      v-model="openJoinUs"
+      :overlay="true"
+    >
+      <h5 class="logo-font text-primary text-weight-bolder text-center q-my-none q-py-md">Ansker:)</h5>
       <small
-        class="has-text-weight-bold p10 p-b-15 p-t-0 is-size-5"
+        class="full-width text-center text-weight-bold text-subtitle"
         style="color: #363636"
       >Comparte con tu alrededor de forma anónima</small>
-      <a
+      <button
         :href="googleUrl"
-        @click="checkLoginState"
-        class="has-bg-google has-text-white flex flex-middle p-10 is-pointer m-b-5 border-5"
+        class="full-width no-border bg-red-8 has-text-white row justify-center items-center cursor-pointer"
       >
         <div v-if="!login.isLoading.google" class="p0-10 p-r-15">
           <i class="fab fa-google is-size-5 p-t-5"></i>
         </div>
-        <spinner v-else :isLoading="true" />
-        <span
-          v-t="{
-                  path: 'login.social_button',
-                  args: { name: 'Google' }
-                }"
-          class="is-size-5"
-          style="font-weight: none !important"
-        ></span>
-      </a>
+        <span class="text-h6 text-white text-weight-bold">Continuar con Google</span>
+      </button>
       <button
-        @click="checkLoginState"
-        class="has-bg-facebook has-text-white flex flex-middle p-10 is-pointer border-5"
+        class="full-width bg-blue-10 no-border has-text-white row justify-center items-center cursor-pointer"
       >
         <div v-if="!login.isLoading.facebook" class="p0-10 p-r-15">
           <i class="fab fa-facebook-f is-size-4 p-t-5"></i>
         </div>
         <spinner v-else :isLoading="true" />
-        <span
-          v-if="!login.isLoading.facebook"
-          v-t="{
-                  path: 'login.social_button',
-                  args: { name: 'Facebook' }
-                }"
-          class="is-size-5"
-        ></span>
+        <span class="text-h6 text-white text-weight-bold">Continuar con Facebook</span>
       </button>
-      <aside class="p15" style="line-height: initial">
+      <!-- <aside class="p15" style="line-height: initial">
         <small class="m-p-10">
           Al unirte, aceptas nuestros
           <br />
           <a href="/terms" target="_blanket">Términos</a> y
           <a href="/policies" target="_blanket">Políticas de privacidad</a>
         </small>
-      </aside>
+      </aside>-->
     </van-popup>
     <section></section>
   </section>
@@ -83,6 +73,7 @@ export default {
     return {
       showFooter: true,
       openJoinUs: false,
+      googleUrl: `${process.env.VUE_APP_API}/request/gmail/auth`,
       login: {
         isLoading: {
           facebook: false,
