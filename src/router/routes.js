@@ -1,14 +1,8 @@
+// function lazyLoad(component) {
+//   return () => import(`@/${component}.vue`)
+// }
 
-const get = (folder, component) => import(`${folder}/${component}.vue`)
-
-const loadPage = (page) => {
-  return get('pages', page)
-}
-
-const loadLayout = (layout) => {
-  return get('layout', layout)
-}
-
+// TODO: Implemented a better way to performs lazyLoad of component
 const routes = [
   // {
   //   path: '/',
@@ -19,7 +13,7 @@ const routes = [
   // }
   {
     path: '/',
-    component: loadPage('Index')
+    component: () => import('pages/Index.vue')
   }
 ]
 
@@ -27,7 +21,7 @@ const routes = [
 if (process.env.MODE !== 'ssr') {
   routes.push({
     path: '*',
-    component: () => import('pages/Error404.vue')
+    component: () => import('pages/Error404')
   })
 }
 

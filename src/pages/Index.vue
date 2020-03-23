@@ -1,6 +1,6 @@
 <template>
   <container :showFooter="showFooter">
-    
+    hola
   </container>
 </template>
 
@@ -20,6 +20,8 @@ export default {
   }
 }
 </script>
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.container {
+  background: 
+}
 </style>
