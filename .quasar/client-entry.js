@@ -38,6 +38,8 @@ import qboot_Booti18n from 'boot/i18n'
 
 import qboot_Bootaxios from 'boot/axios'
 
+import qboot_Bootvant from 'boot/vant'
+
 
 
 
@@ -68,7 +70,7 @@ async function start () {
   }
 
   const urlPath = window.location.href.replace(window.location.origin, '')
-  const bootFiles = [qboot_Booti18n,qboot_Bootaxios]
+  const bootFiles = [qboot_Booti18n,qboot_Bootaxios,qboot_Bootvant]
 
   for (let i = 0; routeUnchanged === true && i < bootFiles.length; i++) {
     if (typeof bootFiles[i] !== 'function') {
