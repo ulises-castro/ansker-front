@@ -1,6 +1,7 @@
 <template>
-  <container :showFooter="showFooter">
-    hola
+  <container class="block window-height window-width bg-primary" :showFooter="showFooter">
+
+    <h3 class="logo-font q-mt-none text-white text-weight-bold">Ansker;)</h3>
   </container>
 </template>
 
@@ -21,7 +22,4 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.container {
-  background: 
-}
 </style>

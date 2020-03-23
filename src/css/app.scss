@@ -1,0 +1,11 @@
+// app global css in SCSS form
+
+@font-face {
+  font-family: MarckScript;
+  src: url(./fonts/MarckScript-Regular.ttf);
+}
+
+// declare a class which applies it
+.logo-font {
+  font-family: 'MarckScript';
+}
