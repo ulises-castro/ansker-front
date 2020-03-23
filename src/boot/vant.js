@@ -19,9 +19,3 @@ Vue.use(Button);
 Vue.use(ActionSheet);
 Vue.use(Lazyload, {});
 Locale.use("en-US", enUS);
-
-export default async ({
-  /* app, router, Vue, ... */
-}) => {
-  // something to do
-}
