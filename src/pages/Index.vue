@@ -1,5 +1,5 @@
 <template>
-  <container class="block window-height window-width bg-primary" :showFooter="showFooter">
+  <section class="block window-height window-width bg-primary" :showFooter="showFooter">
     <section class="q-py-lg">
       <h4 class="logo-font q-py-lg q-my-none text-white text-weight-bold text-center">Ansker;)</h4>
       <p
@@ -19,7 +19,7 @@
       >Unirme</van-button>
     </section>
     <section></section>
-  </container>
+  </section>
 </template>
 
 <script>
