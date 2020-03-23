@@ -8,9 +8,9 @@
     </section>
     <section>
       <van-button
-        @click="showJoinUs = true"
+        @click="openJoinUs = true"
         round
-        type="main-button is-color-primary is-size-5 has-text-weight-bold m-t-10"
+        type="main-button bg-primary text-weight-bold"
         size="large"
         :loading="
           login.isLoading.google ||
@@ -28,9 +28,10 @@ export default {
   data() {
     return {
       showFooter: true,
+      openJoinUs: open,
       login: {
         isLoading: {
-          facebook: false,
+          facebook: true,
           google: false
         }
       }
@@ -43,7 +44,7 @@ export default {
   font-size: 5em;
 }
 
-.slong {
-  font-size: 1.1em;
+.slogan {
+  font-size: 1.2em;
 }
 </style>

@@ -15,6 +15,7 @@ import enUS from "vant/lib/locale/lang/en-US";
 
 import Vant, {
   Image,
+  Button,
   Locale,
   Lazyload,
   Collapse,
@@ -32,6 +33,8 @@ Vue.use(Vant);
 Vue.use(Image);
 Vue.use(ActionSheet);
 Vue.use(Lazyload, {});
+Vue.use(Button);
+
 Locale.use("en-US", enUS);
 
 export default async function () {
