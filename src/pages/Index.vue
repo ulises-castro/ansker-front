@@ -8,7 +8,7 @@
         class="text-center slogan text-weight-bold text-white"
       >Comparte lo que piensas con tu alrededor de manera anónima.</p>
     </section>
-    <section class="row justify-center">
+    <section class="row justify-center q-px-sm">
       <van-button
         @click="openJoinUs = true"
         round
@@ -25,7 +25,7 @@
     <van-popup
       round
       position="bottom"
-      :style="{ height: '30%' }"
+      :style="{ height: '40%' }"
       class="row wrap justify-center"
       v-model="openJoinUs"
       :overlay="true"
@@ -53,14 +53,17 @@
         <spinner v-else :isLoading="true" />
         <span class="text-h6 text-white text-weight-bold">Continuar con Facebook</span>
       </button>
-      <!-- <aside class="p15" style="line-height: initial">
-        <small class="m-p-10">
+      <aside class="q-py-sm row items-center">
+        <small class="text-weight-bold text-subtitle text-indigo-9">
           Al unirte, aceptas nuestros
-          <br />
-          <a href="/terms" target="_blanket">Términos</a> y
-          <a href="/policies" target="_blanket">Políticas de privacidad</a>
+          <a
+            class="text-primary"
+            href="/terms"
+            target="_blanket"
+          >Términos</a> y
+          <a class="text-primary" href="/policies" target="_blanket">Políticas de privacidad</a>
         </small>
-      </aside>-->
+      </aside>
     </van-popup>
     <section></section>
   </section>
