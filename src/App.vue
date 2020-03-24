@@ -6,10 +6,8 @@
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
 <style lang="scss" scoped>
-html, body, #q-app {
-}
 </style>
