@@ -30,7 +30,11 @@
       v-model="openJoinUs"
       :overlay="true"
     >
-      <h5 class="logo-font text-primary text-weight-bolder text-center q-my-none q-py-md">Ansker:)</h5>
+      <div class="row items-center">
+        <span
+          class="logo-font text-primary text-weight-bolder text-center q-my-none q-py-sm text-h5"
+        >Ansker:)</span>
+      </div>
       <small
         class="full-width text-center text-weight-bold text-subtitle"
         style="color: #363636"
