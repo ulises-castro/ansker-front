@@ -80,7 +80,7 @@ export default {
     return {
       showFooter: true,
       openJoinUs: false,
-      googleUrl: `${process.env.VUE_APP_API}/request/gmail/auth`,
+      googleUrl: `${process.env.API}/request/gmail/auth`,
       login: {
         isLoading: {
           facebook: false,

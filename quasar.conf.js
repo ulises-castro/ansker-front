@@ -59,6 +59,14 @@ module.exports = function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 
+      env: ctx.dev ? { // so on dev we'll have
+        API: JSON.stringify('http://localanskerme.me:3000/api'),
+        SOCKET: JSON.stringify('http://localanskerme.me:3000'),
+        BASE_URL: JSON.stringify('http://localanskerme.me:3000')
+      } : { // and on build (production):
+        API: JSON.stringify('https://prod.api.com')
+      },
+
       // rtl: false, // https://quasar.dev/options/rtl-support
       // showProgress: false,
       // gzip: true,
