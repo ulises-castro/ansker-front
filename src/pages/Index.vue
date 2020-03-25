@@ -39,7 +39,7 @@
         class="full-width text-center text-weight-bold text-subtitle"
         style="color: #363636"
       >Comparte con tu alrededor de forma anónima</small>
-      <button
+      <a
         :href="googleUrl"
         class="full-width no-border bg-red-8 has-text-white row justify-center items-center cursor-pointer"
       >
@@ -47,8 +47,8 @@
           <i class="fab fa-google is-size-5 p-t-5"></i>
         </div>
         <span class="text-h6 text-white text-weight-bold">Continuar con Google</span>
-      </button>
-      <button
+      </a>
+      <a
         class="full-width bg-blue-10 no-border has-text-white row justify-center items-center cursor-pointer"
       >
         <div v-if="!login.isLoading.facebook" class="p0-10 p-r-15">
@@ -56,9 +56,9 @@
         </div>
         <spinner v-else :isLoading="true" />
         <span class="text-h6 text-white text-weight-bold">Continuar con Facebook</span>
-      </button>
+      </a>
       <aside class="q-py-sm row items-center">
-        <small class="text-weight-bold text-subtitle text-indigo-9">
+        <small class="text-weight-bold text-subtitle text-grey-9">
           Al unirte, aceptas nuestros
           <a
             class="text-primary"
