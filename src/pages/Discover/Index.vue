@@ -13,7 +13,7 @@
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
             <img
               style="width: 38px; height: 38px; border-radius: 50%;"
-              src="@/assets/cities/mx-manzanillo.jpg" />
+              src="statics/cities/mx-manzanillo.jpg" />
             <small class="width: 100%; is-size-7">
               Manzanillo
             </small>
@@ -22,7 +22,7 @@
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
             <img
               style="width: 38px; height: 38px; border-radius: 50%;"
-              src="@/assets/cities/mx-guadalajara.jpg" />
+              src="statics/cities/mx-guadalajara.jpg" />
             <small class="is-size-7">
               Guadalajara
             </small>
@@ -31,7 +31,7 @@
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
             <img 
               style="width: 38px; height: 38px; border-radius: 50%;"
-              src="@/assets/cities/mx-tijuana.jpg" />
+              src="statics/cities/mx-tijuana.jpg" />
             <small class="is-size-7">
               Tijuana
             </small>
@@ -40,7 +40,7 @@
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
             <img 
               style="width: 38px; height: 38px; border-radius: 50%;"
-              src="@/assets/cities/mx-colima.jpg" />
+              src="statics/cities/mx-colima.jpg" />
             <small class="is-size-7">
               Colima
             </small>
