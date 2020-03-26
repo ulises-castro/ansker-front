@@ -14,6 +14,10 @@ const routes = [
   {
     path: '/',
     component: () => import('pages/Index.vue')
+  },
+  {
+    path: '/discover',
+    component: () => import('pages/Discover/Index')
   }
 ]
 
