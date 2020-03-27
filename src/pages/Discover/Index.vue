@@ -95,6 +95,6 @@ export default {
       activeCitiesHot: ["1"],
       citiesSearchFound: [],
     }
-  }
+  },
 }
 </script>

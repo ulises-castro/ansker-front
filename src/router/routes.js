@@ -17,7 +17,12 @@ const routes = [
   },
   {
     path: '/discover',
-    component: () => import('pages/Discover/Index')
+    component: () => import('layouts/AppLayout.vue'),
+    children: [
+      {
+        path: '', component: () => import('pages/Discover/Index.vue')
+      }
+    ]
   }
 ]
 

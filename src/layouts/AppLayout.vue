@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink'
-
 export default {
   name: 'AppLayout',
   data () {
@@ -69,3 +67,13 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+.headerBar {
+  .van-nav-bar__title {
+    color: $primary;
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: 'MarckScript';
+  }
+}
+</style>

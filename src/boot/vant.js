@@ -1,23 +1,28 @@
 // import something here
 import Vue from 'vue'
 import Vant, {
+  Icon,
   Popup,
   Image,
   Locale,
   Lazyload,
   Button,
+  NavBar,
   Collapse,
   CollapseItem,
   ActionSheet
-} from "vant";
+} from "vant"
 
-import enUS from "vant/lib/locale/lang/en-US";
-import 'vant/lib/index.css';
+import enUS from "vant/lib/locale/lang/en-US"
+import 'vant/lib/index.css'
 
 // "async" is optional
-Vue.use(Popup);
-Vue.use(Image);
-Vue.use(Button);
-Vue.use(ActionSheet);
-Vue.use(Lazyload, {});
-Locale.use("en-US", enUS);
+Vue.use(Icon)
+Vue.use(Popup)
+Vue.use(Image)
+Vue.use(Image)
+Vue.use(NavBar)
+Vue.use(Button)
+Vue.use(ActionSheet)
+Vue.use(Lazyload, {})
+Locale.use("en-US", enUS)
