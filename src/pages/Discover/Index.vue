@@ -38,7 +38,7 @@
           </div>
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
-            <img 
+            <img
               style="width: 38px; height: 38px; border-radius: 50%;"
               src="statics/cities/mx-colima.jpg" />
             <small class="is-size-7">
