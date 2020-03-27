@@ -5,11 +5,11 @@
       v-model="activeCitiesHot">
       <van-collapse-item
         :border="false"
-        title-class="has-text-weight-bold"
+        title-class="text-weight-bold"
         title="Ciudades hot" name="1">
 
         <aside
-          class="flex flex-wrap space-between">
+          class="row wrap space-between">
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
             <img
               style="width: 38px; height: 38px; border-radius: 50%;"
@@ -48,6 +48,37 @@
         </aside>
       </van-collapse-item>
     </van-collapse>
+
+    <van-search
+      v-model="citySearchValue"
+      placeholder="Filtrar por ciudad"
+      shape="round"
+      :show-action="(citiesSearchFound.length)"
+      @blur.native="citiesSearchFound = []"
+      @search="onSearchCity"
+      @keyup.native="onSearchCity"
+    >
+    <van-loading
+      size="18px"
+      color="#54a0c0"
+      style="margin-top: 3px"
+      v-if="isLoadingCities" slot="left-icon" />
+      <div
+        slot="action"
+        @click="citiesSearchFound = []">Cerrar</div>
+    </van-search>
+    <aside
+      v-if="citiesSearchFound.length"
+      class="width100">
+      <div
+        v-for="(city, index) in citiesSearchFound"
+        :key="index"
+        @click="updateCitySelected(city)"
+        class="p10" style="background: white">
+        {{ city.name }} -
+         {{ city.countryName }} {{ city.flag }}
+        </div>
+    </aside>
   </section>
 </template>
 <script>
