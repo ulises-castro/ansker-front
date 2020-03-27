@@ -64,7 +64,9 @@ module.exports = function (ctx) {
         SOCKET: JSON.stringify('http://localanskerme.me:3000'),
         BASE_URL: JSON.stringify('http://localanskerme.me:3000')
       } : { // and on build (production):
-        API: JSON.stringify('https://prod.api.com')
+        API: JSON.stringify('http://localanskerme.me:3000/api'),
+        SOCKET: JSON.stringify('http://localanskerme.me:3000'),
+        BASE_URL: JSON.stringify('http://localanskerme.me:3000')
       },
 
       // rtl: false, // https://quasar.dev/options/rtl-support
