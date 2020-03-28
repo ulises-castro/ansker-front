@@ -7,71 +7,51 @@
       left-text="Regresar"
       @click-left="toggleNotifications"
       :left-arrow="showBackButton"
-      >
+    >
       <div v-if="!showBackButton" slot="left">
-        <van-icon
-          color="#49AFC4"
-          :size="18"
-          info="30"
-          name="bullhorn-o"
-        />
+        <van-icon color="#49AFC4" :size="18" info="30" name="bullhorn-o" />
       </div>
-      <div
-        slot="right"
-      >
-        <van-icon
-          color="#49AFC4"
-          v-if="showBackButton"
-          :size="18"
-          name="bullhorn-o"
-        />
-        <van-icon
-          color="#49AFC4"
-          v-else
-          @click="goPublish"
-          :size="18" name="edit"
-        />
+      <div slot="right">
+        <van-icon color="#49AFC4" v-if="showBackButton" :size="18" name="bullhorn-o" />
+        <van-icon color="#49AFC4" v-else @click="goPublish" :size="18" name="edit" />
       </div>
 
-      <span slot="title"> Ansker:) </span>
-      </van-nav-bar>
+      <span slot="title">Ansker:)</span>
+    </van-nav-bar>
     <slot></slot>
-    <Menu></Menu>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'app-layout',
-  data () {
-    return {
-    }
+  name: "app-layout",
+  data() {
+    return {};
   },
   methods: {
     goPublish() {
-      // Implement to 
+      // Implement to
     },
-    toggleNotifications() {
-    }
+    toggleNotifications() {}
   },
   props: {
     isLoading: {
       type: Boolean,
-      default: false,
+      default: false
     },
     isFullPage: {
       type: Boolean,
-      default: false,
+      default: false
     },
     showBackButton: {
       type: Boolean,
-      default: false,
+      default: false
     },
     title: {
-      default: '',
-    },
-  },
-}
+      default: ""
+    }
+  }
+};
 </script>
 <style lang="scss" scoped>
 .headerBar {
@@ -79,7 +59,7 @@ export default {
     color: $primary;
     font-weight: bold;
     font-size: 1.5rem;
-    font-family: 'MarckScript';
+    font-family: "MarckScript";
   }
 }
 </style>
