@@ -5,9 +5,10 @@ import Vant, {
   Popup,
   Image,
   Locale,
-  Lazyload,
+  Search,
   Button,
   NavBar,
+  Lazyload,
   Collapse,
   CollapseItem,
   ActionSheet
@@ -23,6 +24,7 @@ Vue.use(Image)
 Vue.use(Image)
 Vue.use(NavBar)
 Vue.use(Button)
+Vue.use(Search)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(ActionSheet)
