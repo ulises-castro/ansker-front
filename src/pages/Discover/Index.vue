@@ -7,7 +7,7 @@
         title="Ciudades hot"
         name="1"
       >
-        <aside class="row wrap space-between">
+        <aside class="row justify-center wrap space-between">
           <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
             <img
               style="width: 38px; height: 38px; border-radius: 50%;"

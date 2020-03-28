@@ -10,10 +10,11 @@ import Vant, {
   NavBar,
   Lazyload,
   Tabbar,
+  Skeleton,
   TabbarItem,
   Collapse,
   CollapseItem,
-  ActionSheet
+  ActionSheet,
 } from "vant"
 
 import enUS from "vant/lib/locale/lang/en-US"
@@ -27,8 +28,9 @@ Vue.use(Image)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
-Vue.use(Tabbar);
-Vue.use(TabbarItem);
+Vue.use(Tabbar)
+Vue.use(Skeleton)
+Vue.use(TabbarItem)
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(ActionSheet)
