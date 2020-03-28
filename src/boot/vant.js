@@ -9,6 +9,8 @@ import Vant, {
   Button,
   NavBar,
   Lazyload,
+  Tabbar,
+  TabbarItem,
   Collapse,
   CollapseItem,
   ActionSheet
@@ -25,6 +27,8 @@ Vue.use(Image)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
 Vue.use(Collapse)
 Vue.use(CollapseItem)
 Vue.use(ActionSheet)
