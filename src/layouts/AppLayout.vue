@@ -5,7 +5,7 @@
       :title="title"
       class="headerBar"
       left-text="Regresar"
-      @click-left="handlerActionLeft"
+      @click-left="toggleNotifications"
       :left-arrow="showBackButton"
       >
       <div v-if="!showBackButton" slot="left">
@@ -42,9 +42,16 @@
 
 <script>
 export default {
-  name: 'AppLayout',
+  name: 'app-layout',
   data () {
     return {
+    }
+  },
+  methods: {
+    goPublish() {
+      // Implement to 
+    },
+    toggleNotifications() {
     }
   },
   props: {

@@ -13,16 +13,11 @@ const routes = [
   // }
   {
     path: '/',
-    component: () => import('pages/Index.vue')
+    component: () => import('pages/Home/Index.vue')
   },
   {
     path: '/discover',
-    component: () => import('layouts/AppLayout.vue'),
-    children: [
-      {
-        path: '', component: () => import('pages/Discover/Index.vue')
-      }
-    ]
+    component: () => import('pages/Discover/Index.vue')
   }
 ]
 
