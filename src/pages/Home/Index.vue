@@ -40,7 +40,7 @@
         style="color: #363636"
       >Comparte con tu alrededor de forma anónima</small>
       <a
-        :href="googleUrl"
+        :href="googleLoginUrl"
         class="full-width no-border bg-red-8 has-text-white row justify-center items-center cursor-pointer"
       >
         <div v-if="!login.isLoading.google" class="p0-10 p-r-15">
@@ -74,13 +74,15 @@
 </template>
 
 <script>
+import googleLoginUrl from "utils/google-auth";
+
 export default {
   name: "PageIndex",
   data() {
     return {
       showFooter: true,
       openJoinUs: false,
-      googleUrl: `${process.env.API}/request/gmail/auth`,
+      googleLoginUrl,
       login: {
         isLoading: {
           facebook: false,
