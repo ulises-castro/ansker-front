@@ -65,13 +65,13 @@ module.exports = function (ctx) {
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('http://localanskerme.me:3000'),
-        BASE_URL: JSON.stringify('http://localanskerme.me:3000')
+        BASE_URL: JSON.stringify('http://localanskerme.me:1297')
       } : { // and on build (production):
         API: JSON.stringify('http://localanskerme.me:3000/api'),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('http://localanskerme.me:3000'),
-        BASE_URL: JSON.stringify('http://localanskerme.me:3000')
+        BASE_URL: JSON.stringify('http://localanskerme.me:1297')
       },
 
       // rtl: false, // https://quasar.dev/options/rtl-support

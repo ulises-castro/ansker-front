@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import googleLoginUrl from "../../utils/google-auth.js";
+import { googleLoginUrl } from "../../utils/google-auth.js";
 
 export default {
   name: "PageIndex",

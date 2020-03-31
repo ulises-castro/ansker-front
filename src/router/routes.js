@@ -18,6 +18,10 @@ const routes = [
   {
     path: '/discover',
     component: () => import('pages/Discover/Index.vue')
+  },
+  {
+    path: '/authenticate/google',
+    component: () => import('pages/Authenticate/Google.vue')
   }
 ]
 
