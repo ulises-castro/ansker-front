@@ -14,28 +14,7 @@ const stringifiedParams = queryString.stringify({
 
 const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
 
-async function getAccessTokenFromCode(code) {
-  const {
-    data
-  } = await axios({
-    url: `https://oauth2.googleapis.com/token`,
-    method: 'post',
-    data: {
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
-      grant_type: 'authorization_code',
-      code,
-    },
-  });
-  console.log(data); // { access_token, expires_in, token_type, refresh_token }
-  return data.access_token;
-};
 
-
-export {
-  getAccessTokenFromCode,
-}
 
 export {
   googleLoginUrl
