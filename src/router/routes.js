@@ -21,7 +21,7 @@ const routes = [
   },
   {
     path: '/authenticate/google',
-    component: () => import('pages/Authenticate/Google.vue')
+    component: () => import('pages/Authenticate/AuthGoogle.vue')
   }
 ]
 
