@@ -1,6 +1,8 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
+const path = require('path')
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
@@ -61,13 +63,13 @@ module.exports = function (ctx) {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
       env: ctx.dev ? { // so on dev we'll have
-        API: JSON.stringify('http://localanskerme.me:3000/api'),
+        API: JSON.stringify('http://localanskerme.me:3000/api/'),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('http://localanskerme.me:3000'),
         BASE_URL: JSON.stringify('http://localanskerme.me:1297')
       } : { // and on build (production):
-        API: JSON.stringify('http://localanskerme.me:3000/api'),
+        API: JSON.stringify('http://localanskerme.me:3000/api/'),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('http://localanskerme.me:3000'),
@@ -94,6 +96,11 @@ module.exports = function (ctx) {
             formatter: require('eslint').CLIEngine.getFormatter('stylish')
           }
         })
+
+        cfg.resolve.alias = {
+          ...cfg.resolve.alias,
+          '@': path.resolve(__dirname, 'src'),
+        }
       }
     },
 
