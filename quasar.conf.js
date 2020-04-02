@@ -99,9 +99,7 @@ module.exports = function (ctx) {
 
         cfg.resolve.alias = {
           ...cfg.resolve.alias,
-
-          //My own alias
-          services: path.resolve(__dirname, './src/services'),
+          '@': path.resolve(__dirname, 'src'),
         }
       }
     },

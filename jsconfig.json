@@ -14,11 +14,8 @@
       "layouts/*": [
         "src/layouts/*"
       ],
-      "services/*": [
-        "src/services/*"
-      ],
-      "utils/*": [
-        "src/utils/*"
+      "@/*": [
+        "src/*"
       ],
       "pages/*": [
         "src/pages/*"

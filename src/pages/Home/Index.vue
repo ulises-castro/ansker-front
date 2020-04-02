@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { googleLoginUrl } from "../../utils/google-auth.js";
+import AuthService from "src/services/auth.service";
 
 export default {
   name: "PageIndex",
@@ -82,7 +82,7 @@ export default {
     return {
       showFooter: true,
       openJoinUs: false,
-      googleLoginUrl,
+      googleLoginUrl: AuthService.getGoogleLink(),
       login: {
         isLoading: {
           facebook: false,

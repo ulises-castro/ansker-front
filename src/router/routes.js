@@ -3,15 +3,7 @@
 // }
 
 // TODO: Implemented a better way to performs lazyLoad of component
-const routes = [
-  // {
-  //   path: '/',
-  //   component: () => import('layouts/MainLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Index.vue') }
-  //   ]
-  // }
-  {
+const routes = [{
     path: '/',
     component: () => import('pages/Home/Index.vue')
   },
