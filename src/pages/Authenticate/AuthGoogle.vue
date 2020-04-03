@@ -19,14 +19,7 @@ export default {
       } else {
         console.log(`The code is: ${urlParams.code}`);
 
-        const response = await axios.get(
-          "http://localanskerme.me:3000/api/authenticate/google",
-          {
-            params: {
-              code: urlParams.code
-            }
-          }
-        );
+        const respone = await AuthService.googleLogin(urlParams.code);
 
         console.table(response);
       }

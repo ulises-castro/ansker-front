@@ -1,7 +1,5 @@
 import axios from 'axios'
-// import * as process from 'process';
 
-// TODO: Fix this my friend
 const apiUrl = process.env.API
 
 if (localStorage.authToken) {
@@ -9,8 +7,7 @@ if (localStorage.authToken) {
 }
 
 const getUrl = (url) => {
-  if (url.includes('perfectpitchtech.com')) return url
-  else return apiUrl + url
+  return apiUrl + url
 }
 
 async function get(url, params = {}) {
@@ -18,7 +15,9 @@ async function get(url, params = {}) {
 
   try {
     return await axios.get(url, {
-      ...params
+      params: {
+        ...params
+      }
     })
   } catch (error) {
     return error.response;
