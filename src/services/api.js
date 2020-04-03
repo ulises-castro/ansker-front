@@ -15,7 +15,9 @@ async function get(url, params = {}) {
 
   try {
     return await axios.get(url, {
-      ...params
+      params: {
+        ...params
+      }
     })
   } catch (error) {
     return error.response;
