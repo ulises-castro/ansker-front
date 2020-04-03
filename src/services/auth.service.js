@@ -26,9 +26,10 @@ class AuthService {
     return `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   }
 
+  async googleLogin(code) {
+    const response = await get('authenticate/google', code)
 
-  googleLogin() {
-
+    return response
   }
 }
 
