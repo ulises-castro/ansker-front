@@ -27,7 +27,7 @@ class AuthService {
   }
 
   async googleLogin(code) {
-    const response = await get('authenticate/google', {
+    const response = await get('user/authenticate/google', {
       code
     })
 
