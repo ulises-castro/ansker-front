@@ -17,22 +17,23 @@ export default {
 
       const [ err, googleData ] = await AuthService.googleLogin(urlParams.code)
 
-      this.$notify(`${err.response.data.message}`)
-    },
-    getTokenAndsignIn() {
-      const { auth_token } = this.$route.params.auth_token
-      console.log(this.$route.params)
-      const [err, token] = AuthService.getApiToken(auth_token)
+      console.log(googleData)
+      if (err) return this.$notify(`${err.response.data.message}`)
 
-      if (err)
+      this.getTokenAndsignIn(googleData)
+    },
+    getTokenAndsignIn(auth_token) {
+      console.log(this.$route.params)
+      const [err, token] = AuthService.getTokenAndSignIn(auth_token)
+
+      if (err) return this.$notify(`${err.response.data.message}`)
+
+      console.log(token.data)
     }
   },
   created() {
-    if (this.$route.params.code) {
-      this.init()
-    }
+    this.init()
 
-    this.getTokenAndsignIn()
   },
   mounted() {
   }
