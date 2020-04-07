@@ -19,14 +19,19 @@ export default {
       } else {
         console.log(`The code is: ${urlParams.code}`);
 
-        const respone = await AuthService.googleLogin(urlParams.code);
+        const [ err, googleData ] = await AuthService.googleLogin(urlParams.code);
 
-        console.table(response);
+        console.table(googleData);
+      },
+      getToken() {
+
       }
     }
   },
-  mounted() {
+  created() {
     this.init();
+  },
+  mounted() {
   }
 };
 </script>

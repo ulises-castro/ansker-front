@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Catch from 'await-to-decorater'
 import * as queryString from 'query-string'
 import {
   get,
@@ -26,12 +27,11 @@ class AuthService {
     return `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   }
 
-  async googleLogin(code) {
-    const response = await get('user/authenticate/google', {
+  @Catch
+  googleLogin(code) {
+    return get('user/authenticate/google', {
       code
     })
-
-    return response
   }
 }
 

@@ -14,6 +14,10 @@ const routes = [{
   {
     path: '/authenticate/google',
     component: () => import('pages/Authenticate/AuthGoogle.vue')
+  },
+  {
+    path: '/authenticate/google/token',
+    component: () => import('pages/Authenticate/AuthGoogle.vue')
   }
 ]
 
