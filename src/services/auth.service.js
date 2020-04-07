@@ -27,7 +27,7 @@ class AuthService {
     return `https://accounts.google.com/o/oauth2/v2/auth?${stringifiedParams}`
   }
 
-  @Catch
+  @Catch()
   googleLogin(code) {
     return get('user/authenticate/google', {
       code

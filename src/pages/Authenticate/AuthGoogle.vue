@@ -13,19 +13,19 @@ export default {
     async init() {
       const urlParams = queryString.parse(window.location.search);
 
-      if (urlParams.error) {
-        // TODO: Implement a modal alert
-        console.log(`An error occurred: ${urlParams.error}`);
-      } else {
-        console.log(`The code is: ${urlParams.code}`);
+      console.log(`The code is: ${urlParams.code}`);
 
-        const [ err, googleData ] = await AuthService.googleLogin(urlParams.code);
+      const [ err, googleData ] = await AuthService.googleLogin(urlParams.code);
 
-        console.table(googleData);
-      },
-      getToken() {
+      console.log(err.response, googleData);
+      this.$notify(`${err.response.data.message}`);
 
-      }
+    },
+    getToken() {
+      const urlParams = queryString.parse(window.location.search)
+
+      console.log(urlParams.accessToken)
+      // AuthService.getToken()
     }
   },
   created() {
