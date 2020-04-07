@@ -10,18 +10,14 @@ const getUrl = (url) => {
   return apiUrl + url
 }
 
-async function get(url, params = {}) {
+function get(url, params = {}) {
   url = getUrl(url)
 
-  try {
-    return await axios.get(url, {
+  return axios.get(url, {
       params: {
         ...params
       }
     })
-  } catch (error) {
-    return error.response;
-  }
 }
 
 async function post(url, params = {}) {

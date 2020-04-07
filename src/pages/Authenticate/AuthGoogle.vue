@@ -3,30 +3,39 @@
 </template>
 
 <script>
-import axios from "axios";
-import AuthService from "src/services/auth.service";
-import * as queryString from "query-string";
+import axios from "axios"
+import AuthService from "src/services/auth.service"
+import * as queryString from "query-string"
 
 export default {
   name: "google",
   methods: {
     async init() {
-      const urlParams = queryString.parse(window.location.search);
+      const urlParams = queryString.parse(window.location.search)
 
-      if (urlParams.error) {
-        // TODO: Implement a modal alert
-        console.log(`An error occurred: ${urlParams.error}`);
-      } else {
-        console.log(`The code is: ${urlParams.code}`);
+      console.log(`The code is: ${urlParams.code}`)
 
-        const respone = await AuthService.googleLogin(urlParams.code);
+      const [ err, googleData ] = await AuthService.googleLogin(urlParams.code)
 
-        console.table(response);
-      }
+      console.log(googleData)
+      if (err) return this.$notify(`${err.response.data.message}`)
+
+      this.getTokenAndsignIn(googleData)
+    },
+    getTokenAndsignIn(auth_token) {
+      console.log(this.$route.params)
+      const [err, token] = AuthService.getTokenAndSignIn(auth_token)
+
+      if (err) return this.$notify(`${err.response.data.message}`)
+
+      console.log(token.data)
     }
   },
+  created() {
+    this.init()
+
+  },
   mounted() {
-    this.init();
   }
-};
+}
 </script>
