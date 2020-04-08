@@ -29,6 +29,7 @@ export default {
       if (err) return this.$notify(`${err.response.data.message}`)
 
       console.log(token.data)
+      this.$notify({ type: 'success', message: 'Welcome to ansker' });
     }
   },
   created() {
