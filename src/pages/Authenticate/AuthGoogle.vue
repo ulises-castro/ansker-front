@@ -4,7 +4,7 @@
 
 <script>
 import axios from "axios"
-import AuthService from "src/services/auth.service"
+import AuthService from "src/services/AuthService"
 import * as queryString from "query-string"
 
 export default {
