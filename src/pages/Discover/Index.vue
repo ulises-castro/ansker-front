@@ -136,7 +136,9 @@ export default {
       clearTimeout(this.timerLoading)
       this.isLoadingCities = true
 
-      const { data } = await get(`searchPlace/${citySearchValue}`)
+      const [err, citiesData] = await City.searchCity(citySearchValue)
+
+      if (err) return this.$notify(`${err.response.data.message}`)
 
       this.citiesSearchFound = data.cities
 
