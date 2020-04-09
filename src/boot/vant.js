@@ -9,6 +9,7 @@ import Vant, {
   Button,
   NavBar,
   Notify,
+  Loading,
   Lazyload,
   Tabbar,
   Skeleton,
@@ -31,6 +32,7 @@ Vue.use(Button)
 Vue.use(Search)
 Vue.use(Tabbar)
 Vue.use(Notify)
+Vue.use(Loading)
 Vue.use(Skeleton)
 Vue.use(TabbarItem)
 Vue.use(Collapse)

@@ -10,7 +10,9 @@
         <aside class="row justify-center wrap space-between">
           <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px height: 38px border-radius: 50%"
+              height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-manzanillo.jpg"
             />
             <small class="width: 100% is-size-7">Manzanillo</small>
@@ -18,7 +20,9 @@
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px height: 38px border-radius: 50%"
+                          height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-guadalajara.jpg"
             />
             <small class="is-size-7">Guadalajara</small>
@@ -26,7 +30,9 @@
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px height: 38px border-radius: 50%"
+                          height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-tijuana.jpg"
             />
             <small class="is-size-7">Tijuana</small>
@@ -34,7 +40,9 @@
 
           <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px height: 38px border-radius: 50%"
+                          height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-colima.jpg"
             />
             <small class="is-size-7">Colima</small>
@@ -47,6 +55,7 @@
       v-model="citySearchValue"
       placeholder="Filtrar por ciudad"
       shape="round"
+      :error="citiesNotFound"
       :show-action="(citiesSearchFound.length)"
       @blur.native="citiesSearchFound = []"
       @search="onSearchCity"
@@ -100,7 +109,7 @@
 </template>
 <script>
 import { QSkeleton, QCard } from "quasar"
-import { City } from 'services'
+import { City } from 'src/services'
 
 export default {
   name: "Discover",
@@ -116,6 +125,7 @@ export default {
       showPublishSecretModal: false,
       citySearchValue: "",
       citySelected: {},
+      citiesNotFound: false,
       isLoadingCities: false,
       activeCitiesHot: ["1"],
       citiesSearchFound: []
@@ -140,7 +150,9 @@ export default {
 
       if (err) return this.$notify(`${err.response.data.message}`)
 
-      this.citiesSearchFound = data.cities
+      const { cities } = citiesData.data
+
+      this.citiesSearchFound = cities
 
       this.timerLoading = setTimeout(() => (this.isLoadingCities = false), 800)
     }
