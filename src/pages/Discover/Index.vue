@@ -8,33 +8,33 @@
         name="1"
       >
         <aside class="row justify-center wrap space-between">
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+              style="width: 38px height: 38px border-radius: 50%"
               src="statics/cities/mx-manzanillo.jpg"
             />
-            <small class="width: 100%; is-size-7">Manzanillo</small>
+            <small class="width: 100% is-size-7">Manzanillo</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+              style="width: 38px height: 38px border-radius: 50%"
               src="statics/cities/mx-guadalajara.jpg"
             />
             <small class="is-size-7">Guadalajara</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+              style="width: 38px height: 38px border-radius: 50%"
               src="statics/cities/mx-tijuana.jpg"
             />
             <small class="is-size-7">Tijuana</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+              style="width: 38px height: 38px border-radius: 50%"
               src="statics/cities/mx-colima.jpg"
             />
             <small class="is-size-7">Colima</small>
@@ -99,7 +99,8 @@
   </section>
 </template>
 <script>
-import { QSkeleton, QCard } from "quasar";
+import { QSkeleton, QCard } from "quasar"
+import { City } from 'services'
 
 export default {
   name: "Discover",
@@ -118,25 +119,31 @@ export default {
       isLoadingCities: false,
       activeCitiesHot: ["1"],
       citiesSearchFound: []
-    };
+    }
+  },
+  created() {
+    this.fetchPublications()
   },
   methods: {
+    async fetchPublications() {
+      const publications = await Publication.getAllByCity()
+    },
     async onSearchCity() {
-      const { citySearchValue } = this;
+      const { citySearchValue } = this
 
-      if (citySearchValue.length < 3) return;
+      if (citySearchValue.length < 3) return
 
-      clearTimeout(this.timerLoading);
-      this.isLoadingCities = true;
+      clearTimeout(this.timerLoading)
+      this.isLoadingCities = true
 
-      const { data } = await get(`searchPlace/${citySearchValue}`);
+      const { data } = await get(`searchPlace/${citySearchValue}`)
 
-      this.citiesSearchFound = data.cities;
+      this.citiesSearchFound = data.cities
 
-      this.timerLoading = setTimeout(() => (this.isLoadingCities = false), 800);
+      this.timerLoading = setTimeout(() => (this.isLoadingCities = false), 800)
     }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .publications {
