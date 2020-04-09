@@ -83,8 +83,12 @@
       </div>
     </aside>
     <section class="publications q-pt-md">
-      <div class v-for="skeleton in skeletons" :key="skeleton">
-        <q-card flat bordered square>
+      <div>
+        <publication :publication=""></publication>
+      </div>
+
+      <div v-if="!publications.length">
+        <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
           <q-skeleton height="170px" square animation="fade" />
           <div class="q-pa-sm row items-center justify-between no-wrap">
             <div class="row items-center">
@@ -119,7 +123,7 @@ export default {
   },
   data() {
     return {
-      secrets: [],
+      publications: [],
       skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
