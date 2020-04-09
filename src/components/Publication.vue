@@ -4,10 +4,17 @@
       <van-image
         lazy-load
         class="background-image"
-        src="https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi"
         :width="screenWidth"
+        :src="publication.image"
         :height="300">
       ></van-image>
+      <img >
+    <div style="position: absolute; top: 0; right: 0">
+      <div class="row justify-end q-pa-sm icon-link"
+        @click="showOptions = true">
+        <q-icon name="las la-ellipsis-h" color="white" class="q-mr-sm" size="25px" />
+      </div>
+    </div>
     <div
       @click="gopublication(publication.id)"
       class="publication-body">
@@ -20,34 +27,30 @@
         @click="gopublication(publication.id)"
         class="icon-link has-background-white">
         <router-link :to="{ name: '', params: {} }">
-          <van-icon name="clock-o"/>
+          <q-icon name="las la-hourglass-half" color="grey-1" class="q-mr-sm" size="22px" />
         </router-link>
         <span class="indicator p-l-5 has-text-weight-bold">
           1 hr
         </span>
       </div>
-      <div
-        @click="(isUserLogged) ? showOptions = true : ''"
-        class="icon-link">
-        <van-icon name="ellipsis" class="is-size-4" />
-      </div>
+
       <div
         @click="gopublication(publication.id)"
         class="icon-link">
-        <span class="indicator p-r-5"> {{ publication.comments }} </span>
         <router-link :to="{ name: '', params: {} }">
-          <q-icon name="chat_bubble_outline" color="grey-1" class="q-mr-sm" size="18px" />
+          <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="22px" />
         </router-link>
+        <span class="indicator p-r-5"> 10 </span>
       </div>
       <div
         @click="like"
         class="icon-link">
-        <span class="p-r-5 indicator">
-          {{ publication.likes }}
-        </span>
         <router-link :to="{ name: '', params: {} }">
-          <van-icon name="like-o" />
+          <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="16px" />
         </router-link>
+        <span class="p-r-5 indicator">
+          22
+        </span>
       </div>
     </div>
     <van-action-sheet
@@ -180,6 +183,23 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     }
   }
 
+  .icon-link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    i {
+      color: white;
+      font-weight: bold;
+      font-size: 1.3em;
+      text-shadow: $shadow-icons;
+    }
+
+    a {
+      color: #fff;
+    }
+  }
+
   &-actions {
     display: flex;
     justify-content: space-around;
@@ -190,22 +210,7 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     bottom: 0;
     width: 100%;
 
-    .icon-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
 
-      i {
-        color: white;
-        font-weight: bold;
-        font-size: 1.3em;
-        text-shadow: $shadow-icons;
-      }
-
-      a {
-        color: #fff;
-      }
-    }
   }
 }
 </style>

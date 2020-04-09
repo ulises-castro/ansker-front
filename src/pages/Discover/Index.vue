@@ -84,7 +84,9 @@
     </aside>
     <section class="publications q-pt-md">
       <div v-if="publications.length">
-        <publication v-for="publication in publications"  :key="publication.id" :publication="publication"></publication>
+        <div v-for="publication in publications" :key="publication.id">
+          <publication :publication="publication"></publication>
+        </div>
       </div>
 
       <div v-else>
@@ -97,17 +99,17 @@
             </div>
             <div class="q-pa-sm row items-center justify-between no-wrap full-width" style="position: absolute; bottom: 0">
               <div class="row items-center">
-                <q-icon name="alarm" color="grey-1" class="q-mr-sm" size="18px" />
+                <q-icon name="las la-hourglass-half" color="grey-1" class="q-mr-sm" size="20px" />
                 <q-skeleton type="text" width="30px" />
               </div>
 
               <div class="row items-center">
-                <q-icon name="chat_bubble_outline" color="grey-1" class="q-mr-sm" size="18px" />
+                <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="20px" />
                 <q-skeleton type="text" width="30px" />
               </div>
 
               <div class="row items-center">
-                <q-icon name="favorite_border" color="grey-1" class="q-mr-sm" size="18px" />
+                <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="20px" />
                 <q-skeleton type="text" width="30px" />
               </div>
             </div>
@@ -153,21 +155,24 @@ export default {
     const publications = [
         {
           id: 1,
-          content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {}
+          content: 'Hay mas casos de coronavirus de ha dicho el gobierno!!!',
+          likes: {},
+          image: 'https://cdn2.excelsior.com.mx/media/styles/large/public/pictures/2020/02/26/2313677.jpg'
         },
         {
           id: 2,
           content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {}
+          likes: {},
+          image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
         },
         {
           id: 3,
           content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {}
+          likes: {},
+          image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
         },
     ]
-    // setTimeout(() => this.publications.push(publications), 2000)
+    setTimeout(() => this.publications = publications, 2000)
   },
   methods: {
     async fetchPublications() {
