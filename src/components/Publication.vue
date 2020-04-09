@@ -9,7 +9,7 @@
         :height="300">
       ></van-image>
     <div
-      @click="goSecret(publication.id)"
+      @click="gopublication(publication.id)"
       class="publication-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
         {{ publication.content }}
@@ -17,7 +17,7 @@
     </div>
     <div @click="showJoinUs" class="publication-actions">
       <div
-        @click="goSecret(publication.id)"
+        @click="gopublication(publication.id)"
         class="icon-link has-background-white">
         <router-link :to="{ name: '', params: {} }">
           <van-icon name="clock-o"/>
@@ -32,7 +32,7 @@
         <van-icon name="ellipsis" class="is-size-4" />
       </div>
       <div
-        @click="goSecret(publication.id)"
+        @click="gopublication(publication.id)"
         class="icon-link">
         <span class="indicator p-r-5"> {{ publication.comments }} </span>
         <router-link :to="{ name: '', params: {} }">
@@ -116,20 +116,20 @@ export default {
     },
     async like() {
       if (this.showJoinUs) return;
-      const { secretId } = this.publication;
+      const { publicationId } = this.publication;
 
-      const { data } = await post("publication/liked", { secretId });
+      const { data } = await post("publication/liked", { publicationId });
 
       this.publication.userLiked = !this.publication.userLiked;
       const operation = !this.publication.userLiked ? -1 : 1;
       this.publication.likes += operation;
     },
-    goSecret() {
-      const { secretId } = this.publication;
+    gopublication() {
+      const { publicationId } = this.publication;
 
       this.$router.push({
-        name: "Secret",
-        params: { secretId }
+        name: "publication",
+        params: { publicationId }
       });
     }
   }
