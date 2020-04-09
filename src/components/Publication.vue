@@ -36,7 +36,7 @@
         class="icon-link">
         <span class="indicator p-r-5"> {{ publication.comments }} </span>
         <router-link :to="{ name: '', params: {} }">
-          <van-icon name="chat-o"></van-icon>
+          <q-icon name="chat_bubble_outline" color="grey-1" class="q-mr-sm" size="18px" />
         </router-link>
       </div>
       <div

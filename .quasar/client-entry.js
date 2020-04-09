@@ -12,7 +12,11 @@
 
 
 
-import '@quasar/extras/roboto-font/roboto-font.css'
+import '@quasar/extras/themify/themify.css'
+
+import '@quasar/extras/ionicons-v4/ionicons-v4.css'
+
+import '@quasar/extras/line-awesome/line-awesome.css'
 
 import '@quasar/extras/material-icons/material-icons.css'
 

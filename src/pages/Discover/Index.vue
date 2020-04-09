@@ -89,23 +89,30 @@
 
       <div v-else>
         <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
-          <q-skeleton height="170px" square animation="fade" />
-          <div class="q-pa-sm row items-center justify-between no-wrap">
-            <div class="row items-center">
-              <q-icon name="alarm" color="grey-4" class="q-mr-sm" size="18px" />
-              <q-skeleton type="text" width="30px" />
+          <q-skeleton height="200px" square animation="fade">
+            <div style="height: 180px">
+              <div class="row justify-end q-px-sm">
+                <q-icon name="las la-ellipsis-h" color="grey-1" class="q-mr-sm" size="25px" />
+              </div>
+            </div>
+            <div class="q-pa-sm row items-center justify-between no-wrap full-width" style="position: absolute; bottom: 0">
+              <div class="row items-center">
+                <q-icon name="alarm" color="grey-1" class="q-mr-sm" size="18px" />
+                <q-skeleton type="text" width="30px" />
+              </div>
+
+              <div class="row items-center">
+                <q-icon name="chat_bubble_outline" color="grey-1" class="q-mr-sm" size="18px" />
+                <q-skeleton type="text" width="30px" />
+              </div>
+
+              <div class="row items-center">
+                <q-icon name="favorite_border" color="grey-1" class="q-mr-sm" size="18px" />
+                <q-skeleton type="text" width="30px" />
+              </div>
             </div>
 
-            <div class="row items-center">
-              <q-icon name="chat_bubble_outline" color="grey-4" class="q-mr-sm" size="18px" />
-              <q-skeleton type="text" width="30px" />
-            </div>
-
-            <div class="row items-center">
-              <q-icon name="favorite_border" color="grey-4" class="q-mr-sm" size="18px" />
-              <q-skeleton type="text" width="30px" />
-            </div>
-          </div>
+          </q-skeleton>
         </q-card>
       </div>
     </section>
@@ -160,7 +167,7 @@ export default {
           likes: {}
         },
     ]
-    setTimeout(() => this.publications.push(publications), 2000)
+    // setTimeout(() => this.publications.push(publications), 2000)
   },
   methods: {
     async fetchPublications() {

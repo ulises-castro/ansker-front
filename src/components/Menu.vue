@@ -8,8 +8,12 @@
         <van-tabbar-item icon="home-o" info="10">
           Inicio
         </van-tabbar-item>
-        <!-- <van-tabbar-item
-          icon="friends-o" info="5">Tab</van-tabbar-item> -->
+        <van-tabbar-item info="5">
+          Alrededor
+            <template #icon>
+              <q-icon name="las la-users" size="sm"></q-icon>
+            </template>
+          </van-tabbar-item>
         <van-tabbar-item
           icon="setting-o">
           Configuración
