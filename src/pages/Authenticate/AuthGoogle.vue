@@ -4,7 +4,7 @@
 
 <script>
 import axios from "axios"
-import AuthService from "src/services/auth.service"
+import AuthService from "src/services/AuthService"
 import * as queryString from "query-string"
 
 export default {
@@ -20,15 +20,16 @@ export default {
       console.log(googleData)
       if (err) return this.$notify(`${err.response.data.message}`)
 
-      this.getTokenAndsignIn(googleData)
+      this.getTokenAndsignIn(googleData.data.access_token)
     },
-    getTokenAndsignIn(auth_token) {
+    getTokenAndsignIn(access_token) {
       console.log(this.$route.params)
-      const [err, token] = AuthService.getTokenAndSignIn(auth_token)
+      const [err, token] = AuthService.getTokenAndSignIn(access_token)
 
       if (err) return this.$notify(`${err.response.data.message}`)
 
       console.log(token.data)
+      this.$notify({ type: 'success', message: 'Welcome to ansker' });
     }
   },
   created() {

@@ -8,36 +8,44 @@
         name="1"
       >
         <aside class="row justify-center wrap space-between">
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+              height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-manzanillo.jpg"
             />
-            <small class="width: 100%; is-size-7">Manzanillo</small>
+            <small class="full-width text-center is-size-7">Manzanillo</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+                          height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-guadalajara.jpg"
             />
-            <small class="is-size-7">Guadalajara</small>
+            <small class="full-width text-center is-size-7">Guadalajara</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+                          height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-tijuana.jpg"
             />
-            <small class="is-size-7">Tijuana</small>
+            <small class="full-width text-center is-size-7">Tijuana</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px; max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-              style="width: 38px; height: 38px; border-radius: 50%;"
+                          height="38"
+              width="38"
+              style="border-radius: 50%"
               src="statics/cities/mx-colima.jpg"
             />
-            <small class="is-size-7">Colima</small>
+            <small class="full-width text-center is-size-7">Colima</small>
           </div>
         </aside>
       </van-collapse-item>
@@ -47,6 +55,7 @@
       v-model="citySearchValue"
       placeholder="Filtrar por ciudad"
       shape="round"
+      :error="citiesNotFound"
       :show-action="(citiesSearchFound.length)"
       @blur.native="citiesSearchFound = []"
       @search="onSearchCity"
@@ -73,38 +82,112 @@
         {{ city.countryName }} {{ city.flag }}
       </div>
     </aside>
+    <section class="publications q-pt-md">
+      <div v-if="publications.length">
+        <publication v-for="publication in publications"  :key="publication.id" :publication="publication"></publication>
+      </div>
+
+      <div v-else>
+        <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
+          <q-skeleton height="170px" square animation="fade" />
+          <div class="q-pa-sm row items-center justify-between no-wrap">
+            <div class="row items-center">
+              <q-icon name="alarm" color="grey-4" class="q-mr-sm" size="18px" />
+              <q-skeleton type="text" width="30px" />
+            </div>
+
+            <div class="row items-center">
+              <q-icon name="chat_bubble_outline" color="grey-4" class="q-mr-sm" size="18px" />
+              <q-skeleton type="text" width="30px" />
+            </div>
+
+            <div class="row items-center">
+              <q-icon name="favorite_border" color="grey-4" class="q-mr-sm" size="18px" />
+              <q-skeleton type="text" width="30px" />
+            </div>
+          </div>
+        </q-card>
+      </div>
+    </section>
   </section>
 </template>
 <script>
+import { QSkeleton, QCard } from "quasar"
+import Publication from 'src/components/Publication'
+import { City } from 'src/services'
+
 export default {
   name: "Discover",
+  components: {
+    QCard,
+    QSkeleton,
+    Publication,
+  },
   data() {
     return {
-      secrets: [],
+      publications: [
+
+      ],
+      skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
       citySearchValue: "",
       citySelected: {},
+      citiesNotFound: false,
       isLoadingCities: false,
       activeCitiesHot: ["1"],
       citiesSearchFound: []
-    };
+    }
+  },
+  created() {
+    this.fetchPublications()
+  },
+  mounted() {
+    const publications = [
+        {
+          id: 1,
+          content: 'Un vecino tiene coronavirus, cuidense!',
+          likes: {}
+        },
+        {
+          id: 2,
+          content: 'Un vecino tiene coronavirus, cuidense!',
+          likes: {}
+        },
+        {
+          id: 3,
+          content: 'Un vecino tiene coronavirus, cuidense!',
+          likes: {}
+        },
+    ]
+    setTimeout(() => this.publications.push(publications), 2000)
   },
   methods: {
+    async fetchPublications() {
+      // const publications = await Publication.getAllByCity()
+    },
     async onSearchCity() {
-      const { citySearchValue } = this;
+      const { citySearchValue } = this
 
-      if (citySearchValue.length < 3) return;
+      if (citySearchValue.length < 3) return
 
-      clearTimeout(this.timerLoading);
-      this.isLoadingCities = true;
+      clearTimeout(this.timerLoading)
+      this.isLoadingCities = true
 
-      const { data } = await get(`searchPlace/${citySearchValue}`);
+      const [err, citiesData] = await City.searchCity(citySearchValue)
 
-      this.citiesSearchFound = data.cities;
+      if (err) return this.$notify(`${err.response.data.message}`)
 
-      this.timerLoading = setTimeout(() => (this.isLoadingCities = false), 800);
+      const { cities } = citiesData.data
+
+      this.citiesSearchFound = cities
+
+      this.timerLoading = setTimeout(() => (this.isLoadingCities = false), 800)
     }
   }
-};
+}
 </script>
+<style lang="scss" scoped>
+.publications {
+}
+</style>

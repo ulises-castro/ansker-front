@@ -35,9 +35,9 @@ class AuthService {
   }
 
   @Catch()
-  getTokenAndSignIn(auth_token) {
+  getTokenAndSignIn(access_token) {
     return get('user/authenticate/google/token', {
-      auth_token
+      access_token
     })
   }
 }

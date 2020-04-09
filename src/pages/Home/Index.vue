@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import AuthService from "src/services/auth.service";
+import AuthService from "src/services/AuthService";
 
 export default {
   name: "PageIndex",
