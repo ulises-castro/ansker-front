@@ -137,8 +137,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/main.scss";
-
 $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
 
 .publication {

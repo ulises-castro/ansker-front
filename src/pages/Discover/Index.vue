@@ -8,44 +8,44 @@
         name="1"
       >
         <aside class="row justify-center wrap space-between">
-          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
               height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-manzanillo.jpg"
             />
-            <small class="width: 100% is-size-7">Manzanillo</small>
+            <small class="full-width text-center is-size-7">Manzanillo</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
                           height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-guadalajara.jpg"
             />
-            <small class="is-size-7">Guadalajara</small>
+            <small class="full-width text-center is-size-7">Guadalajara</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
                           height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-tijuana.jpg"
             />
-            <small class="is-size-7">Tijuana</small>
+            <small class="full-width text-center is-size-7">Tijuana</small>
           </div>
 
-          <div class="flex flex-center flex-wrap" style="min-width: 50px max-width: 70px">
+          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
                           height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-colima.jpg"
             />
-            <small class="is-size-7">Colima</small>
+            <small class="full-width text-center is-size-7">Colima</small>
           </div>
         </aside>
       </van-collapse-item>
@@ -83,11 +83,11 @@
       </div>
     </aside>
     <section class="publications q-pt-md">
-      <div>
-        <publication :publication=""></publication>
+      <div v-if="publications.length">
+        <publication v-for="publication in publications"  :key="publication.id" :publication="publication"></publication>
       </div>
 
-      <div v-if="!publications.length">
+      <div v-else>
         <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
           <q-skeleton height="170px" square animation="fade" />
           <div class="q-pa-sm row items-center justify-between no-wrap">
@@ -113,17 +113,21 @@
 </template>
 <script>
 import { QSkeleton, QCard } from "quasar"
+import Publication from 'src/components/Publication'
 import { City } from 'src/services'
 
 export default {
   name: "Discover",
   components: {
+    QCard,
     QSkeleton,
-    QCard
+    Publication,
   },
   data() {
     return {
-      publications: [],
+      publications: [
+
+      ],
       skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
@@ -138,9 +142,29 @@ export default {
   created() {
     this.fetchPublications()
   },
+  mounted() {
+    const publications = [
+        {
+          id: 1,
+          content: 'Un vecino tiene coronavirus, cuidense!',
+          likes: {}
+        },
+        {
+          id: 2,
+          content: 'Un vecino tiene coronavirus, cuidense!',
+          likes: {}
+        },
+        {
+          id: 3,
+          content: 'Un vecino tiene coronavirus, cuidense!',
+          likes: {}
+        },
+    ]
+    setTimeout(() => this.publications.push(publications), 2000)
+  },
   methods: {
     async fetchPublications() {
-      const publications = await Publication.getAllByCity()
+      // const publications = await Publication.getAllByCity()
     },
     async onSearchCity() {
       const { citySearchValue } = this
