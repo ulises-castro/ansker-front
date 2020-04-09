@@ -73,8 +73,8 @@
         {{ city.countryName }} {{ city.flag }}
       </div>
     </aside>
-    <section class="publications">
-      <div class="q-py-sm" v-for="skeleton in [1,2,3,4,5]" :key="skeleton">
+    <section class="publications q-pt-md">
+      <div class v-for="skeleton in [1,2,3,4,5]" :key="skeleton">
         <q-card flat bordered square>
           <q-skeleton height="170px" square animation="fade" />
           <div class="q-pa-sm row items-center justify-between no-wrap">

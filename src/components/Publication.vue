@@ -1,6 +1,6 @@
 <template lang="html">
-  <!-- <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen secret"> -->
-    <div class="secret">
+  <!-- <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen publication"> -->
+    <div class="publication">
       <van-image
         lazy-load
         class="background-image"
@@ -9,15 +9,15 @@
         :height="300">
       ></van-image>
     <div
-      @click="goSecret(secret.id)"
-      class="secret-body">
+      @click="goSecret(publication.id)"
+      class="publication-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
-        {{ secret.content }}
+        {{ publication.content }}
       </span>
     </div>
-    <div @click="showJoinUs" class="secret-actions">
+    <div @click="showJoinUs" class="publication-actions">
       <div
-        @click="goSecret(secret.id)"
+        @click="goSecret(publication.id)"
         class="icon-link has-background-white">
         <router-link :to="{ name: '', params: {} }">
           <van-icon name="clock-o"/>
@@ -32,9 +32,9 @@
         <van-icon name="ellipsis" class="is-size-4" />
       </div>
       <div
-        @click="goSecret(secret.id)"
+        @click="goSecret(publication.id)"
         class="icon-link">
-        <span class="indicator p-r-5"> {{ secret.comments }} </span>
+        <span class="indicator p-r-5"> {{ publication.comments }} </span>
         <router-link :to="{ name: '', params: {} }">
           <van-icon name="chat-o"></van-icon>
         </router-link>
@@ -43,7 +43,7 @@
         @click="like"
         class="icon-link">
         <span class="p-r-5 indicator">
-          {{ secret.likes }}
+          {{ publication.likes }}
         </span>
         <router-link :to="{ name: '', params: {} }">
           <van-icon name="like-o" />
@@ -52,8 +52,9 @@
     </div>
     <van-action-sheet
       v-model="showOptions"
-      title="Selecciona una opción"
+      description="Selecciona una opción"
       :actions="actions"
+      @cancel="onCancel"
     />
     <!-- <van-popup v-model="showOptions" position="bottom" :overlay="true">
       <van-picker
@@ -73,7 +74,7 @@
 export default {
   name: "publication",
   props: {
-    secret: {
+    publication: {
       type: Object,
       required: true
     }
@@ -81,11 +82,10 @@ export default {
   data() {
     return {
       showOptions: false,
-      isUserLogged: this.$store.getters.isLogged,
-      userLogged: this.$store.getters.isLogged,
+      isUserLogged: true,
       actions: [
         {
-          name: "Option"
+          name: "Reportar"
         },
         {
           name: "Option",
@@ -116,16 +116,16 @@ export default {
     },
     async like() {
       if (this.showJoinUs) return;
-      const { secretId } = this.secret;
+      const { secretId } = this.publication;
 
-      const { data } = await post("secret/liked", { secretId });
+      const { data } = await post("publication/liked", { secretId });
 
-      this.secret.userLiked = !this.secret.userLiked;
-      const operation = !this.secret.userLiked ? -1 : 1;
-      this.secret.likes += operation;
+      this.publication.userLiked = !this.publication.userLiked;
+      const operation = !this.publication.userLiked ? -1 : 1;
+      this.publication.likes += operation;
     },
     goSecret() {
-      const { secretId } = this.secret;
+      const { secretId } = this.publication;
 
       this.$router.push({
         name: "Secret",
@@ -141,7 +141,7 @@ export default {
 
 $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
 
-.secret {
+.publication {
   background: white;
   position: relative;
   height: 300px;
