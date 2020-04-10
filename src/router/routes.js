@@ -5,14 +5,20 @@
 // TODO: Implemented a better way to performs lazyLoad of component
 const routes = [{
     path: '/',
+    name: 'Home',
     component: () => import('pages/Home/Index.vue')
   },
   {
     path: '/discover',
+    name: 'Discover',
+    meta: {
+      requiresAuth: true,
+    },
     component: () => import('pages/Discover/Index.vue')
   },
   {
     path: '/authenticate/google',
+    name: 'AuthGoogle',
     component: () => import('pages/Authenticate/AuthGoogle.vue')
   },
   {

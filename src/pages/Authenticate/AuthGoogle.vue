@@ -6,6 +6,7 @@
 import axios from "axios"
 import AuthService from "src/services/AuthService"
 import * as queryString from "query-string"
+import { mapActions } from 'vuex'
 
 export default {
   name: "google",
@@ -29,8 +30,13 @@ export default {
       if (err) return this.$notify(`${err.response.data.message}`)
 
       console.log(token.data)
-      this.$notify({ type: 'success', message: 'Welcome to ansker' });
-    }
+      this.$notify({ type: 'success', message: 'Welcome to  ansker' });
+
+      this.login(token.data.token)
+    },
+    ...mapActions('User',[
+      'login',
+    ])
   },
   created() {
     this.init()
