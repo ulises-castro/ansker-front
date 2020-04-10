@@ -84,28 +84,37 @@
     </aside>
     <section class="publications q-pt-md">
       <div v-if="publications.length">
-        <publication v-for="publication in publications"  :key="publication.id" :publication="publication"></publication>
+        <div v-for="publication in publications" :key="publication.id">
+          <publication :publication="publication"></publication>
+        </div>
       </div>
 
       <div v-else>
         <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
-          <q-skeleton height="170px" square animation="fade" />
-          <div class="q-pa-sm row items-center justify-between no-wrap">
-            <div class="row items-center">
-              <q-icon name="alarm" color="grey-4" class="q-mr-sm" size="18px" />
-              <q-skeleton type="text" width="30px" />
+          <q-skeleton height="250px" square animation="fade">
+            <div style="height: 180px">
+              <div class="row justify-end q-px-sm">
+                <q-icon name="las la-ellipsis-h" color="grey-1" class="q-mr-sm" size="25px" />
+              </div>
+            </div>
+            <div class="q-pa-sm row items-center justify-between no-wrap full-width" style="position: absolute; bottom: 0">
+              <div class="row items-center">
+                <q-icon name="las la-hourglass-half" color="grey-1" class="q-mr-sm" size="20px" />
+                <q-skeleton type="text" width="30px" />
+              </div>
+
+              <div class="row items-center">
+                <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="20px" />
+                <q-skeleton type="text" width="30px" />
+              </div>
+
+              <div class="row items-center">
+                <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="20px" />
+                <q-skeleton type="text" width="30px" />
+              </div>
             </div>
 
-            <div class="row items-center">
-              <q-icon name="chat_bubble_outline" color="grey-4" class="q-mr-sm" size="18px" />
-              <q-skeleton type="text" width="30px" />
-            </div>
-
-            <div class="row items-center">
-              <q-icon name="favorite_border" color="grey-4" class="q-mr-sm" size="18px" />
-              <q-skeleton type="text" width="30px" />
-            </div>
-          </div>
+          </q-skeleton>
         </q-card>
       </div>
     </section>
@@ -146,21 +155,24 @@ export default {
     const publications = [
         {
           id: 1,
-          content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {}
+          content: 'Hay mas casos de coronavirus de ha dicho el gobierno!!!',
+          likes: {},
+          image: 'https://ichef.bbci.co.uk/news/410/cpsprodpb/823A/production/_111083333_060312069-1.jpg'
         },
         {
           id: 2,
           content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {}
+          likes: {},
+          image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
         },
         {
           id: 3,
           content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {}
+          likes: {},
+          image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
         },
     ]
-    setTimeout(() => this.publications.push(publications), 2000)
+    setTimeout(() => this.publications = publications, 2000)
   },
   methods: {
     async fetchPublications() {
