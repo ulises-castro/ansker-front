@@ -9,10 +9,10 @@
         :height="300">
       ></van-image>
       <img >
-    <div style="position: absolute; top: 0; right: 0">
+    <div style="position: absolute; top: 0; right: 0; z-index: 100">
       <div class="row justify-end q-pa-sm icon-link"
-        @click="showOptions = true">
-        <q-icon name="las la-ellipsis-h" color="white" class="q-mr-sm" size="25px" />
+        @click="handlerShowOptions">
+        <q-icon name="las la-ellipsis-h" color="white" class="q-mr-sm" size="30px" />
       </div>
     </div>
     <div
@@ -88,19 +88,14 @@ export default {
       isUserLogged: true,
       actions: [
         {
-          name: "Reportar"
+          name: "Marcar como indebido"
         },
         {
-          name: "Option",
-          description: "Description"
+          name: "Proximamente"
         },
         {
           loading: true
         },
-        {
-          name: "Disabled Option",
-          disabled: true
-        }
       ],
       screenWidth: window.innerWidth
     };
@@ -109,6 +104,9 @@ export default {
     // this.showJoinUs();
   },
   methods: {
+    handlerShowOptions() {
+      this.showOptions = true
+    },
     showJoinUs() {
       if (!this.isUserLogged) {
         this.$emit("openShowJoinUs");

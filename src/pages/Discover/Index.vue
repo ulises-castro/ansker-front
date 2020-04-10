@@ -91,7 +91,7 @@
 
       <div v-else>
         <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
-          <q-skeleton height="200px" square animation="fade">
+          <q-skeleton height="250px" square animation="fade">
             <div style="height: 180px">
               <div class="row justify-end q-px-sm">
                 <q-icon name="las la-ellipsis-h" color="grey-1" class="q-mr-sm" size="25px" />
@@ -157,7 +157,7 @@ export default {
           id: 1,
           content: 'Hay mas casos de coronavirus de ha dicho el gobierno!!!',
           likes: {},
-          image: 'https://cdn2.excelsior.com.mx/media/styles/large/public/pictures/2020/02/26/2313677.jpg'
+          image: 'https://ichef.bbci.co.uk/news/410/cpsprodpb/823A/production/_111083333_060312069-1.jpg'
         },
         {
           id: 2,
