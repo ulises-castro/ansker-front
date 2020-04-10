@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
+    "experimentalDecorators": true,
     "paths": {
       "src/*": [
         "src/*"
@@ -14,8 +15,8 @@
       "layouts/*": [
         "src/layouts/*"
       ],
-      "utils/*": [
-        "src/utils/*"
+      "@/*": [
+        "src/*"
       ],
       "pages/*": [
         "src/pages/*"

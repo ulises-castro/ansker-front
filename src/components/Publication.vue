@@ -1,59 +1,63 @@
 <template lang="html">
-  <!-- <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen secret"> -->
-    <div class="secret">
+  <!-- <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen publication"> -->
+    <div class="publication">
       <van-image
         lazy-load
         class="background-image"
-        src="https://www.theswellelife.com/.a/6a00e54ef16809883301b8d2dcf28f970c-800wi"
         :width="screenWidth"
+        :src="publication.image"
         :height="300">
       ></van-image>
+      <img >
+    <div style="position: absolute; top: 0; right: 0; z-index: 100">
+      <div class="row justify-end q-pa-sm icon-link"
+        @click="handlerShowOptions">
+        <q-icon name="las la-ellipsis-h" color="white" class="q-mr-sm" size="30px" />
+      </div>
+    </div>
     <div
-      @click="goSecret(secret.id)"
-      class="secret-body">
+      @click="gopublication(publication.id)"
+      class="publication-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
-        {{ secret.content }}
+        {{ publication.content }}
       </span>
     </div>
-    <div @click="showJoinUs" class="secret-actions">
+    <div @click="showJoinUs" class="publication-actions">
       <div
-        @click="goSecret(secret.id)"
+        @click="gopublication(publication.id)"
         class="icon-link has-background-white">
         <router-link :to="{ name: '', params: {} }">
-          <van-icon name="clock-o"/>
+          <q-icon name="las la-hourglass-half" color="grey-1" class="q-mr-sm" size="22px" />
         </router-link>
         <span class="indicator p-l-5 has-text-weight-bold">
           1 hr
         </span>
       </div>
+
       <div
-        @click="(isUserLogged) ? showOptions = true : ''"
+        @click="gopublication(publication.id)"
         class="icon-link">
-        <van-icon name="ellipsis" class="is-size-4" />
-      </div>
-      <div
-        @click="goSecret(secret.id)"
-        class="icon-link">
-        <span class="indicator p-r-5"> {{ secret.comments }} </span>
         <router-link :to="{ name: '', params: {} }">
-          <van-icon name="chat-o"></van-icon>
+          <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="22px" />
         </router-link>
+        <span class="indicator p-r-5"> 10 </span>
       </div>
       <div
         @click="like"
         class="icon-link">
-        <span class="p-r-5 indicator">
-          {{ secret.likes }}
-        </span>
         <router-link :to="{ name: '', params: {} }">
-          <van-icon name="like-o" />
+          <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="16px" />
         </router-link>
+        <span class="p-r-5 indicator">
+          22
+        </span>
       </div>
     </div>
     <van-action-sheet
       v-model="showOptions"
-      title="Selecciona una opción"
+      description="Selecciona una opción"
       :actions="actions"
+      @cancel="onCancel"
     />
     <!-- <van-popup v-model="showOptions" position="bottom" :overlay="true">
       <van-picker
@@ -73,7 +77,7 @@
 export default {
   name: "publication",
   props: {
-    secret: {
+    publication: {
       type: Object,
       required: true
     }
@@ -81,23 +85,17 @@ export default {
   data() {
     return {
       showOptions: false,
-      isUserLogged: this.$store.getters.isLogged,
-      userLogged: this.$store.getters.isLogged,
+      isUserLogged: true,
       actions: [
         {
-          name: "Option"
+          name: "Marcar como indebido"
         },
         {
-          name: "Option",
-          description: "Description"
+          name: "Proximamente"
         },
         {
           loading: true
         },
-        {
-          name: "Disabled Option",
-          disabled: true
-        }
       ],
       screenWidth: window.innerWidth
     };
@@ -106,6 +104,9 @@ export default {
     // this.showJoinUs();
   },
   methods: {
+    handlerShowOptions() {
+      this.showOptions = true
+    },
     showJoinUs() {
       if (!this.isUserLogged) {
         this.$emit("openShowJoinUs");
@@ -116,20 +117,20 @@ export default {
     },
     async like() {
       if (this.showJoinUs) return;
-      const { secretId } = this.secret;
+      const { publicationId } = this.publication;
 
-      const { data } = await post("secret/liked", { secretId });
+      const { data } = await post("publication/liked", { publicationId });
 
-      this.secret.userLiked = !this.secret.userLiked;
-      const operation = !this.secret.userLiked ? -1 : 1;
-      this.secret.likes += operation;
+      this.publication.userLiked = !this.publication.userLiked;
+      const operation = !this.publication.userLiked ? -1 : 1;
+      this.publication.likes += operation;
     },
-    goSecret() {
-      const { secretId } = this.secret;
+    gopublication() {
+      const { publicationId } = this.publication;
 
       this.$router.push({
-        name: "Secret",
-        params: { secretId }
+        name: "publication",
+        params: { publicationId }
       });
     }
   }
@@ -137,11 +138,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/styles/main.scss";
-
 $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
 
-.secret {
+.publication {
   background: white;
   position: relative;
   height: 300px;
@@ -182,6 +181,23 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     }
   }
 
+  .icon-link {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    i {
+      color: white;
+      font-weight: bold;
+      font-size: 1.3em;
+      text-shadow: $shadow-icons;
+    }
+
+    a {
+      color: #fff;
+    }
+  }
+
   &-actions {
     display: flex;
     justify-content: space-around;
@@ -192,22 +208,7 @@ $shadow-icons: 0px 0px 3px rgba(150, 150, 150, 1);
     bottom: 0;
     width: 100%;
 
-    .icon-link {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
 
-      i {
-        color: white;
-        font-weight: bold;
-        font-size: 1.3em;
-        text-shadow: $shadow-icons;
-      }
-
-      a {
-        color: #fff;
-      }
-    }
   }
 }
 </style>

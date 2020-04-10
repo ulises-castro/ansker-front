@@ -3,25 +3,27 @@
 // }
 
 // TODO: Implemented a better way to performs lazyLoad of component
-const routes = [
-  // {
-  //   path: '/',
-  //   component: () => import('layouts/MainLayout.vue'),
-  //   children: [
-  //     { path: '', component: () => import('pages/Index.vue') }
-  //   ]
-  // }
-  {
+const routes = [{
     path: '/',
+    name: 'Home',
     component: () => import('pages/Home/Index.vue')
   },
   {
     path: '/discover',
+    name: 'Discover',
+    meta: {
+      requiresAuth: true,
+    },
     component: () => import('pages/Discover/Index.vue')
   },
   {
     path: '/authenticate/google',
-    component: () => import('pages/Authenticate/Google.vue')
+    name: 'AuthGoogle',
+    component: () => import('pages/Authenticate/AuthGoogle.vue')
+  },
+  {
+    path: '/authenticate/google/token',
+    component: () => import('pages/Authenticate/AuthGoogle.vue')
   }
 ]
 
