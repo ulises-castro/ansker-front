@@ -19,20 +19,25 @@ export default {
       const [ err, googleData ] = await AuthService.googleLogin(urlParams.code)
 
       console.log(googleData)
-      if (err) return this.$notify(`${err.response.data.message}`)
+      if (err) {
+        this.$router.push({ name: 'Home' })
+        return this.$notify(`${err.response.data.message}`)
+      }
 
       this.getTokenAndsignIn(googleData.data.access_token)
     },
-    getTokenAndsignIn(access_token) {
+    async getTokenAndsignIn(access_token) {
       console.log(this.$route.params)
-      const [err, token] = AuthService.getTokenAndSignIn(access_token)
+      const [err, token] = await AuthService.getTokenAndSignIn(access_token)
 
       if (err) return this.$notify(`${err.response.data.message}`)
 
       console.log(token.data)
-      this.$notify({ type: 'success', message: 'Welcome to  ansker' });
+      this.$notify({ type: 'success', message: 'Welcome to  ansker' })
 
       this.login(token.data.token)
+
+      this.$router.push({ name: 'Discover' })
     },
     ...mapActions('User',[
       'login',

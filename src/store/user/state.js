@@ -1,6 +1,8 @@
+import { jsonParseStored } from 'src/utils'
+
 export default function () {
   return {
-    isLogged: false,
-    token: '',
+    isLogged: jsonParseStored('isLogged'),
+    token: jsonParseStored('token', ''),
   }
 }
