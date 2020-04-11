@@ -2,6 +2,8 @@
 // https://quasar.dev/quasar-cli/quasar-conf-js
 
 const path = require('path')
+const fs = require('fs')
+
 
 module.exports = function (ctx) {
   return {
@@ -107,7 +109,11 @@ module.exports = function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-devServer
     devServer: {
-      https: false,
+      https: {
+        key: fs.readFileSync('/home/alex/ssl/mydev.dev+5-key.pem'),
+        cert: fs.readFileSync('/home/alex/ssl/mydev.dev+5.pem'),
+        ca: fs.readFileSync('/home/alex/.local/share/mkcert/rootCA.pem'),
+      },
       port: 1297,
       open: false // opens browser window automatically
     },
