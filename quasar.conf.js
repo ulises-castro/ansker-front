@@ -132,9 +132,9 @@ module.exports = function (ctx) {
       workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
-        name: 'Ansker App',
-        short_name: 'Ansker App',
-        description: 'A Quasar Framework app',
+        name: 'Ansker | Comparte con tu alreadedor',
+        short_name: 'Ansker',
+        description: 'Comparte lo que piensas con tu alrededor de forma fácil, anónima y divertida.',
         display: 'standalone',
         orientation: 'portrait',
         background_color: '#ffffff',
