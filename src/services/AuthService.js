@@ -43,7 +43,7 @@ class AuthService {
 
   @Catch()
   signInFacebook(tokenFB) {
-    return get('auth/google/token', tokenFB)
+    return get('auth/facebook', tokenFB)
   }
 }
 
