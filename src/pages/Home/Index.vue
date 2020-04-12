@@ -105,7 +105,7 @@ export default {
         if (response.authResponse) {
           const tokenFB = response.authResponse.accessToken
 
-          this.handlerLoginRequest(tokenFB)
+          this.loginWithFacebook(tokenFB)
         } else {
           this.login.isLoading = false
 
@@ -115,21 +115,17 @@ export default {
         scope: 'public_profile, email'
       })
     },
-    handlerLoginRequest(data) {
-      // this.login.isLoading = false
+    async loginWithFacebook(tokenFB) {
+      this.login.isLoading = false
 
-      console.log(data)
+      const [err, facebookUser] = AuthService.signInFacebook(tokenFB)
 
-      // this.callUserLogin(data)
-      //   .catch((err) => {
-      //     this.showLoginError()
-      // })
-    },
-    async callUserLogin(params) {
-      let { data } = await post('login', params)
+      if (err) return this.$notify('Ocurrio un error, intentalo más tarde')
 
-      let user = { ...data }
-      const { token } = data
+      console.table(facebookUser)
+
+      // let user = { ...data }
+      // const { token } = data
 
       // Consider implement models with orm
       // this.$store.dispatch('entities/userData/create', { data })

@@ -29,20 +29,22 @@ class AuthService {
 
   @Catch()
   googleLogin(code) {
-    return get('user/authenticate/google', {
+    return get('auth/google', {
       code
     })
   }
 
   @Catch()
   signInGoogle(access_token) {
-    return get('user/authenticate/google/token', {
+    return get('auth/google/token', {
       access_token
     })
   }
 
   @Catch()
-  getToken
+  signInFacebook(tokenFB) {
+    return get('auth/google/token', tokenFB)
+  }
 }
 
 export default new AuthService
