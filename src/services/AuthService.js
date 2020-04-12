@@ -1,4 +1,3 @@
-import axios from 'axios'
 import Catch from 'await-to-decorater'
 import * as queryString from 'query-string'
 import {
@@ -6,7 +5,7 @@ import {
   post
 } from './api'
 
-class AuthService {
+class Auth {
   login(user) {
 
   }
@@ -47,4 +46,4 @@ class AuthService {
   }
 }
 
-export default new AuthService
+export default new Auth()
