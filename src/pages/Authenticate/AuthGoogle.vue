@@ -1,5 +1,4 @@
 <template>
-  <div>Loading data</div>
 </template>
 
 <script>
@@ -8,10 +7,15 @@ import AuthService from "src/services/AuthService"
 import * as queryString from "query-string"
 import { mapActions } from 'vuex'
 
+import {
+  Loading,
+} from 'quasar'
+
 export default {
   name: "google",
   methods: {
     async init() {
+      Loading.show()
       const urlParams = queryString.parse(window.location.search)
 
       console.log(`The code is: ${urlParams.code}`)
