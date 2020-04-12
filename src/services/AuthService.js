@@ -35,11 +35,14 @@ class AuthService {
   }
 
   @Catch()
-  getTokenAndSignIn(access_token) {
+  signInGoogle(access_token) {
     return get('user/authenticate/google/token', {
       access_token
     })
   }
+
+  @Catch()
+  getToken
 }
 
 export default new AuthService

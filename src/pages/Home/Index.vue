@@ -3,7 +3,7 @@
     <section class="q-py-lg">
       <h4
         class="logo-font q-py-lg q-my-none text-white text-weight-bold text-center logo-font-title"
-      >Ansker;)</h4>
+      >Ansker)</h4>
       <p
         class="text-center slogan text-weight-bold text-white"
       >Comparte lo que piensas con tu alrededor de manera anónima.</p>
@@ -43,18 +43,20 @@
         :href="googleLoginUrl"
         class="full-width no-border bg-red-8 has-text-white row justify-center items-center cursor-pointer"
       >
-        <div v-if="!login.isLoading.google" class="p0-10 p-r-15">
-          <i class="fab fa-google is-size-5 p-t-5"></i>
-        </div>
         <span class="text-h6 text-white text-weight-bold">Continuar con Google</span>
       </a>
       <a
+        @click="checkLoginState"
         class="full-width bg-blue-10 no-border has-text-white row justify-center items-center cursor-pointer"
       >
         <div v-if="!login.isLoading.facebook" class="p0-10 p-r-15">
           <i class="fab fa-facebook-f is-size-4 p-t-5"></i>
         </div>
-        <spinner v-else :isLoading="true" />
+        <van-loading
+          v-if="login.isLoading.facebook"
+          color="#fff"
+          size="1em"
+        />
         <span class="text-h6 text-white text-weight-bold">Continuar con Facebook</span>
       </a>
       <aside class="q-py-sm row items-center">
@@ -74,7 +76,7 @@
 </template>
 
 <script>
-import AuthService from "src/services/AuthService";
+import AuthService from "src/services/AuthService"
 
 export default {
   name: "PageIndex",
@@ -89,9 +91,56 @@ export default {
           google: false
         }
       }
-    };
+    }
+  },
+  methods: {
+    checkLoginState() {
+      this.login.isLoading.facebook = true
+
+      this.openLoginFB()
+    },
+    openLoginFB() {
+      FB.login((response) => {
+
+        if (response.authResponse) {
+          const tokenFB = response.authResponse.accessToken
+
+          this.handlerLoginRequest(tokenFB)
+        } else {
+          this.login.isLoading = false
+
+          this.$notify('Necesitamos permisos para poder continuar')
+        }
+      },{
+        scope: 'public_profile, email'
+      })
+    },
+    handlerLoginRequest(data) {
+      // this.login.isLoading = false
+
+      console.log(data)
+
+      // this.callUserLogin(data)
+      //   .catch((err) => {
+      //     this.showLoginError()
+      // })
+    },
+    async callUserLogin(params) {
+      let { data } = await post('login', params)
+
+      let user = { ...data }
+      const { token } = data
+
+      // Consider implement models with orm
+      // this.$store.dispatch('entities/userData/create', { data })
+
+      // this.$store.dispatch('login', { token, user })
+      // this.login.isLoading = false
+
+      // this.$router.push({ name: 'Discover' })
+    },
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .logo-font-title {
