@@ -28,7 +28,7 @@ export default {
     },
     async getTokenAndsignIn(access_token) {
       console.log(this.$route.params)
-      const [err, token] = await AuthService.getTokenAndSignIn(access_token)
+      const [err, token] = await AuthService.signInGoogle(access_token)
 
       if (err) return this.$notify(`${err.response.data.message}`)
 
