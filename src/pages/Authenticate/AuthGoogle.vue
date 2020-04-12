@@ -1,4 +1,5 @@
 <template>
+  <div></div>
 </template>
 
 <script>
@@ -50,7 +51,8 @@ export default {
   created() {
     this.init()
   },
-  mounted() {
+  beforeDestroy() {
+    Loading.hide()
   }
 }
 </script>
