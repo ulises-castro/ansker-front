@@ -105,14 +105,11 @@ export default {
         if (response.authResponse) {
           const tokenFB = response.authResponse.accessToken
 
-          const data = {
-            tokenFB,
-          }
-
-          this.handlerLoginRequest(data)
+          this.handlerLoginRequest(tokenFB)
         } else {
           this.login.isLoading = false
 
+          this.$notify('Necesitamos permisos para poder continuar')
         }
       },{
         scope: 'public_profile, email'
