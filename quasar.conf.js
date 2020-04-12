@@ -66,17 +66,17 @@ module.exports = function (ctx) {
       vueRouterMode: 'history', // available values: 'hash', 'history'
 
       env: ctx.dev ? { // so on dev we'll have
-        API: JSON.stringify('http://localanskerme.me:3030/api/'),
+        API: JSON.stringify('https://localanskerme.me:3030/api/'),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
-        SOCKET: JSON.stringify('http://localanskerme.me:3030'),
-        BASE_URL: JSON.stringify('http://localanskerme.me:1297')
+        SOCKET: JSON.stringify('https://localanskerme.me:3030'),
+        BASE_URL: JSON.stringify('https://localanskerme.me:1297')
       } : { // and on build (production):
-        API: JSON.stringify('http://localanskerme.me:3030/api/'),
+        API: JSON.stringify('https://ansker.me/api/'),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
-        SOCKET: JSON.stringify('http://localanskerme.me:3030'),
-        BASE_URL: JSON.stringify('http://localanskerme.me:1297')
+        SOCKET: JSON.stringify('https://ansker.me:3030'),
+        BASE_URL: JSON.stringify('https://ansker.me')
       },
 
       // rtl: false, // https://quasar.dev/options/rtl-support
@@ -114,6 +114,7 @@ module.exports = function (ctx) {
         cert: fs.readFileSync('/home/alex/ssl/mydev.dev+5.pem'),
         ca: fs.readFileSync('/home/alex/.local/share/mkcert/rootCA.pem'),
       },
+      // https: false,
       port: 1297,
       open: false // opens browser window automatically
     },
