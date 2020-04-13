@@ -3,13 +3,14 @@
 
 const path = require('path')
 const fs = require('fs')
-
+const merge = require('webpack-merge');
 
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://quasar.dev/quasar-cli/cli-documentation/boot-files
+    htmlVariables: { title: 'Ansker' },
     boot: [
       'i18n',
       'axios',
