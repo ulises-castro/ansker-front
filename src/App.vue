@@ -93,7 +93,7 @@ export default {
      }(document, 'script', 'facebook-jssdk'));
 
      // TODO: B Create 401 | 403 response middlare, BUG: Because whatever response code exists you will get out
-     this.sendErrorsAndManagesUserLogin();
+    //  this.sendErrorsAndManagesUserLogin();
   },
 };
 </script>

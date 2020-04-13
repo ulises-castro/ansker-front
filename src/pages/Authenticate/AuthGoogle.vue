@@ -1,22 +1,27 @@
 <template>
-  <div>Loading data</div>
+  <div></div>
 </template>
 
 <script>
 import axios from "axios"
-import AuthService from "src/services/AuthService"
+import { Auth } from "src/services"
 import * as queryString from "query-string"
 import { mapActions } from 'vuex'
+
+import {
+  Loading,
+} from 'quasar'
 
 export default {
   name: "google",
   methods: {
     async init() {
+      Loading.show()
       const urlParams = queryString.parse(window.location.search)
 
       console.log(`The code is: ${urlParams.code}`)
 
-      const [ err, googleData ] = await AuthService.googleLogin(urlParams.code)
+      const [ err, googleData ] = await Auth.googleLogin(urlParams.code)
 
       console.log(googleData)
       if (err) {
@@ -28,7 +33,7 @@ export default {
     },
     async getTokenAndsignIn(access_token) {
       console.log(this.$route.params)
-      const [err, token] = await AuthService.signInGoogle(access_token)
+      const [err, token] = await Auth.signInGoogle(access_token)
 
       if (err) return this.$notify(`${err.response.data.message}`)
 
@@ -46,7 +51,8 @@ export default {
   created() {
     this.init()
   },
-  mounted() {
+  beforeDestroy() {
+    Loading.hide()
   }
 }
 </script>

@@ -15,8 +15,8 @@
         type=" join-button bg-white text-primary text-weight-bold no-border"
         size="large"
         :loading="
-          login.isLoading.google ||
-          login.isLoading.facebook"
+          auth.isLoading.google ||
+          auth.isLoading.facebook"
         loading-text="Iniciando sesión..."
       >
         <span class="text-h5 text-weight-bolder">Unirme</span>
@@ -49,11 +49,8 @@
         @click="checkLoginState"
         class="full-width bg-blue-10 no-border has-text-white row justify-center items-center cursor-pointer"
       >
-        <div v-if="!login.isLoading.facebook" class="p0-10 p-r-15">
-          <i class="fab fa-facebook-f is-size-4 p-t-5"></i>
-        </div>
         <van-loading
-          v-if="login.isLoading.facebook"
+          v-if="auth.isLoading.facebook"
           color="#fff"
           size="1em"
         />
@@ -76,7 +73,9 @@
 </template>
 
 <script>
-import AuthService from "src/services/AuthService"
+import { mapActions } from 'vuex'
+import { Auth } from "src/services"
+
 
 export default {
   name: "PageIndex",
@@ -84,8 +83,8 @@ export default {
     return {
       showFooter: true,
       openJoinUs: false,
-      googleLoginUrl: AuthService.getGoogleLink(),
-      login: {
+      googleLoginUrl: Auth.getGoogleLink(),
+      auth: {
         isLoading: {
           facebook: false,
           google: false
@@ -95,7 +94,7 @@ export default {
   },
   methods: {
     checkLoginState() {
-      this.login.isLoading.facebook = true
+      this.auth.isLoading.facebook = true
 
       this.openLoginFB()
     },
@@ -105,9 +104,9 @@ export default {
         if (response.authResponse) {
           const tokenFB = response.authResponse.accessToken
 
-          this.handlerLoginRequest(tokenFB)
+          this.loginWithFacebook(tokenFB)
         } else {
-          this.login.isLoading = false
+          this.auth.isLoading = false
 
           this.$notify('Necesitamos permisos para poder continuar')
         }
@@ -115,30 +114,22 @@ export default {
         scope: 'public_profile, email'
       })
     },
-    handlerLoginRequest(data) {
-      // this.login.isLoading = false
+    async loginWithFacebook(tokenFB) {
+      this.auth.isLoading.facebook = false
 
-      console.log(data)
+      const [err, facebookUser] = await Auth.signInFacebook(tokenFB)
 
-      // this.callUserLogin(data)
-      //   .catch((err) => {
-      //     this.showLoginError()
-      // })
+      if (err) return this.$notify('Ocurrio un error, intentalo más tarde')
+
+      this.$notify({ type: 'success', message: 'Welcome to  ansker' })
+
+      this.login(facebookUser.data.token)
+
+      this.$router.push({ name: 'Discover' })
     },
-    async callUserLogin(params) {
-      let { data } = await post('login', params)
-
-      let user = { ...data }
-      const { token } = data
-
-      // Consider implement models with orm
-      // this.$store.dispatch('entities/userData/create', { data })
-
-      // this.$store.dispatch('login', { token, user })
-      // this.login.isLoading = false
-
-      // this.$router.push({ name: 'Discover' })
-    },
+    ...mapActions('User',[
+      'login',
+    ])
   }
 }
 </script>
