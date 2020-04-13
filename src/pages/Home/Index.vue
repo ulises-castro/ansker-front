@@ -15,8 +15,8 @@
         type=" join-button bg-white text-primary text-weight-bold no-border"
         size="large"
         :loading="
-          login.isLoading.google ||
-          login.isLoading.facebook"
+          auth.isLoading.google ||
+          auth.isLoading.facebook"
         loading-text="Iniciando sesión..."
       >
         <span class="text-h5 text-weight-bolder">Unirme</span>
@@ -49,11 +49,8 @@
         @click="checkLoginState"
         class="full-width bg-blue-10 no-border has-text-white row justify-center items-center cursor-pointer"
       >
-        <div v-if="!login.isLoading.facebook" class="p0-10 p-r-15">
-          <i class="fab fa-facebook-f is-size-4 p-t-5"></i>
-        </div>
         <van-loading
-          v-if="login.isLoading.facebook"
+          v-if="auth.isLoading.facebook"
           color="#fff"
           size="1em"
         />
@@ -76,7 +73,9 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { Auth } from "src/services"
+
 
 export default {
   name: "PageIndex",
@@ -85,7 +84,7 @@ export default {
       showFooter: true,
       openJoinUs: false,
       googleLoginUrl: Auth.getGoogleLink(),
-      login: {
+      auth: {
         isLoading: {
           facebook: false,
           google: false
@@ -95,7 +94,7 @@ export default {
   },
   methods: {
     checkLoginState() {
-      this.login.isLoading.facebook = true
+      this.auth.isLoading.facebook = true
 
       this.openLoginFB()
     },
@@ -107,7 +106,7 @@ export default {
 
           this.loginWithFacebook(tokenFB)
         } else {
-          this.login.isLoading = false
+          this.auth.isLoading = false
 
           this.$notify('Necesitamos permisos para poder continuar')
         }
@@ -116,25 +115,21 @@ export default {
       })
     },
     async loginWithFacebook(tokenFB) {
-      this.login.isLoading = false
+      this.auth.isLoading.facebook = false
 
-      const [err, facebookUser] = AuthService.signInFacebook(tokenFB)
+      const [err, facebookUser] = await Auth.signInFacebook(tokenFB)
 
       if (err) return this.$notify('Ocurrio un error, intentalo más tarde')
 
-      console.table(facebookUser)
+      this.$notify({ type: 'success', message: 'Welcome to  ansker' })
 
-      // let user = { ...data }
-      // const { token } = data
+      this.login(facebookUser.data.token)
 
-      // Consider implement models with orm
-      // this.$store.dispatch('entities/userData/create', { data })
-
-      // this.$store.dispatch('login', { token, user })
-      // this.login.isLoading = false
-
-      // this.$router.push({ name: 'Discover' })
+      this.$router.push({ name: 'Discover' })
     },
+    ...mapActions('User',[
+      'login',
+    ])
   }
 }
 </script>

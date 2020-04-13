@@ -42,7 +42,7 @@ class Auth {
 
   @Catch()
   signInFacebook(tokenFB) {
-    return get('auth/facebook', tokenFB)
+    return post('auth/facebook', { tokenFB })
   }
 }
 
