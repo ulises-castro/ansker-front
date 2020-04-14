@@ -1,10 +1,12 @@
 <template>
   <div id="q-app">
-    <app-layout v-if="isLogged"></app-layout>
-    <!-- TODO: add condition which only allow user logged in the app -->
-    <router-view />
+    <div class="app-container">
+      <app-layout v-if="isLogged"></app-layout>
+      <!-- TODO: add condition which only allow user logged in the app -->
+      <router-view :handlerError="handlerError" />
 
-    <Menu v-if="isLogged"></Menu>
+      <Menu v-if="isLogged"></Menu>
+    </div>
   </div>
 </template>
 <script>
@@ -21,29 +23,12 @@ export default {
   },
   methods: {
     // ...mapAction('User', '')
-    sendErrorsAndManagesUserLogin() {
-      this.$http.interceptors.response.use(undefined, (err) => {
-
-      // Handler error from backend
-      let errorMessage = 'general.error';
-      if (err.response && err.response.data) {
-        errorMessage = (!err.response.data.error)
-          ? 'general.' + err.response.data
-          : err.response.data.error;
+    handlerError(err) {
+      if (err.response.data.message) {
+        return this.$notify(`${err.response.data.message}`)
       }
 
-      this.$notify({
-        message: this.$t(errorMessage),
-        duration: 3000,
-      });
-
-      return;
-      if (err) {
-         this.$store.dispatch('logout');
-
-         this.$router.push({ name: 'Home' });
-       }
-     });
+      return this.$notify(`No pudimos procesar tu solitud, por favor intente más tarde`)
     }
   },
   created() {
@@ -91,9 +76,6 @@ export default {
        js.src = "https://connect.facebook.net/en_US/sdk.js";
        fjs.parentNode.insertBefore(js, fjs);
      }(document, 'script', 'facebook-jssdk'));
-
-     // TODO: B Create 401 | 403 response middlare, BUG: Because whatever response code exists you will get out
-    //  this.sendErrorsAndManagesUserLogin();
   },
 };
 </script>

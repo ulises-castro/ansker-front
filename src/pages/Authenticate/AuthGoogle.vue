@@ -14,6 +14,7 @@ import {
 
 export default {
   name: "google",
+  props: ['handlerError'],
   methods: {
     async init() {
       Loading.show()
@@ -26,7 +27,8 @@ export default {
       console.log(googleData)
       if (err) {
         this.$router.push({ name: 'Home' })
-        return this.$notify(`${err.response.data.message}`)
+
+        return handlerError(err)
       }
 
       this.getTokenAndsignIn(googleData.data.access_token)
@@ -35,9 +37,8 @@ export default {
       console.log(this.$route.params)
       const [err, token] = await Auth.signInGoogle(access_token)
 
-      if (err) return this.$notify(`${err.response.data.message}`)
+      if (err) return handlerError(err)
 
-      console.log(token.data)
       this.$notify({ type: 'success', message: 'Welcome to  ansker' })
 
       this.login(token.data.token)

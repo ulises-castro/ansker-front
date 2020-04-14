@@ -4,6 +4,7 @@ import Vant, {
   Icon,
   Popup,
   Image,
+  Field,
   Locale,
   Search,
   Button,
@@ -13,20 +14,25 @@ import Vant, {
   Lazyload,
   Tabbar,
   Skeleton,
+  Cell,
+  CellGroup,
   TabbarItem,
   Collapse,
   CollapseItem,
   ActionSheet,
 } from "vant"
 
+
 import enUS from "vant/lib/locale/lang/en-US"
 import 'vant/lib/index.css'
 
 // "async" is optional
+Vue.use(Cell)
 Vue.use(Icon)
 Vue.use(Popup)
 Vue.use(Image)
 Vue.use(Image)
+Vue.use(Field)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
@@ -34,6 +40,7 @@ Vue.use(Tabbar)
 Vue.use(Notify)
 Vue.use(Loading)
 Vue.use(Skeleton)
+Vue.use(CellGroup)
 Vue.use(TabbarItem)
 Vue.use(Collapse)
 Vue.use(CollapseItem)

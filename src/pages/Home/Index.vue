@@ -1,9 +1,9 @@
 <template>
   <section class="block window-height window-width bg-primary" :showFooter="showFooter">
     <section class="q-py-lg">
-      <h4
-        class="logo-font q-py-lg q-my-none text-white text-weight-bold text-center logo-font-title"
-      >Ansker)</h4>
+      <div class="full-width row justify-center">
+        <img width="300" src="statics/main-logo.png" />
+      </div>
       <p
         class="text-center slogan text-weight-bold text-white"
       >Comparte lo que piensas con tu alrededor de manera anónima.</p>
@@ -75,7 +75,6 @@
 <script>
 import { mapActions } from 'vuex'
 import { Auth } from "src/services"
-
 
 export default {
   name: "PageIndex",

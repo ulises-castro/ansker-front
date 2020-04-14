@@ -127,6 +127,7 @@ import { City } from 'src/services'
 
 export default {
   name: "Discover",
+  props: ['handlerError'],
   components: {
     QCard,
     QSkeleton,
@@ -188,7 +189,7 @@ export default {
 
       const [err, citiesData] = await City.searchCity(citySearchValue)
 
-      if (err) return this.$notify(`${err.response.data.message}`)
+      if (err) return handlerError(err)
 
       const { cities } = citiesData.data
 
