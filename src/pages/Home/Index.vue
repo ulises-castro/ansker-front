@@ -76,7 +76,6 @@
 import { mapActions } from 'vuex'
 import { Auth } from "src/services"
 
-
 export default {
   name: "PageIndex",
   data() {

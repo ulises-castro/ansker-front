@@ -17,6 +17,14 @@ const routes = [{
     component: () => import('pages/Discover/Index.vue')
   },
   {
+    path: '/settings',
+    name: 'Settings',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('pages/Settings/Index.vue')
+  },
+  {
     path: '/authenticate/google',
     name: 'AuthGoogle',
     component: () => import('pages/Authenticate/AuthGoogle.vue')

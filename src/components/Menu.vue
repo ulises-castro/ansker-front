@@ -5,16 +5,16 @@
         class="has-text-weight-bolds"
         active-color="#239bce"
         v-model="active">
-        <van-tabbar-item icon="home-o" info="10">
+        <van-tabbar-item :to="{ name: 'Home' }" icon="home-o" info="10">
           Inicio
         </van-tabbar-item>
-        <van-tabbar-item info="5">
+        <van-tabbar-item :to="{ name: 'Home' }" info="5">
           Alrededor
             <template #icon>
               <q-icon name="las la-users" size="sm"></q-icon>
             </template>
           </van-tabbar-item>
-        <van-tabbar-item
+        <van-tabbar-item :to="{ name: 'Settings' }"
           icon="setting-o">
           Configuración
         </van-tabbar-item>
