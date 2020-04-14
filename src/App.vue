@@ -1,10 +1,12 @@
 <template>
   <div id="q-app">
-    <app-layout v-if="isLogged"></app-layout>
-    <!-- TODO: add condition which only allow user logged in the app -->
-    <router-view :handlerError="handlerError" />
+    <div class="app-container">
+      <app-layout v-if="isLogged"></app-layout>
+      <!-- TODO: add condition which only allow user logged in the app -->
+      <router-view :handlerError="handlerError" />
 
-    <Menu v-if="isLogged"></Menu>
+      <Menu v-if="isLogged"></Menu>
+    </div>
   </div>
 </template>
 <script>
