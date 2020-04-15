@@ -83,6 +83,17 @@
       </div>
     </aside>
     <section class="publications q-pt-md">
+
+    <div style="position: sticky; top: 0; z-index: 1000">
+      <q-fab
+        icon="add"
+        direction="up"
+        color="accent"
+      >
+        <q-fab-action color="primary" icon="person_add" />
+        <q-fab-action color="primary" icon="mail" />
+      </q-fab>
+    </div>
       <div v-if="publications.length">
         <div v-for="publication in publications" :key="publication.id">
           <publication :publication="publication"></publication>
@@ -118,10 +129,10 @@
         </q-card>
       </div>
     </section>
+
   </section>
 </template>
 <script>
-import { QSkeleton, QCard } from "quasar"
 import Publication from 'src/components/Publication'
 import { City } from 'src/services'
 
@@ -129,8 +140,6 @@ export default {
   name: "Discover",
   props: ['handlerError'],
   components: {
-    QCard,
-    QSkeleton,
     Publication,
   },
   data() {
