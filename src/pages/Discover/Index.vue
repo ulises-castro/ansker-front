@@ -20,7 +20,7 @@
 
           <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-                          height="38"
+              height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-guadalajara.jpg"
@@ -30,7 +30,7 @@
 
           <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-                          height="38"
+              height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-tijuana.jpg"

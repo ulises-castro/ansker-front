@@ -1,4 +1,3 @@
-/*
-export function someAction (context) {
+export function addCities ({ commit }, cities) {
+  commit('addCities', cities)
 }
-*/
