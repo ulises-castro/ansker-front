@@ -84,7 +84,7 @@
     </aside>
     <section class="publications q-pt-md" style="padding-bottom: 55px">
 
-    <div style="position: sticky; top: 0; z-index: 1000">
+    <div style="position: sticky; bottom: 0; z-index: 1000">
       <q-fab
         class="q-btn–fab-mini"
         icon="las la-feather-alt"
