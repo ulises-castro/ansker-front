@@ -6,7 +6,7 @@ import {
 class City {
   @Catch()
   searchCity(city) {
-    return get(`searchPlace/${city}`)
+    return get(`searchPlace/city/${city}`)
   }
 }
 
