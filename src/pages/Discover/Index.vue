@@ -40,7 +40,7 @@
 
           <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-                          height="38"
+              height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-colima.jpg"
@@ -56,7 +56,7 @@
       placeholder="Filtrar por ciudad"
       shape="round"
       :error="citiesNotFound"
-      :show-action="(citiesSearchFound.length)"
+      :show-action="(citiesSearchFound.length > 0)"
       @blur.native="citiesSearchFound = []"
       @search="onSearchCity"
       @keyup.native="onSearchCity"
@@ -70,25 +70,26 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
-    <aside v-if="citiesSearchFound.length" class="width100">
+    <aside v-if="citiesSearchFound.length" class="width100 q-px-md">
       <div
         v-for="(city, index) in citiesSearchFound"
         :key="index"
         @click="updateCitySelected(city)"
-        class="p10"
+        class="p10 cities"
         style="background: white"
       >
         {{ city.name }} -
         {{ city.countryName }} {{ city.flag }}
       </div>
     </aside>
-    <section class="publications q-pt-md">
+    <section class="publications q-pt-md" style="padding-bottom: 55px">
 
-    <div style="position: sticky; top: 0; z-index: 1000">
+    <div style="position: sticky; bottom: 0; z-index: 1000">
       <q-fab
-        icon="add"
+        class="q-btn–fab-mini"
+        icon="las la-feather-alt"
         direction="up"
-        color="accent"
+        color="primary"
       >
         <q-fab-action color="primary" icon="person_add" />
         <q-fab-action color="primary" icon="mail" />
@@ -145,12 +146,11 @@ export default {
   data() {
     return {
       publications: [
-
       ],
       skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
-      citySearchValue: "",
+      citySearchValue: '',
       citySelected: {},
       citiesNotFound: false,
       isLoadingCities: false,
@@ -185,6 +185,11 @@ export default {
     setTimeout(() => this.publications = publications, 2000)
   },
   methods: {
+    updateCitySelected(city) {
+      this.citySelected = city;
+      this.citySearchValue = city.name;
+      this.citiesSearchFound = [];
+    },
     async fetchPublications() {
       // const publications = await Publication.getAllByCity()
     },
@@ -210,6 +215,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.publications {
+.publications {}
+
+.cities {
+  font-size: 0.9em;
+  padding: 5px;
 }
 </style>
