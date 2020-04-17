@@ -20,6 +20,7 @@ import Vant, {
   Collapse,
   CollapseItem,
   ActionSheet,
+  ShareSheet,
 } from "vant"
 
 
@@ -37,6 +38,7 @@ Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
 Vue.use(Tabbar)
+Vue.use(ShareSheet)
 Vue.use(Notify)
 Vue.use(Loading)
 Vue.use(Skeleton)

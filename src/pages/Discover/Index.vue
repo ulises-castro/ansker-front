@@ -83,18 +83,6 @@
       </div>
     </aside>
     <section class="publications q-pt-md" style="padding-bottom: 55px">
-
-    <div style="position: sticky; bottom: 0; z-index: 1000">
-      <q-fab
-        class="q-btn–fab-mini"
-        icon="las la-feather-alt"
-        direction="up"
-        color="primary"
-      >
-        <q-fab-action color="primary" icon="person_add" />
-        <q-fab-action color="primary" icon="mail" />
-      </q-fab>
-    </div>
       <div v-if="publications.length">
         <div v-for="publication in publications" :key="publication.id">
           <publication :publication="publication"></publication>

@@ -16,7 +16,9 @@
         <van-icon color="#49AFC4" v-else @click="goPublish" :size="18" name="edit" />
       </div>
 
-      <span slot="title">Ansker:)</span>
+      <div slot="title" style="padding-top: 8px">
+        <img width="100" src="statics/white-logo.png" />
+      </div>
     </van-nav-bar>
     <slot></slot>
   </section>
