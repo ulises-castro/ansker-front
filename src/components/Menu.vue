@@ -62,7 +62,7 @@ export default {
       ],
       settingsMenu: [
         { name: 'Ayuda', action: "help" },
-        { name: 'Contactanos', action: "contact" },
+        { name: 'Contactanos', action: "goContact" },
         { name: 'Configuración', action: "setting"},
         { name: 'Compartir con tus amigos', action: "share" },
         { name: 'Cerrar sesión', action: "goLogout", color: '#D32F30' },
@@ -81,7 +81,10 @@ export default {
     },
     share() {
       this.showShare = true
-    }
+    },
+    goContact() {
+      this.$router.push({ name: 'Contact' })
+    },
   }
 };
 </script>

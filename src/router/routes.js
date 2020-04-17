@@ -25,6 +25,14 @@ const routes = [{
     component: () => import('pages/Settings/Index.vue')
   },
   {
+    path: '/contact',
+    name: 'Contact',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('pages/Contact/Index.vue')
+  },
+  {
     path: '/authenticate/google',
     name: 'AuthGoogle',
     component: () => import('pages/Authenticate/AuthGoogle.vue')
