@@ -1,8 +1,8 @@
 {
   "name": "ansker",
   "version": "0.0.1",
-  "description": "A Quasar Framework app",
-  "productName": "Ansker App",
+  "description": "Comparte con personas de tu alrededor anónimamente",
+  "productName": "Ansker",
   "cordovaId": "org.cordova.quasar.app",
   "capacitorId": "",
   "author": "Ulises Castro <ulisescastro2015@gmail.com>",
@@ -20,7 +20,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "quasar": "^1.0.0",
     "query-string": "^6.11.1",
-    "vant": "^2.5.7",
+    "vant": "^2.6.1",
     "vue-i18n": "^8.0.0"
   },
   "devDependencies": {

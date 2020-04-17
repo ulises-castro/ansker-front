@@ -104,6 +104,9 @@ export default {
     // this.showJoinUs();
   },
   methods: {
+    onCancel() {
+
+    },
     handlerShowOptions() {
       this.showOptions = true
     },

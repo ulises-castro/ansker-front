@@ -5,33 +5,84 @@
         class="has-text-weight-bolds"
         active-color="#239bce"
         v-model="active">
-        <van-tabbar-item icon="home-o" info="10">
-          Inicio
+        <van-tabbar-item :to="{ name: 'Home' }" badge="10">
+          <template #icon>
+            <van-icon name="home-o" size="28"/>
+          </template>
         </van-tabbar-item>
-        <van-tabbar-item info="5">
-          Alrededor
-            <template #icon>
-              <q-icon name="las la-users" size="sm"></q-icon>
-            </template>
-          </van-tabbar-item>
-        <van-tabbar-item
-          icon="setting-o">
-          Configuración
+        <van-tabbar-item :to="{ name: 'Home' }" badge="5">
+          <template #icon>
+            <van-icon name="location-o" size="28"/>
+          </template>
+        </van-tabbar-item>
+        <van-tabbar-item :to="{ name: 'Home' }" badge="5">
+          <template #icon>
+            <van-icon name="friends-o" size="28"/>
+          </template>
+        </van-tabbar-item>
+        <van-tabbar-item @click="showSettings = true">
+          <template #icon>
+            <van-icon name="setting-o" size="28"/>
+          </template>
         </van-tabbar-item>
       </van-tabbar>
     </div>
+    <van-action-sheet
+      v-model="showSettings"
+      @select="selectedMenu"
+      :actions="settingsMenu"
+      cancel-text="Cancel"
+      @cancel="showSettings = false"
+    />
+
+    <van-share-sheet
+    v-model="showShare"
+    title="Compartir"
+    description="Comparte con tus amigos"
+    :options="shareOptions" />
   </section>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: "Menu",
   data() {
     return {
-      active: 0
+      active: 0,
+      showSettings: false,
+      showShare: false,
+      shareOptions: [
+        { name: 'Wechat', icon: 'whatsapp' },
+        { name: 'Weibo', icon: 'weibo' },
+        { name: 'Link', icon: 'link' },
+        { name: 'Poster', icon: 'poster' },
+        { name: 'Qrcode', icon: 'qrcode' },
+      ],
+      settingsMenu: [
+        { name: 'Ayuda', action: "help" },
+        { name: 'Contactanos', action: "contact" },
+        { name: 'Configuración', action: "setting"},
+        { name: 'Compartir con tus amigos', action: "share" },
+        { name: 'Cerrar sesión', action: "goLogout", color: '#D32F30' },
+      ]
     };
   },
-  methods: {}
+  methods: {
+    ...mapActions('User', ['logout']),
+    selectedMenu(menu) {
+      this[menu.action]()
+    },
+    goLogout() {
+      this.logout()
+
+      this.$router.push({ name: 'Home'})
+    },
+    share() {
+      this.showShare = true
+    }
+  }
 };
 </script>
 

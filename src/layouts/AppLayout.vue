@@ -1,22 +1,24 @@
 <template>
-  <section class="parent-container">
+  <section class="header-container">
     <!-- <HeaderApp :showBackButton="showBackButton"></HeaderApp> -->
     <van-nav-bar
       :title="title"
-      class="headerBar"
+      class="header-bar"
       left-text="Regresar"
       @click-left="toggleNotifications"
       :left-arrow="showBackButton"
     >
       <div v-if="!showBackButton" slot="left">
-        <van-icon color="#49AFC4" :size="18" info="30" name="bullhorn-o" />
+        <van-icon color="#49AFC4" :size="22" info="30" name="bullhorn-o" />
       </div>
       <div slot="right">
-        <van-icon color="#49AFC4" v-if="showBackButton" :size="18" name="bullhorn-o" />
-        <van-icon color="#49AFC4" v-else @click="goPublish" :size="18" name="edit" />
+        <van-icon color="#49AFC4" v-if="showBackButton" :size="22" name="bullhorn-o" />
+        <van-icon color="#49AFC4" v-else @click="goPublish" :size="24" name="edit" />
       </div>
 
-      <span slot="title">Ansker:)</span>
+      <div slot="title" style="padding-top: 8px">
+        <img width="100" src="statics/white-logo.png" />
+      </div>
     </van-nav-bar>
     <slot></slot>
   </section>
@@ -54,12 +56,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.headerBar {
-  .van-nav-bar__title {
-    color: $primary;
-    font-weight: bold;
-    font-size: 1.5rem;
-    font-family: "MarckScript";
+
+.header-container {
+  position: sticky;
+
+  .header-bar {
+    .van-nav-bar__title {
+      color: $primary;
+      font-weight: bold;
+      font-size: 1.5rem;
+      font-family: "MarckScript";
+    }
   }
 }
 </style>

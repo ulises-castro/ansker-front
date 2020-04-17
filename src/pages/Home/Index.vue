@@ -1,9 +1,9 @@
 <template>
   <section class="block window-height window-width bg-primary" :showFooter="showFooter">
     <section class="q-py-lg">
-      <h4
-        class="logo-font q-py-lg q-my-none text-white text-weight-bold text-center logo-font-title"
-      >Ansker)</h4>
+      <div class="full-width row justify-center">
+        <img width="300" src="statics/main-logo.png" />
+      </div>
       <p
         class="text-center slogan text-weight-bold text-white"
       >Comparte lo que piensas con tu alrededor de manera anónima.</p>
@@ -76,7 +76,6 @@
 import { mapActions } from 'vuex'
 import { Auth } from "src/services"
 
-
 export default {
   name: "PageIndex",
   data() {
@@ -119,7 +118,9 @@ export default {
 
       const [err, facebookUser] = await Auth.signInFacebook(tokenFB)
 
-      if (err) return this.$notify('Ocurrio un error, intentalo más tarde')
+      console.log(err, facebookUser)
+
+      if (err || !facebookUser.data) return this.$notify('Ocurrio un error, intentalo más tarde')
 
       this.$notify({ type: 'success', message: 'Welcome to  ansker' })
 

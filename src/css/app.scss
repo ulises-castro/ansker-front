@@ -8,3 +8,14 @@
 .logo-font {
   font-family: 'MarckScript';
 }
+
+#q-app {
+  display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.app-container {
+  width: 100%;
+  max-width: 1024px;
+}

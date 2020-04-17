@@ -20,7 +20,7 @@
 
           <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-                          height="38"
+              height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-guadalajara.jpg"
@@ -30,7 +30,7 @@
 
           <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-                          height="38"
+              height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-tijuana.jpg"
@@ -40,7 +40,7 @@
 
           <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
-                          height="38"
+              height="38"
               width="38"
               style="border-radius: 50%"
               src="statics/cities/mx-colima.jpg"
@@ -56,7 +56,7 @@
       placeholder="Filtrar por ciudad"
       shape="round"
       :error="citiesNotFound"
-      :show-action="(citiesSearchFound.length)"
+      :show-action="(citiesSearchFound.length > 0)"
       @blur.native="citiesSearchFound = []"
       @search="onSearchCity"
       @keyup.native="onSearchCity"
@@ -70,19 +70,19 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
-    <aside v-if="citiesSearchFound.length" class="width100">
+    <aside v-if="citiesSearchFound.length" class="width100 q-px-md">
       <div
         v-for="(city, index) in citiesSearchFound"
         :key="index"
         @click="updateCitySelected(city)"
-        class="p10"
+        class="p10 cities"
         style="background: white"
       >
         {{ city.name }} -
         {{ city.countryName }} {{ city.flag }}
       </div>
     </aside>
-    <section class="publications q-pt-md">
+    <section class="publications q-pt-md" style="padding-bottom: 55px">
       <div v-if="publications.length">
         <div v-for="publication in publications" :key="publication.id">
           <publication :publication="publication"></publication>
@@ -118,29 +118,27 @@
         </q-card>
       </div>
     </section>
+
   </section>
 </template>
 <script>
-import { QSkeleton, QCard } from "quasar"
 import Publication from 'src/components/Publication'
 import { City } from 'src/services'
 
 export default {
   name: "Discover",
+  props: ['handlerError'],
   components: {
-    QCard,
-    QSkeleton,
     Publication,
   },
   data() {
     return {
       publications: [
-
       ],
       skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
-      citySearchValue: "",
+      citySearchValue: '',
       citySelected: {},
       citiesNotFound: false,
       isLoadingCities: false,
@@ -175,6 +173,11 @@ export default {
     setTimeout(() => this.publications = publications, 2000)
   },
   methods: {
+    updateCitySelected(city) {
+      this.citySelected = city;
+      this.citySearchValue = city.name;
+      this.citiesSearchFound = [];
+    },
     async fetchPublications() {
       // const publications = await Publication.getAllByCity()
     },
@@ -188,7 +191,7 @@ export default {
 
       const [err, citiesData] = await City.searchCity(citySearchValue)
 
-      if (err) return this.$notify(`${err.response.data.message}`)
+      if (err) return handlerError(err)
 
       const { cities } = citiesData.data
 
@@ -200,6 +203,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.publications {
+.publications {}
+
+.cities {
+  font-size: 0.9em;
+  padding: 5px;
 }
 </style>
