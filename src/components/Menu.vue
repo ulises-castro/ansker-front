@@ -35,32 +35,23 @@
       @cancel="showSettings = false"
     />
 
-    <van-share-sheet
-    v-model="showShare"
-    title="Compartir"
-    description="Comparte con tus amigos"
-    :options="shareOptions" />
+    <Share :showShare="showShare"></Share>
+
   </section>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Share from 'components/Share'
 
 export default {
   name: "Menu",
+  components: { Share },
   data() {
     return {
       active: 0,
       showSettings: false,
       showShare: !false,
-      shareOptions: [
-        { name: 'Whatsapp', icon: '/statics/icons/social/whatsapp.svg' },
-        { name: 'Instagram', icon: '/statics/icons/social/instagram.svg' },
-        { name: 'Facebook', icon: '/statics/icons/social/facebook.svg' },
-        { name: 'Twitter', icon: '/statics/icons/social/twitter.png' },
-        { name: 'Link', icon: 'link' },
-        { name: 'Qrcode', icon: 'qrcode' },
-      ],
       settingsMenu: [
         { name: 'Ayuda', action: "help" },
         { name: 'Contactanos', action: "goContact" },
@@ -71,7 +62,6 @@ export default {
     };
   },
   methods: {
-    ...mapActions('User', ['logout']),
     selectedMenu(menu) {
       this[menu.action]()
     },
@@ -86,6 +76,7 @@ export default {
     goContact() {
       this.$router.push({ name: 'Contact' })
     },
+    ...mapActions('User', ['logout']),
   }
 };
 </script>
