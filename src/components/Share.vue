@@ -26,7 +26,9 @@ export default {
     handlerShare(option) {
       let name = option.name.toLowerCase()
 
-      this.option['name']()
+      console.log(name)
+
+      this[name]()
     },
     whatsapp() {
       alert('gi')
