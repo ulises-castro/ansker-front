@@ -52,12 +52,13 @@ export default {
     return {
       active: 0,
       showSettings: false,
-      showShare: false,
+      showShare: !false,
       shareOptions: [
-        { name: 'Wechat', icon: 'whatsapp' },
-        { name: 'Weibo', icon: 'weibo' },
+        { name: 'Whatsapp', icon: '/statics/icons/social/whatsapp.svg' },
+        { name: 'Instagram', icon: '/statics/icons/social/instagram.svg' },
+        { name: 'Facebook', icon: '/statics/icons/social/facebook.svg' },
+        { name: 'Twitter', icon: '/statics/icons/social/twitter.png' },
         { name: 'Link', icon: 'link' },
-        { name: 'Poster', icon: 'poster' },
         { name: 'Qrcode', icon: 'qrcode' },
       ],
       settingsMenu: [
