@@ -7,6 +7,8 @@
     :options="shareOptions" />
 </template>
 <script>
+import copy from 'copy-to-clipboard'
+
 export default {
   name: 'Share',
   props: ['showShare'],
@@ -36,7 +38,7 @@ export default {
     twitter() {
     },
     link() {
-
+      copy('https://ansker.me');
     }
   }
 }
