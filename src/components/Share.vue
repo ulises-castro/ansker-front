@@ -18,7 +18,6 @@ export default {
         { name: 'Facebook', icon: '/statics/icons/social/facebook.svg' },
         { name: 'Twitter', icon: '/statics/icons/social/twitter.png' },
         { name: 'Link', icon: 'link' },
-        { name: 'Qrcode', icon: 'qrcode' },
       ],
     }
   },
@@ -26,12 +25,18 @@ export default {
     handlerShare(option) {
       let name = option.name.toLowerCase()
 
-      console.log(name)
-
       this[name]()
     },
     whatsapp() {
-      alert('gi')
+    },
+    facebook() {
+    },
+    instagram() {
+    },
+    twitter() {
+    },
+    link() {
+
     }
   }
 }
