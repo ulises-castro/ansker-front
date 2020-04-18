@@ -38,7 +38,8 @@ export default {
     twitter() {
     },
     link() {
-      copy('https://ansker.me');
+      this.$notify({ type: 'success', message: 'Se ha copiado con existo el link'})
+      copy('https://ansker.me')
     }
   }
 }
