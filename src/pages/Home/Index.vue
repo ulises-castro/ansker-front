@@ -122,7 +122,7 @@ export default {
 
       if (err || !facebookUser.data) return this.$notify('Ocurrio un error, intentalo más tarde')
 
-      this.$notify({ type: 'success', message: 'Welcome to  ansker' })
+      this.$notify({ type: 'success', message: 'Welcome to  Ansker' })
 
       this.login(facebookUser.data.token)
 

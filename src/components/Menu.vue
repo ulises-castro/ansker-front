@@ -7,22 +7,22 @@
         v-model="active">
         <van-tabbar-item :to="{ name: 'Home' }" badge="10">
           <template #icon>
-            <van-icon name="home-o" size="28"/>
+            <van-icon name="home-o" size="32"/>
           </template>
         </van-tabbar-item>
         <van-tabbar-item :to="{ name: 'Home' }" badge="5">
           <template #icon>
-            <van-icon name="location-o" size="28"/>
+            <van-icon name="location-o" size="32"/>
           </template>
         </van-tabbar-item>
         <van-tabbar-item :to="{ name: 'Home' }" badge="5">
           <template #icon>
-            <van-icon name="friends-o" size="28"/>
+            <van-icon name="friends-o" size="32"/>
           </template>
         </van-tabbar-item>
         <van-tabbar-item @click="showSettings = true">
           <template #icon>
-            <van-icon name="setting-o" size="28"/>
+            <van-icon name="setting-o" size="32"/>
           </template>
         </van-tabbar-item>
       </van-tabbar>
@@ -32,37 +32,30 @@
       @select="selectedMenu"
       :actions="settingsMenu"
       cancel-text="Cancel"
-      @cancel="showSettings = false"
+      @cancel="choiseShare = false"
     />
 
-    <van-share-sheet
-    v-model="showShare"
-    title="Compartir"
-    description="Comparte con tus amigos"
-    :options="shareOptions" />
+    <Share :showShare="showShare" :shareText="shareText" ></Share>
+
   </section>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import Share from 'components/Share'
 
 export default {
   name: "Menu",
+  components: { Share },
   data() {
     return {
       active: 0,
+      shareText: 'Comparte con personas de tu alrededor de forma anónima',
       showSettings: false,
       showShare: false,
-      shareOptions: [
-        { name: 'Wechat', icon: 'whatsapp' },
-        { name: 'Weibo', icon: 'weibo' },
-        { name: 'Link', icon: 'link' },
-        { name: 'Poster', icon: 'poster' },
-        { name: 'Qrcode', icon: 'qrcode' },
-      ],
       settingsMenu: [
         { name: 'Ayuda', action: "help" },
-        { name: 'Contactanos', action: "contact" },
+        { name: 'Contactanos', action: "goContact" },
         { name: 'Configuración', action: "setting"},
         { name: 'Compartir con tus amigos', action: "share" },
         { name: 'Cerrar sesión', action: "goLogout", color: '#D32F30' },
@@ -70,9 +63,9 @@ export default {
     };
   },
   methods: {
-    ...mapActions('User', ['logout']),
     selectedMenu(menu) {
       this[menu.action]()
+      this.showSettings = false
     },
     goLogout() {
       this.logout()
@@ -80,8 +73,26 @@ export default {
       this.$router.push({ name: 'Home'})
     },
     share() {
-      this.showShare = true
-    }
+      this.choiceShare()
+    },
+    goContact() {
+      this.$router.push({ name: 'Contact' })
+    },
+    choiceShare() {
+      if (navigator.share) {
+        navigator.share({
+          title: this.shareText,
+          url: 'https://ansker.me'
+        })
+        .then(() => {
+          this.$notify({  type: 'success', message: 'Thanks for sharing!'});
+        })
+        .catch(console.error);
+      } else {
+        this.showShare = true
+      }
+    },
+    ...mapActions('User', ['logout']),
   }
 };
 </script>

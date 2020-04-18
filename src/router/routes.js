@@ -20,9 +20,17 @@ const routes = [{
     path: '/settings',
     name: 'Settings',
     meta: {
-      requiresAuth: true,
+      requiresAuth: !true,
     },
     component: () => import('pages/Settings/Index.vue')
+  },
+  {
+    path: '/contact',
+    name: 'Contact',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('pages/Contact/Index.vue')
   },
   {
     path: '/authenticate/google',

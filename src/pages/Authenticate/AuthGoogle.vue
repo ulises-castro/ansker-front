@@ -39,7 +39,7 @@ export default {
 
       if (err) return handlerError(err)
 
-      this.$notify({ type: 'success', message: 'Welcome to  ansker' })
+      this.$notify({ type: 'success', message: 'Welcome to  Ansker' })
 
       this.login(token.data.token)
 
