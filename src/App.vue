@@ -5,7 +5,7 @@
       <!-- TODO: add condition which only allow user logged in the app -->
       <router-view :handlerError="handlerError" />
 
-      <Menu v-if="isLogged"></Menu>
+      <Menu v-if="!isLogged"></Menu>
     </div>
   </div>
 </template>
@@ -17,7 +17,6 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: "App",
   components: { Menu },
-  // TODO: Added notify about need to login in
   computed: {
     ...mapGetters('User', ['isLogged'])
   },

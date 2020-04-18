@@ -7,22 +7,22 @@
         v-model="active">
         <van-tabbar-item :to="{ name: 'Home' }" badge="10">
           <template #icon>
-            <van-icon name="home-o" size="28"/>
+            <van-icon name="home-o" size="32"/>
           </template>
         </van-tabbar-item>
         <van-tabbar-item :to="{ name: 'Home' }" badge="5">
           <template #icon>
-            <van-icon name="location-o" size="28"/>
+            <van-icon name="location-o" size="32"/>
           </template>
         </van-tabbar-item>
         <van-tabbar-item :to="{ name: 'Home' }" badge="5">
           <template #icon>
-            <van-icon name="friends-o" size="28"/>
+            <van-icon name="friends-o" size="32"/>
           </template>
         </van-tabbar-item>
         <van-tabbar-item @click="showSettings = true">
           <template #icon>
-            <van-icon name="setting-o" size="28"/>
+            <van-icon name="setting-o" size="32"/>
           </template>
         </van-tabbar-item>
       </van-tabbar>

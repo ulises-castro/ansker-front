@@ -14,7 +14,8 @@ export default {
   props: ['showShare'],
   data() {
     return {
-      showDesktop: false,
+      shareText: 'Comparte con personas de tu alrededor de forma anónima',
+      showDesktop: true,
       shareOptions: [
         { name: 'Whatsapp', icon: '/statics/icons/social/whatsapp.svg' },
         { name: 'Facebook', icon: '/statics/icons/social/facebook.svg' },
@@ -46,15 +47,15 @@ export default {
       this[name]()
     },
     whatsapp() {
-      window.href="whatsapp://send?text=The text to share!"
+      window.open(`whatsapp://send?text="${this.shareText}" - https://ansker.me`)
     },
     facebook() {
-      window.open( `https://www.facebook.com/sharer/sharer.php?u=https://ansker.me`)
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=https://ansker.me`)
     },
     instagram() {
     },
     twitter() {
-      window.open('https://twitter.com/share?url=https://ansker.me&text="Comparte con personas de tu alrededor de forma anónima" -')
+      window.open(`https://twitter.com/share?url=https://ansker.me&text="${this.shareText}" -`)
 
     //  =URLENCODED_URL&via=TWITTER_HANDLE&text=TEXT"
     },
