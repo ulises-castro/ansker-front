@@ -32,10 +32,10 @@
       @select="selectedMenu"
       :actions="settingsMenu"
       cancel-text="Cancel"
-      @cancel="showSettings = false"
+      @cancel="choiseShare = false"
     />
 
-    <Share v-if="showShare"></Share>
+    <Share :showShare="showShare" :shareText="shareText" ></Share>
 
   </section>
 </template>
@@ -50,8 +50,9 @@ export default {
   data() {
     return {
       active: 0,
+      shareText: 'Comparte con personas de tu alrededor de forma anónima',
       showSettings: false,
-      showShare: !false,
+      showShare: false,
       settingsMenu: [
         { name: 'Ayuda', action: "help" },
         { name: 'Contactanos', action: "goContact" },
@@ -64,6 +65,7 @@ export default {
   methods: {
     selectedMenu(menu) {
       this[menu.action]()
+      this.showSettings = false
     },
     goLogout() {
       this.logout()
@@ -71,10 +73,24 @@ export default {
       this.$router.push({ name: 'Home'})
     },
     share() {
-      this.showShare = true
+      this.choiceShare()
     },
     goContact() {
       this.$router.push({ name: 'Contact' })
+    },
+    choiceShare() {
+      if (navigator.share) {
+        navigator.share({
+          title: this.shareText,
+          url: 'https://ansker.me'
+        })
+        .then(() => {
+          this.$notify({  type: 'success', message: 'Thanks for sharing!'});
+        })
+        .catch(console.error);
+      } else {
+        this.showShare = true
+      }
     },
     ...mapActions('User', ['logout']),
   }

@@ -1,6 +1,6 @@
 <template>
     <van-share-sheet
-    v-model="showDesktop"
+    v-model="showShare"
     title="Compartir"
     @select="handlerShare"
     description="Comparte con tus amigos"
@@ -11,11 +11,9 @@ import copy from 'copy-to-clipboard'
 
 export default {
   name: 'Share',
-  props: ['showShare'],
+  props: ['showShare', 'shareText'],
   data() {
     return {
-      shareText: 'Comparte con personas de tu alrededor de forma anónima',
-      showDesktop: true,
       shareOptions: [
         { name: 'Whatsapp', icon: '/statics/icons/social/whatsapp.svg' },
         { name: 'Facebook', icon: '/statics/icons/social/facebook.svg' },
@@ -28,19 +26,6 @@ export default {
     this.choiceShare()
   },
   methods: {
-    choiceShare() {
-      if (navigator.share && this.$q.platform.is.mobile) {
-        navigator.share({
-          title: 'WebShare API Demo',
-          url: 'https://ansker.me'
-        }).then(() => {
-          this.$notify({  type: 'success', message: 'Thanks for sharing!'});
-        })
-        .catch(console.error);
-      } else {
-        this.showDesktop = true
-      }
-    },
     handlerShare(option) {
       let name = option.name.toLowerCase()
 
@@ -50,13 +35,13 @@ export default {
       window.open(`whatsapp://send?text="${this.shareText}" - https://ansker.me`)
     },
     facebook() {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=https://ansker.me`)
+      // window.open(`https://www.facebook.com/sharer/sharer.php?u=https://ansker.me`)
+
     },
     instagram() {
     },
     twitter() {
       window.open(`https://twitter.com/share?url=https://ansker.me&text="${this.shareText}" -`)
-
     //  =URLENCODED_URL&via=TWITTER_HANDLE&text=TEXT"
     },
     link() {
