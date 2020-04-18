@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-sm">
     <div class="q-py-md">
-      <p class="text-center text-grey-9"> Tratemos de responderte lo antes posible </p>
+      <p class="text-center text-grey-9"> Trataremos de responderte lo antes posible </p>
     </div>
     <van-field
       v-model="message"
