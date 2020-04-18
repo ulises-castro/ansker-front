@@ -35,7 +35,7 @@
       @cancel="showSettings = false"
     />
 
-    <Share :showShare="showShare"></Share>
+    <Share v-if="showShare"></Share>
 
   </section>
 </template>
