@@ -9614,6 +9614,11 @@ word-wrap@~1.2.3:
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
 
+words-array@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/words-array/-/words-array-1.0.1.tgz#fcd695587744f9bd1c7fe2a05e9d8f87cdd87bac"
+  integrity sha512-hIe554G5rHAIa2HeIPcvl4zzIeS9DCSLjFM6HbqzTEGmyCZVqMffXpxEGZwweT+ZxbkTdNg78YwwzhQsA7jjPw==
+
 workbox-background-sync@^4.3.1:
   version "4.3.1"
   resolved "https://registry.yarnpkg.com/workbox-background-sync/-/workbox-background-sync-4.3.1.tgz#26821b9bf16e9e37fd1d640289edddc08afd1950"

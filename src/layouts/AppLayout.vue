@@ -1,6 +1,5 @@
 <template>
   <section class="header-container">
-    <!-- <HeaderApp :showBackButton="showBackButton"></HeaderApp> -->
     <van-nav-bar
       :title="title"
       fixed
@@ -38,6 +37,7 @@ export default {
   methods: {
     goPublish() {
       // Implement to
+      this.$router.push({ name: 'Publish '})
     },
     toggleNotifications() {}
   },
