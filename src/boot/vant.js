@@ -21,6 +21,7 @@ import Vant, {
   CollapseItem,
   ActionSheet,
   ShareSheet,
+  Sticky,
 } from "vant"
 
 
@@ -39,6 +40,7 @@ Vue.use(Button)
 Vue.use(Search)
 Vue.use(Tabbar)
 Vue.use(ShareSheet)
+Vue.use(Sticky)
 Vue.use(Notify)
 Vue.use(Loading)
 Vue.use(Skeleton)
