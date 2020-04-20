@@ -12,7 +12,6 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@quasar/extras": "^1.0.0",
     "await-to-decorater": "^1.0.2",
     "axios": "^0.18.1",
     "babel-plugin-import": "^1.13.0",
@@ -26,6 +25,7 @@
   },
   "devDependencies": {
     "@quasar/app": "^1.0.0",
+    "@quasar/extras": "^1.6.4",
     "babel-eslint": "^10.0.1",
     "copy-to-clipboard": "^3.3.1",
     "eslint": "^6.8.0",

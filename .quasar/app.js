@@ -2,14 +2,11 @@
  * THIS FILE IS GENERATED AUTOMATICALLY.
  * DO NOT EDIT.
  *
- * You are probably looking on adding startup/initialization code.
- * Use "quasar new boot <name>" and add it there.
- * One boot file per concern. Then reference the file(s) in quasar.conf.js > boot:
- * boot: ['file', ...] // do not add ".js" extension to it.
- *
- * Boot files are your "main.js"
+ * You are probably looking on adding initialization code.
+ * Use "quasar new plugin <name>" and add it there.
+ * One plugin per concern. Then reference the file(s) in quasar.conf.js > plugins:
+ * plugins: ['file', ...] // do not add ".js" extension to it.
  **/
-import Vue from 'vue'
 import './import-quasar.js'
 
 
@@ -17,23 +14,19 @@ import './import-quasar.js'
 import App from 'app/src/App.vue'
 
 
-import createStore from 'app/src/store/index'
+import createStore from 'app/src/store/index.js'
 
-import createRouter from 'app/src/router/index'
+import createRouter from 'app/src/router/index.js'
 
-
-
-
-
-export default async function () {
+export default function () {
   // create store and router instances
   
   const store = typeof createStore === 'function'
-    ? await createStore({Vue})
+    ? createStore()
     : createStore
   
   const router = typeof createRouter === 'function'
-    ? await createRouter({Vue, store})
+    ? createRouter({store})
     : createRouter
   
   // make router instance available in store

@@ -2,22 +2,18 @@
  * THIS FILE IS GENERATED AUTOMATICALLY.
  * DO NOT EDIT.
  *
- * You are probably looking on adding startup/initialization code.
- * Use "quasar new boot <name>" and add it there.
- * One boot file per concern. Then reference the file(s) in quasar.conf.js > boot:
- * boot: ['file', ...] // do not add ".js" extension to it.
- *
- * Boot files are your "main.js"
+ * You are probably looking on adding initialization code.
+ * Use "quasar new plugin <name>" and add it there.
+ * One plugin per concern. Then reference the file(s) in quasar.conf.js > plugins:
+ * plugins: ['file', ...] // do not add ".js" extension to it.
  **/
 
-import lang from 'quasar/lang/en-us'
-
-import iconSet from 'quasar/icon-set/material-icons'
+import iconSet from 'quasar-framework/icons/material-icons'
 
 
 import Vue from 'vue'
 
-import {Quasar} from 'quasar'
+import Quasar from 'quasar'
 
 
-Vue.use(Quasar, { config: {},lang: lang,iconSet: iconSet })
+Vue.use(Quasar, { config: {},iconSet: iconSet })
