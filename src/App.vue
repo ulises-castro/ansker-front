@@ -2,10 +2,9 @@
   <div id="q-app">
     <div class="app-container">
       <app-layout v-if="isLogged"></app-layout>
-      <!-- TODO: add condition which only allow user logged in the app -->
       <router-view :handlerError="handlerError" />
 
-      <Menu v-if="!isLogged"></Menu>
+      <Menu v-if="isLogged"></Menu>
     </div>
   </div>
 </template>
@@ -21,7 +20,6 @@ export default {
     ...mapGetters('User', ['isLogged'])
   },
   methods: {
-    // ...mapAction('User', '')
     handlerError(err) {
       if (err.response.data.message) {
         return this.$notify(`${err.response.data.message}`)

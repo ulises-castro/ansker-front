@@ -17,10 +17,18 @@ const routes = [{
     component: () => import('pages/Discover/Index.vue')
   },
   {
+    path: '/Publish',
+    name: 'Publish',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('pages/Publish/Index.vue')
+  },
+  {
     path: '/settings',
     name: 'Settings',
     meta: {
-      requiresAuth: !true,
+      requiresAuth: true,
     },
     component: () => import('pages/Settings/Index.vue')
   },

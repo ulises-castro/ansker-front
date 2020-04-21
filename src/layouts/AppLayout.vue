@@ -1,17 +1,21 @@
 <template>
   <section class="header-container">
-    <!-- <HeaderApp :showBackButton="showBackButton"></HeaderApp> -->
     <van-nav-bar
       :title="title"
+      fixed
       class="header-bar"
       left-text="Regresar"
       @click-left="toggleNotifications"
       :left-arrow="showBackButton"
     >
-      <div v-if="!showBackButton" slot="left">
+      <div
+        v-if="!showBackButton"
+        class="row justify-center"
+        slot="left">
         <van-icon color="#49AFC4" :size="22" info="30" name="bullhorn-o" />
       </div>
-      <div slot="right">
+
+      <div class="row justify-center" slot="right">
         <van-icon color="#49AFC4" v-if="showBackButton" :size="22" name="bullhorn-o" />
         <van-icon color="#49AFC4" v-else @click="goPublish" :size="24" name="edit" />
       </div>
@@ -33,6 +37,7 @@ export default {
   methods: {
     goPublish() {
       // Implement to
+      this.$router.push({ name: 'Publish '})
     },
     toggleNotifications() {}
   },
@@ -58,7 +63,7 @@ export default {
 <style lang="scss" scoped>
 
 .header-container {
-  position: sticky;
+  z-index: 1000;
 
   .header-bar {
     .van-nav-bar__title {
