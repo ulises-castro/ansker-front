@@ -12,20 +12,20 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@quasar/extras": "^1.6.4",
     "await-to-decorater": "^1.0.2",
     "axios": "^0.18.1",
     "babel-plugin-import": "^1.13.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
-    "quasar": "^1.0.0",
+    "quasar": "^1.9.15",
     "query-string": "^6.11.1",
     "vant": "^2.6.1",
     "vue-i18n": "^8.0.0",
     "words-array": "^1.0.1"
   },
   "devDependencies": {
-    "@quasar/app": "^1.0.0",
-    "@quasar/extras": "^1.6.4",
+    "@quasar/app": "^1.7.1",
     "babel-eslint": "^10.0.1",
     "copy-to-clipboard": "^3.3.1",
     "eslint": "^6.8.0",
@@ -49,6 +49,6 @@
     "last 1 version, not dead, ie >= 11"
   ],
   "resolutions": {
-    "@babel/parser": "7.7.5"
+    "@babel/parser": "7.9.4"
   }
 }
