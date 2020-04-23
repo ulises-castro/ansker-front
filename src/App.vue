@@ -3,7 +3,6 @@
     <div class="app-container">
       <app-layout v-if="isLogged"></app-layout>
       <router-view :handlerError="handlerError" />
-
       <Menu v-if="isLogged"></Menu>
     </div>
   </div>
@@ -17,7 +16,11 @@ export default {
   name: "App",
   components: { Menu },
   computed: {
-    ...mapGetters('User', ['isLogged'])
+    getCurrentRoute() {
+      alert(this.$router.currentRoute)
+      return this.$router.currentRoute.name
+    },
+    ...mapGetters('User', ['isLogged']),
   },
   methods: {
     handlerError(err) {

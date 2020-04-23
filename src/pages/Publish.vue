@@ -5,7 +5,7 @@
       :width="screen.width"
       :height="screen.height">
     </canvas>
-    <div class="toolbar">
+    <div class="toolbar row justify-around">
       <q-icon name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon name="las la-bold" color="white" class="q-mr-sm" size="30px" />
       <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30px" />
@@ -19,43 +19,58 @@
 import {fabric} from 'fabric'
 
 export default {
-  // name: 'PageName',
+  name: 'Publish',
   data() {
     return {
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
       },
-      canvas: new fabric.Canvas('image-area')
+      canvas: new fabric.Canvas(this.$refs.can),
+      text: {
+        fontFamily: 'sans-serif',
+        fontSize: 30,
+        fill: 'white'
+      }
+    }
+  },
+  methods: {
+    generateImage() {
+      this.href = this.canvas.toDataURL({
+        format: 'png',
+        quality: 0.8,
+      })
+    },
+    assignCanvas() {
+      const ref = this.$refs.can
+      const canvas = new fabric.Canvas(ref)
+      this.canvas = canvas
+
+      return canvas
     }
   },
   mounted() {
-    const ref = this.$refs.can;
-    const canvas = new fabric.Canvas(ref);
+    const canvas = this.assignCanvas()
 
     const data = `/statics/wallpaper.jpg`
+    const { fontFamily, fontSize, fill } = this.text
 
     const textImage = new fabric.IText('Escribe aqui...', {
       left: (this.screen.width / 2) - (30 * 2),
       top: (this.screen.height / 2) - 30,
-      fontFamily: 'Lobster',
-      fontSize: 30,
+      fontFamily,
+      fontSize,
+      fill,
       caching: false,
-      fill: 'white',
-    });
-    canvas.add(textImage);
+    })
+    canvas.add(textImage)
 
-    textImage.hasControls = false;
-    canvas.renderAll();
+    textImage.hasControls = false
+    canvas.renderAll()
 
-    const ratio = 1290 / 720;
-
-fabric.Image.fromURL(data, function(img) {
-      // add background image
-      console.log(img)
+    fabric.Image.fromURL(data, function(img) {
       canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-        // width: 1290 * ratio,
-        // height: 720 / ratio
+
         scaleX: canvas.width / img.width,
         scaleY: canvas.height / img.height
       });
@@ -64,3 +79,16 @@ fabric.Image.fromURL(data, function(img) {
   }
 }
 </script>
+<style lang="scss" scoped>
+.van-tabbar--fixed {
+  display: none !important;
+}
+
+.toolbar {
+  position: absolute;
+  width: 100%;
+  padding: 5px;
+  bottom: 100px;
+  background: rgba(255, 255, 255, 0.5);
+}
+</style>
