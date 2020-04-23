@@ -5,6 +5,11 @@
       :width="screen.width"
       :height="screen.height">
     </canvas>
+    <div class="toolbar">
+      <q-icon name="las la-font" color="white" class="q-mr-sm" size="30px" />
+      <q-icon name="las la-bold" color="white" class="q-mr-sm" size="30px" />
+      <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30px" />
+    </div>
     <!-- <img src="https://i.pinimg.com/originals/61/6a/d8/616ad83e3cf5ef66fbcc43acb2b7499a.png"> -->
   </div>
 
