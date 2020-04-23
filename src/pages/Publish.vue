@@ -6,17 +6,28 @@
       :height="screen.height">
     </canvas>
     <div class="toolbar row justify-around">
-      <q-icon name="las la-font" color="white" class="q-mr-sm" size="30px" />
+      <q-icon @click="showEditor.fontFamily = true" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30px" />
+      <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
     </div>
-    <!-- <img src="https://i.pinimg.com/originals/61/6a/d8/616ad83e3cf5ef66fbcc43acb2b7499a.png"> -->
+    <van-popup
+      v-model="showEditor.fontFamily"
+      position="bottom">
+      <p class="text-center q-pt-md">
+        <b class="p-10"> Tipo de fuente</b>
+      </p>
+      <van-picker
+        :columns="editorOptions.fontFamilies"
+        @cancel="showEditor.fontFamily = false"
+        @change="changeFontFamily"
+      />
+    </van-popup>
   </div>
 
 </template>
 
 <script>
-import {fabric} from 'fabric'
+import { fabric } from 'fabric'
 
 export default {
   name: 'Publish',
@@ -26,12 +37,19 @@ export default {
         width: window.innerWidth,
         height: window.innerHeight,
       },
+      showEditor: {
+        fontFamily: false,
+      },
+      editorOptions: {
+        fontFamilies: ['<span class="arial">Arial</span>', '<span class="sans-serif">Sans Serif</span>', '<span class="helvetica">Helvetica</span>']
+      },
       canvas: new fabric.Canvas(this.$refs.can),
       text: {
+        element: false,
         fontFamily: 'sans-serif',
         fontSize: 30,
         fill: 'white'
-      }
+      },
     }
   },
   methods: {
@@ -47,6 +65,11 @@ export default {
       this.canvas = canvas
 
       return canvas
+    },
+    changeFontFamily() {
+      this.text.element.fontFamily = 'Arial'
+
+      this.canvas.renderAll()
     }
   },
   mounted() {
@@ -64,8 +87,9 @@ export default {
       caching: false,
     })
     canvas.add(textImage)
+    this.text.element = textImage
 
-    textImage.hasControls = false
+    this.text.element.hasControls = false
     canvas.renderAll()
 
     fabric.Image.fromURL(data, function(img) {
@@ -90,5 +114,17 @@ export default {
   padding: 5px;
   bottom: 100px;
   background: rgba(255, 255, 255, 0.5);
+}
+
+.arial {
+  font-family: Arial;
+}
+
+.helvetica {
+  font-family: Helvetica;
+}
+
+.sans-serif {
+  font-family: sans-serif;
 }
 </style>
