@@ -7,7 +7,7 @@
     </canvas>
     <div class="toolbar row justify-around">
       <q-icon @click="showEditor.fontFamily = true" name="las la-font" color="white" class="q-mr-sm" size="30px" />
-      <q-icon name="las la-bold" color="white" class="q-mr-sm" size="30px" />
+      <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
       <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
     </div>
     <van-popup
@@ -22,6 +22,16 @@
         @change="changeFontFamily"
       />
     </van-popup>
+
+    <q-color
+      v-model="text.fill"
+      no-header
+      :palette="[
+        '#019A9D', '#D9B801', '#E8045A', '#B2028A',
+        '#2A0449', '#019A9D'
+      ]"
+      class="color-picker"
+    />
   </div>
 
 </template>
@@ -41,17 +51,36 @@ export default {
         fontFamily: false,
       },
       editorOptions: {
-        fontFamilies: ['<span class="arial">Arial</span>', '<span class="sans-serif">Sans Serif</span>', '<span class="helvetica">Helvetica</span>']
+        fontFamilies: [
+          '<span style="font-family: Arial">Arial</span>',
+          '<span style="font-family: sans-serif">Sans Serif</span>',
+          '<span style="font-family: Lato">Lato</span>',
+          '<span style="font-family: Helvetica">Helvetica</span>']
       },
       canvas: new fabric.Canvas(this.$refs.can),
       text: {
         element: false,
         fontFamily: 'sans-serif',
+        fontBold: '',
         fontSize: 30,
         fill: 'white'
       },
     }
   },
+  watch: {
+    'text.fill'(color) {
+      this.text.element.fill = 'red'
+
+      this.canvas.renderAll()
+    }
+  },
+  // computed: {
+  //   'text.fontBold'() {
+  //     this.text.element.fontWeight = 'bold'
+
+  //     this.canvas.renderAll()
+  //   }
+  // },
   methods: {
     generateImage() {
       this.href = this.canvas.toDataURL({
@@ -66,40 +95,49 @@ export default {
 
       return canvas
     },
-    changeFontFamily() {
-      this.text.element.fontFamily = 'Arial'
+    changeFontFamily(family) {
+      this.text.fontFamily = family
 
       this.canvas.renderAll()
+    },
+    toggleFontBold() {
+      const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
+
+      this.text.element.fontWeight = toggleBold
+
+      this.canvas.renderAll()
+    },
+    initialize(canvas) {
+      const data = `/statics/wallpaper.jpg`
+      const { fontFamily, fontSize, fill } = this.text
+
+      const textImage = new fabric.IText('Escribe aqui...', {
+        left: (this.screen.width / 2) - (30 * 2),
+        top: (this.screen.height / 2) - 30,
+        fontFamily,
+        fontSize,
+        fill,
+        caching: false,
+      })
+      canvas.add(textImage)
+      this.text.element = textImage
+
+      this.text.element.hasControls = false
+      canvas.renderAll()
+
+      fabric.Image.fromURL(data, function(img) {
+        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
+
+          scaleX: canvas.width / img.width,
+          scaleY: canvas.height / img.height
+        });
+
+      })
     }
   },
   mounted() {
     const canvas = this.assignCanvas()
-
-    const data = `/statics/wallpaper.jpg`
-    const { fontFamily, fontSize, fill } = this.text
-
-    const textImage = new fabric.IText('Escribe aqui...', {
-      left: (this.screen.width / 2) - (30 * 2),
-      top: (this.screen.height / 2) - 30,
-      fontFamily,
-      fontSize,
-      fill,
-      caching: false,
-    })
-    canvas.add(textImage)
-    this.text.element = textImage
-
-    this.text.element.hasControls = false
-    canvas.renderAll()
-
-    fabric.Image.fromURL(data, function(img) {
-      canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-
-        scaleX: canvas.width / img.width,
-        scaleY: canvas.height / img.height
-      });
-
-    })
+    this.initialize(canvas)
   }
 }
 </script>
@@ -116,8 +154,8 @@ export default {
   background: rgba(255, 255, 255, 0.5);
 }
 
-.arial {
-  font-family: Arial;
+span.arial {
+  font-family: Arial !important;
 }
 
 .helvetica {
@@ -126,5 +164,9 @@ export default {
 
 .sans-serif {
   font-family: sans-serif;
+}
+
+.color-picker {
+  height: 120px;
 }
 </style>
