@@ -63,13 +63,14 @@ export default {
         fontFamily: 'sans-serif',
         fontBold: '',
         fontSize: 30,
-        fill: 'white'
+        fill: '#ff0000'
       },
     }
   },
   watch: {
     'text.fill'(color) {
-      this.text.element.fill = 'red'
+      this.text.element.fill = color
+      this.text.element.styles = '' + Math.random()
 
       this.canvas.renderAll()
     }
@@ -167,6 +168,5 @@ span.arial {
 }
 
 .color-picker {
-  height: 120px;
 }
 </style>
