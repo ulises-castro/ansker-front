@@ -15,26 +15,13 @@
           </div>
         </div>
       </div>
-      <q-icon @click="showEditor.fontFamily = true" name="las la-font" color="white" class="q-mr-sm" size="30px" />
+
+      <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
       <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
     </div>
-    <van-popup
-      v-model="showEditor.fontFamily"
-      position="bottom">
-      <p class="text-center q-pt-md">
-        <b class="p-10"> Tipo de fuente</b>
-      </p>
-      <van-picker
-        :columns="editorOptions.fontFamilies"
-        @cancel="showEditor.fontFamily = false"
-        @change="changeFontFamily"
-      />
-    </van-popup>
-
 
   </div>
-
 </template>
 
 <script>
@@ -54,10 +41,10 @@ export default {
       },
       editorOptions: {
         fontFamilies: [
-          '<span style="font-family: Arial">Arial</span>',
-          '<span style="font-family: sans-serif">Sans Serif</span>',
-          '<span style="font-family: Lato">Lato</span>',
-          '<span style="font-family: Helvetica">Helvetica</span>'],
+          'Arial',
+          'sans-serif',
+          'Lato',
+          'Helvetica'],
         fontColors: [
           '#019A9D', '#D9B801', '#E8045A', '#B2028A',
           '#2A0449', '#019A9D'
@@ -102,8 +89,12 @@ export default {
 
       return canvas
     },
-    changeFontFamily(family) {
-      this.text.fontFamily = family
+    changeFontFamily() {
+      const { fontFamilies } = this.editorOptions
+      let indexFont = fontFamilies.indexOf(this.text.fontFamily)
+      const nextFontIndex = (indexFont < fontFamilies.length) ? indexFont++ : 0
+
+      this.text.fontFamily = fontFamilies[nextFontIndex]
 
       this.canvas.renderAll()
     },
