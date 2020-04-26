@@ -6,6 +6,15 @@
       :height="screen.height">
     </canvas>
     <div class="toolbar row justify-around">
+      <div class="font-colors" v-if="showEditor.fontColor">
+        <div
+          class="color-container"
+          v-for="(color, index) in editorOptions.fontColors"
+          :key="index" @click="text.fill = color">
+          <div class="" :style="{'background-color': color}">
+          </div>
+        </div>
+      </div>
       <q-icon @click="showEditor.fontFamily = true" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
       <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
@@ -23,15 +32,7 @@
       />
     </van-popup>
 
-    <q-color
-      v-model="text.fill"
-      no-header
-      :palette="[
-        '#019A9D', '#D9B801', '#E8045A', '#B2028A',
-        '#2A0449', '#019A9D'
-      ]"
-      class="color-picker"
-    />
+
   </div>
 
 </template>
@@ -49,13 +50,18 @@ export default {
       },
       showEditor: {
         fontFamily: false,
+        fontColor: !false,
       },
       editorOptions: {
         fontFamilies: [
           '<span style="font-family: Arial">Arial</span>',
           '<span style="font-family: sans-serif">Sans Serif</span>',
           '<span style="font-family: Lato">Lato</span>',
-          '<span style="font-family: Helvetica">Helvetica</span>']
+          '<span style="font-family: Helvetica">Helvetica</span>'],
+        fontColors: [
+          '#019A9D', '#D9B801', '#E8045A', '#B2028A',
+          '#2A0449', '#019A9D'
+        ]
       },
       canvas: new fabric.Canvas(this.$refs.can),
       text: {
@@ -147,6 +153,10 @@ export default {
   display: none !important;
 }
 
+.color-container {
+  border-radius: 50%;
+}
+
 .toolbar {
   position: absolute;
   width: 100%;
@@ -168,5 +178,29 @@ span.arial {
 }
 
 .color-picker {
+}
+
+.font-colors {
+  position: absolute;
+  display: flex;
+  bottom: 50px;
+
+  .color-container {
+    display: block;
+    height: 22px;
+    width: 22px;
+    margin-right: 10px;
+
+    div {
+      height: 100%;
+      width: 100%;
+      border: 2px solid white;
+      border-radius: 50%;
+
+      // &:last-child: {
+      //   margin-right: 0;
+      // }
+    }
+  }
 }
 </style>
