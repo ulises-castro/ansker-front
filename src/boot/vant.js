@@ -6,6 +6,7 @@ import Vant, {
   Image,
   Field,
   Locale,
+  Picker,
   Search,
   Button,
   NavBar,
@@ -35,6 +36,7 @@ Vue.use(Popup)
 Vue.use(Image)
 Vue.use(Image)
 Vue.use(Field)
+Vue.use(Picker)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
