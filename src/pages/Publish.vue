@@ -1,12 +1,15 @@
 <template>
   <div>
+    <div class="control-font-size" :style="{ height: '100px' }">
+      <van-slider :max="40" :min="18" v-model="text.element.fontSize" vertical />
+    </div>
     <canvas
       ref="can"
       :width="screen.width"
       :height="screen.height">
     </canvas>
     <div class="toolbar row justify-around">
-      <div class="font-colors" v-if="showEditor.fontColor">
+      <div class="control-font-colors" v-if="showEditor.fontColor">
         <div
           class="color-container"
           v-for="(color, index) in editorOptions.fontColors"
@@ -60,12 +63,21 @@ export default {
       },
     }
   },
+  computed: {
+    textFontSize() {
+      return this.text.element.fontSize
+    }
+  },
   watch: {
     'text.fill'(color) {
       this.text.element.fill = color
       this.text.element.styles = '' + Math.random()
-
-      this.canvas.renderAll()
+    },
+    text: {
+      deep: true,
+      handler() {
+        this.canvas.renderAll()
+      }
     }
   },
   methods: {
@@ -87,13 +99,9 @@ export default {
       let indexFont = fontFamilies.indexOf(this.text.fontFamily)
       indexFont = (indexFont < fontFamilies.length) ? indexFont += 1 : 0
 
-      // this.text.fontFamily = fontFamilies[indexFont]
-      // fontFamilies[indexFont]
-      // this.text.fontFamily = 'helvetica'
       this.text.element.fontFamily = fontFamilies[indexFont]
-      this.text.element.styles = '' + Math.random()
 
-      this.canvas.renderAll()
+      console.log(this.text.element.fontFamily)
     },
     toggleFontBold() {
       const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
@@ -165,26 +173,33 @@ span.arial {
   font-family: sans-serif;
 }
 
-.color-picker {
-}
+.control {
+  &-font-size {
+    position: absolute;
+    top: calc((100vh / 2) - 100px) ;
+    left: 30px;
+    z-index: 10;
+  }
 
-.font-colors {
-  position: absolute;
-  display: flex;
-  bottom: 50px;
+  &-font-colors {
+    position: absolute;
+    display: flex;
+    bottom: 50px;
 
-  .color-container {
-    display: block;
-    height: 24px;
-    width: 24px;
-    margin-right: 1em;
+    .color-container {
+      display: block;
+      height: 24px;
+      width: 24px;
+      margin-right: 1em;
 
-    div {
-      height: 100%;
-      width: 100%;
-      border: 2px solid white;
-      border-radius: 50%;
+      div {
+        height: 100%;
+        width: 100%;
+        border: 2px solid white;
+        border-radius: 50%;
+      }
     }
   }
 }
+  
 </style>
