@@ -47,13 +47,13 @@ export default {
           'Helvetica'],
         fontColors: [
           '#019A9D', '#D9B801', '#E8045A', '#B2028A',
-          '#2A0449', '#019A9D'
+          '#2A0449', '#fff', '#000'
         ]
       },
       canvas: new fabric.Canvas(this.$refs.can),
       text: {
         element: false,
-        fontFamily: 'sans-serif',
+        fontFamily: 'Lato',
         fontBold: '',
         fontSize: 30,
         fill: '#ff0000'
@@ -68,13 +68,6 @@ export default {
       this.canvas.renderAll()
     }
   },
-  // computed: {
-  //   'text.fontBold'() {
-  //     this.text.element.fontWeight = 'bold'
-
-  //     this.canvas.renderAll()
-  //   }
-  // },
   methods: {
     generateImage() {
       this.href = this.canvas.toDataURL({
@@ -92,9 +85,13 @@ export default {
     changeFontFamily() {
       const { fontFamilies } = this.editorOptions
       let indexFont = fontFamilies.indexOf(this.text.fontFamily)
-      const nextFontIndex = (indexFont < fontFamilies.length) ? indexFont++ : 0
+      indexFont = (indexFont < fontFamilies.length) ? indexFont += 1 : 0
 
-      this.text.fontFamily = fontFamilies[nextFontIndex]
+      // this.text.fontFamily = fontFamilies[indexFont]
+      // fontFamilies[indexFont]
+      // this.text.fontFamily = 'helvetica'
+      this.text.element.fontFamily = fontFamilies[indexFont]
+      this.text.element.styles = '' + Math.random()
 
       this.canvas.renderAll()
     },
@@ -178,19 +175,15 @@ span.arial {
 
   .color-container {
     display: block;
-    height: 22px;
-    width: 22px;
-    margin-right: 10px;
+    height: 24px;
+    width: 24px;
+    margin-right: 1em;
 
     div {
       height: 100%;
       width: 100%;
       border: 2px solid white;
       border-radius: 50%;
-
-      // &:last-child: {
-      //   margin-right: 0;
-      // }
     }
   }
 }
