@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     goPublish() {
-      // Implement to
+      // TODO: fix this because publish isnt detect Implement to
       this.$router.push({ name: 'Publish '})
     },
     toggleNotifications() {}
