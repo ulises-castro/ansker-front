@@ -22,9 +22,6 @@ export default {
       ],
     }
   },
-  created() {
-    this.choiceShare()
-  },
   methods: {
     handlerShare(option) {
       let name = option.name.toLowerCase()

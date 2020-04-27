@@ -7,9 +7,9 @@ Vue.use(VueRouter)
 
 /*
  * If not building with SSR mode, you can
- * directly export the Router instantiation;
+ * directly export the Router instantiation
  *
- * The function below can be async too; either use
+ * The function below can be async too either use
  * async/await or return a Promise which resolves
  * with the Router instance.
  */
@@ -29,22 +29,22 @@ export default function ({ store }) {
   Router.beforeEach((to, from, next) => {
     const isLogged = store.getters['User/isLogged']
 
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.meta.requiresAuth) {
       if (isLogged) {
-        next();
-        return;
+        next()
+        return
       }
 
-      next({ name: 'Home' });
+      next({ name: 'Home' })
     } else {
-      if (isLogged) {
-        next({ name: 'Discover' });
-        return;
+      if (isLogged && to.name === 'Home') {
+        next({ name: 'Discover' })
+        return
       }
 
-      next();
+      next()
     }
-  });
+  })
 
   return Router
 }

@@ -1,11 +1,13 @@
 // import something here
 import Vue from 'vue'
-import Vant, {
+import {
   Icon,
   Popup,
   Image,
   Field,
   Locale,
+  Slider,
+  Picker,
   Search,
   Button,
   NavBar,
@@ -21,6 +23,7 @@ import Vant, {
   CollapseItem,
   ActionSheet,
   ShareSheet,
+  Sticky,
 } from "vant"
 
 
@@ -34,11 +37,14 @@ Vue.use(Popup)
 Vue.use(Image)
 Vue.use(Image)
 Vue.use(Field)
+Vue.use(Slider)
+Vue.use(Picker)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
 Vue.use(Tabbar)
 Vue.use(ShareSheet)
+Vue.use(Sticky)
 Vue.use(Notify)
 Vue.use(Loading)
 Vue.use(Skeleton)
