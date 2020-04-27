@@ -198,8 +198,8 @@ span.arial {
 
     .color-container {
       display: block;
-      height: 24px;
-      width: 24px;
+      height: 25px;
+      width: 25px;
       margin-right: 1em;
 
       div {
