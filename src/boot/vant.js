@@ -1,6 +1,6 @@
 // import something here
 import Vue from 'vue'
-import Vant, {
+import {
   Icon,
   Popup,
   Image,

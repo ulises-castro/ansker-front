@@ -1,7 +1,12 @@
 <template>
   <div>
-    <div class="control-font-size" :style="{ height: '100px' }">
-      <van-slider :max="40" :min="18" v-model="text.element.fontSize" vertical />
+    <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
+      <van-slider
+      :active-color="text.element.fill"
+      button-size="22px"
+      :max="40"
+      :min="18"
+      v-model="text.element.fontSize" vertical />
     </div>
     <canvas
       ref="can"
