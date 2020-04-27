@@ -34,6 +34,8 @@
 
 <script>
 import { fabric } from 'fabric'
+import EventBus from 'src/eventBus.js'
+
 
 export default {
   name: 'Publish',
@@ -142,6 +144,9 @@ export default {
 
       })
     }
+  },
+  created() {
+    EventBus.$emit('toggleUI', false)
   },
   mounted() {
     const canvas = this.assignCanvas()

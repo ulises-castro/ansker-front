@@ -39,7 +39,11 @@ export default {
       // TODO: fix this because publish isnt detect Implement to
       this.$router.push({ name: 'Publish '})
     },
-    toggleNotifications() {}
+    hideMenu() {
+    },
+    toggleNotifications() {},
+  },
+  mounted() {
   },
   props: {
     isLoading: {
