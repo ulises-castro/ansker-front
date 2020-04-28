@@ -1,5 +1,6 @@
 <template>
   <div>
+    <img ref="backImg" src="/statics/wallpaper.jpg"/>
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
       :active-color="text.element.fill"
@@ -34,6 +35,7 @@
 
 <script>
 import { fabric } from 'fabric'
+import EventBus from 'src/eventBus.js'
 
 export default {
   name: 'Publish',
@@ -139,13 +141,34 @@ export default {
           scaleX: canvas.width / img.width,
           scaleY: canvas.height / img.height
         });
-
       })
     }
+  },
+  created() {
+    EventBus.$emit('toggleUI', false)
   },
   mounted() {
     const canvas = this.assignCanvas()
     this.initialize(canvas)
+
+    const colorThief = new ColorThief();
+    const img = this.$refs.backImg;
+
+    if (img.complete) {
+      colorThief.getColor(img);
+    } else {
+      img.addEventListener('load', () => {
+        let palette = colorThief.getPalette(this.$refs.backImg).slice(0, 6)
+
+
+        palette = palette.map(current => {
+          return `rgb(${current[0]},${current[1]},${current[2]})`
+        })
+
+        this.editorOptions.fontColors = palette
+      });
+    }
+
   }
 }
 </script>
@@ -193,8 +216,8 @@ span.arial {
 
     .color-container {
       display: block;
-      height: 24px;
-      width: 24px;
+      height: 25px;
+      width: 25px;
       margin-right: 1em;
 
       div {

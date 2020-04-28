@@ -1,14 +1,15 @@
 <template>
   <div id="q-app">
     <div class="app-container">
-      <app-layout v-if="isLogged"></app-layout>
+      <app-layout v-if="isLogged && showHeader"></app-layout>
       <router-view :handlerError="handlerError" />
-      <Menu v-if="isLogged"></Menu>
+      <Menu v-if="isLogged && showMenu"></Menu>
     </div>
   </div>
 </template>
 <script>
-import Menu from "components/Menu.vue";
+import EventBus from 'src/eventBus.js'
+import Menu from "components/Menu.vue"
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -22,6 +23,12 @@ export default {
     },
     ...mapGetters('User', ['isLogged']),
   },
+  data() {
+    return {
+      showMenu: true,
+      showHeader: true
+    }
+  },
   methods: {
     handlerError(err) {
       if (err.response.data.message) {
@@ -29,10 +36,19 @@ export default {
       }
 
       return this.$notify(`No pudimos procesar tu solitud, por favor intente más tarde`)
-    }
+    },
+    toggleUI() {
+      this.showMenu = false
+      this.showHeader = false
+    },
+    listenEventBus() {
+      EventBus.$on('toggleUI', this.toggleUI);
+    },
   },
   created() {
     // TODO: Check if useful this piece of code otherwise remove it
+    this.listenEventBus()
+
     let installPrompt;
 
     window.addEventListener('beforeinstallprompt', e => {
