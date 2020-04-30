@@ -148,7 +148,6 @@ export default {
     EventBus.$emit('toggleUI', false)
   },
   mounted() {
-
     const canvas = this.assignCanvas()
     this.initialize(canvas)
 
