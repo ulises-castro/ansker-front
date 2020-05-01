@@ -161,9 +161,15 @@ export default {
         let palette = colorThief.getPalette(this.$refs.backImg).slice(0, 6)
 
 
-        palette = palette.map(current => {
-          return `rgb(${current[0]},${current[1]},${current[2]})`
+        palette = palette.map(channels => {
+          const inverted_channels = channels.map(function(ch) {
+              return 255 - ch;
+          })
+
+          return 'rgb(' + inverted_channels.join(', ') + ')'
+          // return `rgb(${channels[0]},${channels[1]},${channels[2]})`
         })
+
 
         this.editorOptions.fontColors = palette
       });
