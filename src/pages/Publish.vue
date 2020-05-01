@@ -1,6 +1,5 @@
 <template>
   <div>
-    <img ref="backImg" src="/statics/wallpaper.jpg"/>
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
       :active-color="text.element.fill"
@@ -150,31 +149,6 @@ export default {
   mounted() {
     const canvas = this.assignCanvas()
     this.initialize(canvas)
-
-    const colorThief = new ColorThief();
-    const img = this.$refs.backImg;
-
-    if (img.complete) {
-      colorThief.getColor(img);
-    } else {
-      img.addEventListener('load', () => {
-        let palette = colorThief.getPalette(this.$refs.backImg).slice(0, 6)
-
-
-        palette = palette.map(channels => {
-          const inverted_channels = channels.map(function(ch) {
-              return 255 - ch;
-          })
-
-          return 'rgb(' + inverted_channels.join(', ') + ')'
-          // return `rgb(${channels[0]},${channels[1]},${channels[2]})`
-        })
-
-
-        this.editorOptions.fontColors = palette
-      });
-    }
-
   }
 }
 </script>
