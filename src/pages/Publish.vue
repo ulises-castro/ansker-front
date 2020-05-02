@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div ref="container">
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
       :active-color="text.element.fill"
@@ -150,20 +150,21 @@ export default {
 
     this.canvas.selection = false
 
-    this.$refs.can.addEventListener ("touchstart", function() { alert('hola') },  false);
+    this.$refs.container.addEventListener ("touchmove", function() { console.log('hola') },  false);
 
-// this.canvas.on('touch:gesture', (opt) => {
-//   let delta = opt.e.deltaY;
-//   let zoom = this.canvas.getZoom();
-//   zoom = zoom + delta/200;
-//   if (zoom > 20) zoom = 20;
-//   if (zoom < 0.01) zoom = 0.01;
-//   this.canvas.setZoom(zoom);
-//   opt.e.preventDefault();
-//   opt.e.stopPropagation();
-// })
+this.canvas.on('touch:start', (opt) => {
+  console.log('hola canvas')
+  let delta = opt.e.deltaY;
+  let zoom = this.canvas.getZoom();
+  zoom = zoom + delta/200;
+  if (zoom > 20) zoom = 20;
+  if (zoom < 0.01) zoom = 0.01;
+  this.canvas.setZoom(zoom);
+  opt.e.preventDefault();
+  opt.e.stopPropagation();
+})
 
-    // return
+    return
 this.canvas.on({
     'touch:start': function(e) {
       alert('estar')

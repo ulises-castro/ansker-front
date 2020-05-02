@@ -115,7 +115,9 @@ module.exports = function (ctx) {
       },
       // https: false,
       port: 1297,
-      open: false // opens browser window automatically
+      open: false, // opens browser window automatically
+      // This isn't recommed due to DNS direct atackking
+      disableHostCheck: true,
     },
 
     // animations: 'all', // --- includes all animations
