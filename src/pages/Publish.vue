@@ -77,7 +77,7 @@ export default {
   },
   watch: {
     'text.fill'(color) {
-      this.updatePrevCanvasState()
+      this.saveCanvasState()
 
       this.text.element.fill = color
       this.text.element.styles = '' + Math.random()
@@ -95,7 +95,7 @@ export default {
 
       this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas));
     },
-    updatePrevCanvasState() {
+    saveCanvasState() {
       this.canvasPrevState = this.canvas.toJSON()
     },
     generateImage() {
@@ -115,7 +115,7 @@ export default {
       let indexFont = fontFamilies.indexOf(this.text.element.fontFamily)
       indexFont = (indexFont + 1 < fontFamilies.length) ? indexFont + 1 : 0
 
-      this.updatePrevCanvasState()
+      this.saveCanvasState()
       this.text.element.fontFamily = fontFamilies[indexFont]
 
       console.log(this.text.element.fontFamily)
@@ -123,7 +123,7 @@ export default {
     toggleFontBold() {
       const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
 
-      this.updatePrevCanvasState()
+      this.saveCanvasState()
       this.text.element.fontWeight = toggleBold
 
       this.canvas.renderAll()
@@ -146,12 +146,14 @@ export default {
       this.text.element.hasControls = false
       canvas.renderAll()
 
-      fabric.Image.fromURL(data, function(img) {
+      fabric.Image.fromURL(data, (img) => {
         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
 
           scaleX: canvas.width / img.width,
           scaleY: canvas.height / img.height
-        });
+        })
+
+        this.saveCanvasState()
       })
     }
   },
