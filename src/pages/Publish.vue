@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <img ref="backImg" src="/statics/wallpaper.jpg"/>
+  <div ref="container">
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
       :active-color="text.element.fill"
@@ -27,7 +26,7 @@
 
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
+      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
     </div>
 
   </div>
@@ -41,6 +40,7 @@ export default {
   name: 'Publish',
   data() {
     return {
+      canvasPrevState: false,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -77,6 +77,8 @@ export default {
   },
   watch: {
     'text.fill'(color) {
+      this.saveCanvasState()
+
       this.text.element.fill = color
       this.text.element.styles = '' + Math.random()
     },
@@ -88,6 +90,14 @@ export default {
     }
   },
   methods: {
+    returnCanvasState() {
+      this.canvas.clear();
+
+      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas));
+    },
+    saveCanvasState() {
+      this.canvasPrevState = this.canvas.toJSON()
+    },
     generateImage() {
       this.href = this.canvas.toDataURL({
         format: 'png',
@@ -97,15 +107,15 @@ export default {
     assignCanvas() {
       const ref = this.$refs.can
       const canvas = new fabric.Canvas(ref)
-      this.canvas = canvas
 
-      return canvas
+      this.canvas = canvas
     },
     changeFontFamily() {
       const { fontFamilies } = this.editorOptions
-      let indexFont = fontFamilies.indexOf(this.text.fontFamily)
-      indexFont = (indexFont < fontFamilies.length) ? indexFont += 1 : 0
+      let indexFont = fontFamilies.indexOf(this.text.element.fontFamily)
+      indexFont = (indexFont + 1 < fontFamilies.length) ? indexFont + 1 : 0
 
+      this.saveCanvasState()
       this.text.element.fontFamily = fontFamilies[indexFont]
 
       console.log(this.text.element.fontFamily)
@@ -113,6 +123,7 @@ export default {
     toggleFontBold() {
       const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
 
+      this.saveCanvasState()
       this.text.element.fontWeight = toggleBold
 
       this.canvas.renderAll()
@@ -135,12 +146,14 @@ export default {
       this.text.element.hasControls = false
       canvas.renderAll()
 
-      fabric.Image.fromURL(data, function(img) {
+      fabric.Image.fromURL(data, (img) => {
         canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
 
           scaleX: canvas.width / img.width,
           scaleY: canvas.height / img.height
-        });
+        })
+
+        this.saveCanvasState()
       })
     }
   },
@@ -148,26 +161,63 @@ export default {
     EventBus.$emit('toggleUI', false)
   },
   mounted() {
-    const canvas = this.assignCanvas()
-    this.initialize(canvas)
+    this.assignCanvas()
+    this.initialize(this.canvas)
 
-    const colorThief = new ColorThief();
-    const img = this.$refs.backImg;
+    this.canvas.selection = false
 
-    if (img.complete) {
-      colorThief.getColor(img);
-    } else {
-      img.addEventListener('load', () => {
-        let palette = colorThief.getPalette(this.$refs.backImg).slice(0, 6)
+    this.$refs.container.addEventListener ("touchmove", function() { console.log('hola') },  false);
 
+this.canvas.on('touch:start', (opt) => {
+  console.log('hola canvas')
+  let delta = opt.e.deltaY;
+  let zoom = this.canvas.getZoom();
+  zoom = zoom + delta/200;
+  if (zoom > 20) zoom = 20;
+  if (zoom < 0.01) zoom = 0.01;
+  this.canvas.setZoom(zoom);
+  opt.e.preventDefault();
+  opt.e.stopPropagation();
+})
 
-        palette = palette.map(current => {
-          return `rgb(${current[0]},${current[1]},${current[2]})`
-        })
+    return
+this.canvas.on({
+    'touch:start': function(e) {
+      alert('estar')
+        if (e.e.touches && e.e.touches.length == 2) {
+            pausePanning = true;
+            var point = new fabric.Point(e.self.x, e.self.y);
+            if (e.self.state == "start") {
+                zoomStartScale = canvas.getZoom();
+            }
+            var delta = zoomStartScale * e.self.scale;
+            canvas.zoomToPoint(point, delta);
+            pausePanning = false;
+        }
+    },
+    'object:selected': function() {
+        pausePanning = true;
+    },
+    'selection:cleared': function() {
+        pausePanning = false;
+    },
+    'touch:drag': function(e) {
+        if (pausePanning == false && undefined != e.self.x && undefined != e.self.x) {
+            currentX = e.self.x;
+            currentY = e.self.y;
+            xChange = currentX - lastX;
+            yChange = currentY - lastY;
 
-        this.editorOptions.fontColors = palette
-      });
+            if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
+                var delta = new fabric.Point(xChange, yChange);
+                canvas.relativePan(delta);
+            }
+
+            lastX = e.self.x;
+            lastY = e.self.y;
+        }
     }
+})
 
   }
 }
