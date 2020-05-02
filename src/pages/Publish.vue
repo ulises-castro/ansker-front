@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { fabric } from 'fabric'
+// import { fabric } from 'fabric'
 import EventBus from 'src/eventBus.js'
 
 export default {
@@ -91,9 +91,7 @@ export default {
   },
   methods: {
     returnCanvasState() {
-      this.canvas.clear();
-
-      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas));
+      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas))
     },
     saveCanvasState() {
       this.canvasPrevState = this.canvas.toJSON()
@@ -107,6 +105,32 @@ export default {
     assignCanvas() {
       const ref = this.$refs.can
       const canvas = new fabric.Canvas(ref)
+
+
+canvas.on({
+  'touch:gesture': function() {
+    console.log('ges')
+
+    var text = document.createTextNode(' Gesture ');
+    info.insertBefore(text, info.firstChild);
+  },
+  'touch:drag': function() {
+    console.log('drag')
+
+  },
+  'touch:orientation': function() {
+    var text = document.createTextNode(' Orientation ');
+    info.insertBefore(text, info.firstChild);
+  },
+  'touch:shake': function() {
+    var text = document.createTextNode(' Shaking ');
+    info.insertBefore(text, info.firstChild);
+  },
+  'touch:longpress': function() {
+    console.log('long press')
+  }
+});
+
 
       this.canvas = canvas
     },
@@ -166,21 +190,43 @@ export default {
 
     this.canvas.selection = false
 
-    this.$refs.container.addEventListener ("touchmove", function() { console.log('hola') },  false);
-
-this.canvas.on('touch:start', (opt) => {
-  console.log('hola canvas')
-  let delta = opt.e.deltaY;
-  let zoom = this.canvas.getZoom();
-  zoom = zoom + delta/200;
-  if (zoom > 20) zoom = 20;
-  if (zoom < 0.01) zoom = 0.01;
-  this.canvas.setZoom(zoom);
+    //mouse zoom
+this.canvas.on('mouse:wheel', (opt) => {
+  var delta = opt.e.deltaY;
+  var pointer = this.canvas.getPointer(opt.e);
+  var zoom = this.canvas.getZoom();
+  zoom = zoom - delta / 200;
+  // limit zoom to 4x in
+  if (zoom > 4) zoom = 4;
+  // limit zoom to 1x out
+  if (zoom < 1) {
+    zoom = 1;
+    this.canvas.setViewportTransform([1, 0, 0, 1, 0, 0]);
+  }
+  this.canvas.zoomToPoint({
+    x: opt.e.offsetX,
+    y: opt.e.offsetY
+  }, zoom);
   opt.e.preventDefault();
   opt.e.stopPropagation();
-})
+});
 
-    return
+//     this.$refs.container.addEventListener("touchmove", (opt) => {
+//       console.log('hola canvas', opt)
+//       let delta = opt.e.deltaY;
+//       let zoom = this.canvas.getZoom();
+//       zoom = zoom + delta/200;
+//       if (zoom > 20) zoom = 20;
+//       if (zoom < 0.01) zoom = 0.01;
+//       this.canvas.setZoom(zoom);
+//       opt.e.preventDefault();
+//       opt.e.stopPropagation();
+
+//     },  false);
+
+// // this.canvas.on('touch:move', (opt) => {
+// // })
+let pausePanning = false
 this.canvas.on({
     'touch:start': function(e) {
       alert('estar')
