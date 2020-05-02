@@ -26,7 +26,7 @@
 
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
+      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
     </div>
 
   </div>
@@ -40,6 +40,7 @@ export default {
   name: 'Publish',
   data() {
     return {
+      canvasPrevState: false,
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -76,6 +77,8 @@ export default {
   },
   watch: {
     'text.fill'(color) {
+      this.updatePrevCanvasState()
+
       this.text.element.fill = color
       this.text.element.styles = '' + Math.random()
     },
@@ -87,6 +90,14 @@ export default {
     }
   },
   methods: {
+    returnCanvasState() {
+      this.canvas.clear();
+
+      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas));
+    },
+    updatePrevCanvasState() {
+      this.canvasPrevState = this.canvas.toJSON()
+    },
     generateImage() {
       this.href = this.canvas.toDataURL({
         format: 'png',
@@ -96,6 +107,7 @@ export default {
     assignCanvas() {
       const ref = this.$refs.can
       const canvas = new fabric.Canvas(ref)
+
       this.canvas = canvas
     },
     changeFontFamily() {
@@ -103,6 +115,7 @@ export default {
       let indexFont = fontFamilies.indexOf(this.text.element.fontFamily)
       indexFont = (indexFont + 1 < fontFamilies.length) ? indexFont + 1 : 0
 
+      this.updatePrevCanvasState()
       this.text.element.fontFamily = fontFamilies[indexFont]
 
       console.log(this.text.element.fontFamily)
@@ -110,6 +123,7 @@ export default {
     toggleFontBold() {
       const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
 
+      this.updatePrevCanvasState()
       this.text.element.fontWeight = toggleBold
 
       this.canvas.renderAll()
