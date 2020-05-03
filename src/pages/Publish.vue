@@ -227,6 +227,7 @@ this.canvas.on('mouse:wheel', (opt) => {
 // // this.canvas.on('touch:move', (opt) => {
 // // })
 let pausePanning = false
+let zoomStartScale = 0
 this.canvas.on({
     'touch:start': function(e) {
       alert('estar')
@@ -241,13 +242,13 @@ this.canvas.on({
             pausePanning = false;
         }
     },
-    'object:selected': function() {
+    'object:selected': () => {
         pausePanning = true;
     },
-    'selection:cleared': function() {
+    'selection:cleared': () => {
         pausePanning = false;
     },
-    'touch:drag': function(e) {
+    'touch:drag': (e) => {
         if (pausePanning == false && undefined != e.self.x && undefined != e.self.x) {
             currentX = e.self.x;
             currentY = e.self.y;
