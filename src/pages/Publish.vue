@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { fabric } from 'fabric'
+// import { fabric } from 'fabric'
 import EventBus from 'src/eventBus.js'
 
 export default {
@@ -91,9 +91,7 @@ export default {
   },
   methods: {
     returnCanvasState() {
-      this.canvas.clear();
-
-      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas));
+      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas))
     },
     saveCanvasState() {
       this.canvasPrevState = this.canvas.toJSON()
@@ -155,6 +153,9 @@ export default {
 
         this.saveCanvasState()
       })
+    },
+    touchStart(e) {
+
     }
   },
   created() {
@@ -166,58 +167,75 @@ export default {
 
     this.canvas.selection = false
 
-    this.$refs.container.addEventListener ("touchmove", function() { console.log('hola') },  false);
+    //mouse zoom
+    this.canvas.on('mouse:wheel', (opt) => {
+      console.log('wheel', opt)
+      var delta = opt.e.deltaY
+      var pointer = this.canvas.getPointer(opt.e)
+      var zoom = this.canvas.getZoom()
+      zoom = zoom - delta / 200
+      // limit zoom to 4x in
+      if (zoom > 4) zoom = 4
+      // limit zoom to 1x out
+      if (zoom < 1) {
+        zoom = 1
+        this.canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
+      }
+      this.canvas.zoomToPoint({
+        x: opt.e.offsetX,
+        y: opt.e.offsetY
+      }, zoom)
+      opt.e.preventDefault()
+      opt.e.stopPropagation()
+    })
 
-this.canvas.on('touch:start', (opt) => {
-  console.log('hola canvas')
-  let delta = opt.e.deltaY;
-  let zoom = this.canvas.getZoom();
-  zoom = zoom + delta/200;
-  if (zoom > 20) zoom = 20;
-  if (zoom < 0.01) zoom = 0.01;
-  this.canvas.setZoom(zoom);
-  opt.e.preventDefault();
-  opt.e.stopPropagation();
-})
+    let pausePanning = false
+    let zoomStartScale = 0
+    this.canvas.on({
+        'touch:end': function(e) {
+          console.log('touch end')
+        },
+        'touch:drag': (e) => {
+          console.log('DRAGEVENT', e)
 
-    return
-this.canvas.on({
-    'touch:start': function(e) {
-      alert('estar')
-        if (e.e.touches && e.e.touches.length == 2) {
-            pausePanning = true;
-            var point = new fabric.Point(e.self.x, e.self.y);
-            if (e.self.state == "start") {
-                zoomStartScale = canvas.getZoom();
+          if (e.e.type === 'touchstart') {
+            console.log('start')
+            this.$notify('start')
+            // var point = new fabric.Point(0,12);
+            // this.canvas.zoomToPoint(point, 3);
+            const touchesTotal =  e.e.touches.length
+
+            // Validate at least 2 touch
+            if (e.e.touches) {
+              pausePanning = true;
+              var point = new fabric.Point(e.self.x, e.self.y);
+              if (e.self.state == "start") {
+                  zoomStartScale = canvas.getZoom();
+              }
+              var delta = zoomStartScale * e.self.scale;
+              canvas.zoomToPoint(point, delta);
+              pausePanning = false;
             }
-            var delta = zoomStartScale * e.self.scale;
-            canvas.zoomToPoint(point, delta);
-            pausePanning = false;
-        }
-    },
-    'object:selected': function() {
-        pausePanning = true;
-    },
-    'selection:cleared': function() {
-        pausePanning = false;
-    },
-    'touch:drag': function(e) {
-        if (pausePanning == false && undefined != e.self.x && undefined != e.self.x) {
-            currentX = e.self.x;
-            currentY = e.self.y;
-            xChange = currentX - lastX;
-            yChange = currentY - lastY;
+          } else {
+            this.$notify(e.e.touches.length)
 
-            if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
-                var delta = new fabric.Point(xChange, yChange);
-                canvas.relativePan(delta);
+            if (pausePanning == false && undefined != e.self.x && undefined != e.self.x) {
+                let currentX = e.self.x;
+                let currentY = e.self.y;
+                let xChange = currentX - lastX;
+                let yChange = currentY - lastY;
+
+                if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
+                    var delta = new fabric.Point(xChange, yChange);
+                    canvas.relativePan(delta);
+                }
+
+                let lastX = e.self.x;
+                let lastY = e.self.y;
             }
-
-            lastX = e.self.x;
-            lastY = e.self.y;
+          }
         }
-    }
-})
+    })
 
   }
 }
