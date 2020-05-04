@@ -168,73 +168,103 @@ export default {
     this.canvas.selection = false
 
     //mouse zoom
-    this.canvas.on('mouse:wheel', (opt) => {
-      console.log('wheel', opt)
-      var delta = opt.e.deltaY
-      var pointer = this.canvas.getPointer(opt.e)
-      var zoom = this.canvas.getZoom()
-      zoom = zoom - delta / 200
-      // limit zoom to 4x in
-      if (zoom > 4) zoom = 4
-      // limit zoom to 1x out
-      if (zoom < 1) {
-        zoom = 1
-        this.canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
-      }
-      this.canvas.zoomToPoint({
-        x: opt.e.offsetX,
-        y: opt.e.offsetY
-      }, zoom)
-      opt.e.preventDefault()
-      opt.e.stopPropagation()
-    })
+    // this.canvas.on('mouse:wheel', (opt) => {
+    //   console.log('wheel', opt)
+    //   let delta = opt.e.deltaY
+    //   let pointer = this.canvas.getPointer(opt.e)
+    //   let zoom = this.canvas.getZoom()
+    //   zoom = zoom - delta / 200
+    //   // limit zoom to 4x in
+    //   if (zoom > 4) zoom = 4
+    //   // limit zoom to 1x out
+    //   if (zoom < 1) {
+    //     zoom = 1
+    //     this.canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
+    //   }
+    //   this.canvas.zoomToPoint({
+    //     x: opt.e.offsetX,
+    //     y: opt.e.offsetY
+    //   }, zoom)
+    //   opt.e.preventDefault()
+    //   opt.e.stopPropagation()
+    // })
 
+    let lastX = 0
+    let lastY = 0
+    let zoomStartScale = 1
     let pausePanning = false
-    let zoomStartScale = 0
+    let curDiff = 1
+    let prevDiff = -10
+
+    //TODO: Check this  'touch:gesture': function (event) {
+    // https://stackoverflow.com/questions/58203865/fabric-js-pinch-to-zoom
+    // https://stackoverflow.com/questions/57269095/fabric-js-with-gesture-how-to-prevent-zooming-on-touch-devices
     this.canvas.on({
+        'touch:gesture': function(e) {
+          console.log('touch gesture')
+        },
         'touch:end': function(e) {
           console.log('touch end')
         },
-        'touch:drag': (e) => {
-          console.log('DRAGEVENT', e)
+        'touch:drag': (opt) => {
+          console.table('DRAGEVENT', opt)
 
-          if (e.e.type === 'touchstart') {
+          if (opt.e.type === 'touchstart') {
             console.log('start')
             this.$notify('start')
-            // var point = new fabric.Point(0,12);
+            // let point = new fabric.Point(10,12);
             // this.canvas.zoomToPoint(point, 3);
-            const touchesTotal =  e.e.touches.length
+            // let units = 10
+            // let delta = new fabric.Point(0,units)
+            // this.canvas.relativePan(delta)
+            const touchesTotal =  opt.e.touches.length
+            this.$notify(touchesTotal)
+            const { touches } = opt.e
 
-            // Validate at least 2 touch
-            if (e.e.touches) {
+            // TODO: Validate at least 2 touch
+            if (opt.e.touches && touchesTotal === 2) {
               pausePanning = true;
-              var point = new fabric.Point(e.self.x, e.self.y);
-              if (e.self.state == "start") {
-                  zoomStartScale = canvas.getZoom();
+              let point = new fabric.Point(opt.self.x, opt.self.y)
+
+              if (opt.self.state == "start") {
+                  zoomStartScale = canvas.getZoom()
               }
-              var delta = zoomStartScale * e.self.scale;
-              canvas.zoomToPoint(point, delta);
-              pausePanning = false;
+              this.$notify(opt.self.scale)
+              curDiff = Math.abs(touches[0].clientX - touches[1].clientX)
+              let scale = curDiff > prevScale ? 1 : .5
+              let delta = zoomStartScale * scale
+
+              this.canvas.zoomToPoint(point, delta)
+              pausePanning = false
+
+              prevDiff = curDiff
             }
           } else {
-            this.$notify(e.e.touches.length)
+            return
+            // this.$notify(opt.e.touches.length)
+            console.log(opt.e.touches.length, pausePanning, opt.self)
 
-            if (pausePanning == false && undefined != e.self.x && undefined != e.self.x) {
-                let currentX = e.self.x;
-                let currentY = e.self.y;
-                let xChange = currentX - lastX;
-                let yChange = currentY - lastY;
+            if (pausePanning == false && undefined != opt.self.x && undefined != opt.self.y) {
+                let currentX = opt.self.x
+                let currentY = opt.self.y
+                let xChange = currentX - lastX
+                let yChange = currentY - lastY
 
                 if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
-                    var delta = new fabric.Point(xChange, yChange);
-                    canvas.relativePan(delta);
+                  let delta = new fabric.Point(xChange, yChange)
+                  this.canvas.relativePan(delta)
                 }
 
-                let lastX = e.self.x;
-                let lastY = e.self.y;
+                lastX = opt.self.x
+                lastY = opt.self.y
             }
           }
-        }
+        },
+        // 'mouse:move': (opt) => {
+        //   let units = 10;
+        //   let delta = new fabric.Point(opt.e.movementX, opt.e.movementY);
+        //   this.canvas.relativePan(delta);
+        // }
     })
 
   }
