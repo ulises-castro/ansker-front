@@ -5,8 +5,8 @@
       ref="image-edit"
       v-model="imageSelected"
       :width="this.screen.width"
-      :height="200"
-      :quality="2"
+      :height="this.screen.height / 2"
+      :quality="1"
       :zoom-speed="10"
       :disable-rotation="true"
       :show-remove-button="!false"
@@ -105,7 +105,7 @@ export default {
       this.background =
         this.imageSelected.generateDataUrl('image/jpeg', 0.8);
 
-      setTimeout(() => this.drawTextInImage(), 500);
+      // setTimeout(() => this.drawTextInImage(), 500);
     },
 
   },
