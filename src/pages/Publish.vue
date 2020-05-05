@@ -1,20 +1,43 @@
 <template>
   <div ref="container">
-    <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
+
+    <cropper
+      ref="image-edit"
+      v-model="imageSelected"
+      :width="this.screen.width"
+      :height="200"
+      :quality="2"
+      :zoom-speed="10"
+      :disable-rotation="true"
+      :show-remove-button="!false"
+      :prevent-white-space="true"
+      placeholder="Seleccionar imagén"
+      @file-choose="alert('file choose')"
+      @file-size-exceed="alert('file size exceeds')"
+      @file-type-mismatch="alert('file type mismatches')"
+      @new-image="alert('new image attatched')"
+      @image-remove="removeBackgroundImage"
+      @loading-start="isLoading = true"
+      @loading-end="isLoading = false"
+      @new-image-drawn="updateBackgroundImage"
+      @zoom="updateBackgroundImage"
+      @move="updateBackgroundImage"></cropper>
+
+    <!-- <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
       :active-color="text.element.fill"
       button-size="22px"
       :max="40"
       :min="18"
       v-model="text.element.fontSize" vertical />
-    </div>
-    <canvas
+    </div> -->
+    <!-- <canvas
       ref="can"
       :width="screen.width"
       :height="screen.height">
-    </canvas>
+    </canvas> -->
     <div class="toolbar row justify-around">
-      <div class="control-font-colors" v-if="showEditor.fontColor">
+      <!-- <div class="control-font-colors" v-if="showEditor.fontColor">
         <div
           class="color-container"
           v-for="(color, index) in editorOptions.fontColors"
@@ -22,11 +45,11 @@
           <div class="" :style="{'background-color': color}">
           </div>
         </div>
-      </div>
+      </div> -->
 
-      <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
+      <!-- <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
+      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" /> -->
     </div>
 
   </div>
@@ -34,12 +57,15 @@
 
 <script>
 // import { fabric } from 'fabric'
+import Cropper from 'src/components/cropper'
 import EventBus from 'src/eventBus.js'
 
 export default {
   name: 'Publish',
+  components: { Cropper },
   data() {
     return {
+      imageSelected: {},
       canvasPrevState: false,
       screen: {
         width: window.innerWidth,
@@ -71,6 +97,17 @@ export default {
     }
   },
   methods: {
+    removeBackgroundImage() {
+      // this.background = ''
+    },
+    updateBackgroundImage() {
+      // this.$refs.publishArea.blur();
+      this.background =
+        this.imageSelected.generateDataUrl('image/jpeg', 0.8);
+
+      setTimeout(() => this.drawTextInImage(), 500);
+    },
+
   },
   created() {
     EventBus.$emit('toggleUI', false)
