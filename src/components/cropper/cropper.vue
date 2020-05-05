@@ -1418,6 +1418,7 @@ export default {
 
   & textarea {
     width: 100%;
+    resize: none;
     height: 100%;
     background: transparent;
     border: 2px solid rgba($color: #000000, $alpha: 1.0);

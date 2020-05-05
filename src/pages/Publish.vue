@@ -5,7 +5,7 @@
       v-model="imageSelected"
       :width="this.screen.width"
       :height="this.screen.height"
-      :quality="1"
+      :quality="2"
       :zoom-speed="10"
       :disable-rotation="true"
       :show-remove-button="!false"
@@ -45,7 +45,7 @@
 
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
+      <q-icon @click="restorePrevCanvas" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
     </div>
 
   </div>
@@ -56,6 +56,13 @@
 import Cropper from 'src/components/cropper'
 import EventBus from 'src/eventBus.js'
 
+const initialTextArea = {
+  fontFamily: 'Lato',
+  fontWeight: '',
+  fontSize: 20,
+  color: '#FFF'
+}
+
 export default {
   name: 'Publish',
   components: { Cropper },
@@ -63,6 +70,9 @@ export default {
     return {
       imageSelected: {},
       canvasPrevState: false,
+      prevCanvasStack: {
+        textarea: [initialTextArea]
+      },
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -82,12 +92,7 @@ export default {
           '#2A0449', '#fff', '#000'
         ]
       },
-      textarea: {
-        fontFamily: 'Lato',
-        fontWeight: '',
-        fontSize: 20,
-        color: '#FFF'
-      },
+      textarea: initialTextArea,
     }
   },
   methods: {
@@ -108,12 +113,32 @@ export default {
 
     },
 
-    returnCanvasState() {
+    restorePrevCanvas() {
+      const prevCanvasStack = { ...this.prevCanvasStack }
+      const keys = Object.keys(prevCanvasStack)
 
+      keys.forEach(key => {
+        if (prevCanvasStack[key].length) {
+          prevCanvasStack[key].pop()
+          const lastChanges = prevCanvasStack[key].pop()
+          console.log(lastChanges)
+          this.textarea = lastChanges
+        }
+      })
+
+      this.prevCanvasStack = prevCanvasStack
     },
 
     toggleFontBold() {
       this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
+    }
+  },
+  watch: {
+    textarea: {
+      deep: true,
+      handler(textarea, oldTextArea) {
+        this.prevCanvasStack.textarea.push({textarea})
+      }
     }
   },
   created() {
