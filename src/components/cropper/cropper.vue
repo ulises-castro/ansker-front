@@ -21,10 +21,11 @@
     <div class="textarea-container" style="z-index: 100">
       <textarea
         ref="textarea"
+        maxlength="180"
+        minlength="10"
+        placeholder="Escribe"
         id="story"
-        name="story"
-        rows="5" cols="33">
-          It was a dark and stormy night...
+        name="story">It was a dark and stormy night...
       </textarea>
     </div>
 
@@ -218,9 +219,14 @@ export default {
 
   watch: {
     textarea: {
-      handler(val, oldVal) {
-        // console.log('sdfa', val, this.$refs)
-        this.$refs.textarea.style.fontSize = `${this.textarea.fontSize}px`
+      handler(textarea) {
+        // console.log('sdfa', textarea, this.$refs)
+        
+        this.$refs.textarea.style.fontSize = `${textarea.fontSize}px`
+
+        this.$refs.textarea.style.color = `${textarea.color}`
+
+        this.$refs.textarea.style.fontWeight = `${textarea.fontWeight}`
       },
       deep: true,
     },
@@ -1403,9 +1409,9 @@ export default {
 
 .textarea-container {
   position: absolute;
-  top: calc(50vh - 60px);
+  top: calc(50vh - 80px);
   left: calc(50vw - 100px);
-  width: 100px;
+  width: 250px;
   height: 100px;
   color: white;
   font-size: 20px;

@@ -26,18 +26,18 @@
 
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
-      :active-color="textarea.element.fill"
+      :active-color="textarea.color"
       button-size="22px"
       :max="40"
       :min="18"
       v-model="textarea.fontSize" vertical />
     </div>
-    <!-- <div class="toolbar row justify-around">
+    <div class="toolbar row justify-around">
       <div class="control-font-colors" v-if="showEditor.fontColor">
         <div
           class="color-container"
           v-for="(color, index) in editorOptions.fontColors"
-          :key="index" @click="textarea.fill = color">
+          :key="index" @click="textarea.color = color">
           <div class="" :style="{'cursor': 'pointer', 'background-color': color}">
           </div>
         </div>
@@ -46,7 +46,7 @@
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
-    </div> -->
+    </div>
 
   </div>
 </template>
@@ -83,11 +83,10 @@ export default {
         ]
       },
       textarea: {
-        element: false,
         fontFamily: 'Lato',
-        fontBold: '',
-        fontSize: 30,
-        fill: '#ff0000'
+        fontWeight: '',
+        fontSize: 20,
+        color: '#FFF'
       },
     }
   },
@@ -95,6 +94,7 @@ export default {
     removeBackgroundImage() {
       // this.background = ''
     },
+
     updateBackgroundImage() {
       // this.$refs.publishArea.blur();
 
@@ -104,6 +104,17 @@ export default {
       // setTimeout(() => this.drawTextInImage(), 500);
     },
 
+    changeFontFamily() {
+
+    },
+
+    returnCanvasState() {
+
+    },
+
+    toggleFontBold() {
+      this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
+    }
   },
   created() {
     EventBus.$emit('toggleUI', false)
