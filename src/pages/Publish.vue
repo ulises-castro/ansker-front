@@ -1,17 +1,18 @@
 <template>
-  <div ref="container">
-
+  <div  class="publish-container" ref="container">
     <cropper
-      ref="image-edit"
+      ref="can"
       v-model="imageSelected"
       :width="this.screen.width"
-      :height="this.screen.height / 2"
+      :height="this.screen.height"
       :quality="1"
       :zoom-speed="10"
       :disable-rotation="true"
       :show-remove-button="!false"
       :prevent-white-space="true"
+      initial-image="/statics/wallpaper.jpg"
       placeholder="Seleccionar imagén"
+      :textarea="textarea"
       @file-choose="alert('file choose')"
       @file-size-exceed="alert('file size exceeds')"
       @file-type-mismatch="alert('file type mismatches')"
@@ -23,34 +24,29 @@
       @zoom="updateBackgroundImage"
       @move="updateBackgroundImage"></cropper>
 
-    <!-- <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
+    <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
-      :active-color="text.element.fill"
+      :active-color="textarea.element.fill"
       button-size="22px"
       :max="40"
       :min="18"
-      v-model="text.element.fontSize" vertical />
-    </div> -->
-    <!-- <canvas
-      ref="can"
-      :width="screen.width"
-      :height="screen.height">
-    </canvas> -->
-    <div class="toolbar row justify-around">
-      <!-- <div class="control-font-colors" v-if="showEditor.fontColor">
+      v-model="textarea.fontSize" vertical />
+    </div>
+    <!-- <div class="toolbar row justify-around">
+      <div class="control-font-colors" v-if="showEditor.fontColor">
         <div
           class="color-container"
           v-for="(color, index) in editorOptions.fontColors"
-          :key="index" @click="text.fill = color">
-          <div class="" :style="{'background-color': color}">
+          :key="index" @click="textarea.fill = color">
+          <div class="" :style="{'cursor': 'pointer', 'background-color': color}">
           </div>
         </div>
-      </div> -->
+      </div>
 
-      <!-- <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
+      <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" /> -->
-    </div>
+      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
+    </div> -->
 
   </div>
 </template>
@@ -86,8 +82,7 @@ export default {
           '#2A0449', '#fff', '#000'
         ]
       },
-      // canvas: new fabric.Canvas(this.$refs.can),
-      text: {
+      textarea: {
         element: false,
         fontFamily: 'Lato',
         fontBold: '',
@@ -102,8 +97,9 @@ export default {
     },
     updateBackgroundImage() {
       // this.$refs.publishArea.blur();
-      this.background =
-        this.imageSelected.generateDataUrl('image/jpeg', 0.8);
+
+      // this.background =
+      //   this.imageSelected.generateDataUrl('image/jpeg', 0.8);
 
       // setTimeout(() => this.drawTextInImage(), 500);
     },
@@ -113,11 +109,18 @@ export default {
     EventBus.$emit('toggleUI', false)
   },
   mounted() {
-
+    // console.log(this.$refs.can)
   }
 }
 </script>
 <style lang="scss" scoped>
+
+.publish-container {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
 .van-tabbar--fixed {
   display: none !important;
 }
