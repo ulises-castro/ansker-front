@@ -60,7 +60,7 @@ export default {
           '#2A0449', '#fff', '#000'
         ]
       },
-      canvas: new fabric.Canvas(this.$refs.can),
+      // canvas: new fabric.Canvas(this.$refs.can),
       text: {
         element: false,
         fontFamily: 'Lato',
@@ -70,102 +70,13 @@ export default {
       },
     }
   },
-  computed: {
-    textFontSize() {
-      return this.text.element.fontSize
-    }
-  },
-  watch: {
-    'text.fill'(color) {
-      this.saveCanvasState()
-
-      this.text.element.fill = color
-      this.text.element.styles = '' + Math.random()
-    },
-    text: {
-      deep: true,
-      handler() {
-        this.canvas.renderAll()
-      }
-    }
-  },
   methods: {
-    returnCanvasState() {
-      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas))
-    },
-    saveCanvasState() {
-      this.canvasPrevState = this.canvas.toJSON()
-    },
-    generateImage() {
-      this.href = this.canvas.toDataURL({
-        format: 'png',
-        quality: 0.8,
-      })
-    },
-    assignCanvas() {
-      const ref = this.$refs.can
-      const canvas = new fabric.Canvas(ref)
-
-      this.canvas = canvas
-    },
-    changeFontFamily() {
-      const { fontFamilies } = this.editorOptions
-      let indexFont = fontFamilies.indexOf(this.text.element.fontFamily)
-      indexFont = (indexFont + 1 < fontFamilies.length) ? indexFont + 1 : 0
-
-      this.saveCanvasState()
-      this.text.element.fontFamily = fontFamilies[indexFont]
-
-      console.log(this.text.element.fontFamily)
-    },
-    toggleFontBold() {
-      const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
-
-      this.saveCanvasState()
-      this.text.element.fontWeight = toggleBold
-
-      this.canvas.renderAll()
-    },
-    initialize(canvas) {
-      const data = `/statics/wallpaper.jpg`
-      const { fontFamily, fontSize, fill } = this.text
-
-      const textImage = new fabric.IText('Escribe aqui...', {
-        left: (this.screen.width / 2) - (30 * 2),
-        top: (this.screen.height / 2) - 30,
-        fontFamily,
-        fontSize,
-        fill,
-        caching: false,
-      })
-      canvas.add(textImage)
-      this.text.element = textImage
-
-      this.text.element.hasControls = false
-      canvas.renderAll()
-
-      fabric.Image.fromURL(data, (img) => {
-        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-
-          scaleX: canvas.width / img.width,
-          scaleY: canvas.height / img.height
-        })
-
-        this.saveCanvasState()
-      })
-    },
-    touchStart(e) {
-
-    }
   },
   created() {
     EventBus.$emit('toggleUI', false)
   },
   mounted() {
-    this.assignCanvas()
-    this.initialize(this.canvas)
 
-    this.canvas.selection = false
   }
 }
 </script>
