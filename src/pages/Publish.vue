@@ -1,45 +1,92 @@
 <template>
-  <div ref="container">
+  <div  class="publish-container" ref="container">
+
+    <div class="textarea-container" style="z-index: 100">
+      <textarea
+        ref="textarea"
+        maxlength="180"
+        minlength="10"
+        placeholder="Escribe"
+        id="story"
+        name="story">It was a dark and stormy night...
+      </textarea>
+    </div>
+
+    <cropper
+      ref="can"
+      v-model="imageSelected"
+      :width="this.screen.width"
+      :height="this.screen.height"
+      :quality="2"
+      :zoom-speed="10"
+      :disable-rotation="true"
+      :show-remove-button="!false"
+      :prevent-white-space="true"
+      initial-image="/statics/wallpaper.jpg"
+      placeholder="Seleccionar imagén"
+      :textarea="textarea"
+      @file-choose="alert('file choose')"
+      @file-size-exceed="alert('file size exceeds')"
+      @file-type-mismatch="alert('file type mismatches')"
+      @new-image="alert('new image attatched')"
+      @image-remove="removeBackgroundImage"
+      @loading-start="isLoading = true"
+      @loading-end="isLoading = false"
+      @new-image-drawn="updateBackgroundImage"
+      @zoom="updateBackgroundImage"
+      @move="updateBackgroundImage"></cropper>
+
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
-      :active-color="text.element.fill"
+      :active-color="textarea.color"
       button-size="22px"
       :max="40"
       :min="18"
-      v-model="text.element.fontSize" vertical />
+      v-model="textarea.fontSize" vertical />
     </div>
-    <canvas
-      ref="can"
-      :width="screen.width"
-      :height="screen.height">
-    </canvas>
     <div class="toolbar row justify-around">
       <div class="control-font-colors" v-if="showEditor.fontColor">
         <div
           class="color-container"
           v-for="(color, index) in editorOptions.fontColors"
-          :key="index" @click="text.fill = color">
-          <div class="" :style="{'background-color': color}">
+          :key="index" @click="handlerFontColor(color)">
+          <div class="" :style="{'cursor': 'pointer', 'background-color': color}">
           </div>
         </div>
       </div>
 
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="returnCanvasState" name="las la-undo" color="white" class="q-mr-sm" size="30pxImage" />
+      <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
     </div>
 
   </div>
 </template>
-
 <script>
-// import { fabric } from 'fabric'
+import Cropper from 'src/components/cropper'
 import EventBus from 'src/eventBus.js'
+
+const initialTextArea = {
+  fontFamily: 'Lato',
+  fontWeight: '',
+  fontSize: 20,
+  color: '#FFF'
+}
+
+const initialData = {
+  textarea: initialTextArea,
+  prevCanvasStack: {
+    textarea: [{ ...initialTextArea }],
+  },
+}
 
 export default {
   name: 'Publish',
+  components: { Cropper },
   data() {
     return {
+      ...initialData,
+      imageSelected: {},
       canvasPrevState: false,
       screen: {
         width: window.innerWidth,
@@ -60,187 +107,88 @@ export default {
           '#2A0449', '#fff', '#000'
         ]
       },
-      canvas: new fabric.Canvas(this.$refs.can),
-      text: {
-        element: false,
-        fontFamily: 'Lato',
-        fontBold: '',
-        fontSize: 30,
-        fill: '#ff0000'
-      },
-    }
-  },
-  computed: {
-    textFontSize() {
-      return this.text.element.fontSize
-    }
-  },
-  watch: {
-    'text.fill'(color) {
-      this.saveCanvasState()
-
-      this.text.element.fill = color
-      this.text.element.styles = '' + Math.random()
-    },
-    text: {
-      deep: true,
-      handler() {
-        this.canvas.renderAll()
-      }
     }
   },
   methods: {
-    returnCanvasState() {
-      this.canvas.loadFromJSON(this.canvasPrevState, this.canvas.renderAll.bind(this.canvas))
+    removeBackgroundImage() {
+      // this.background = ''
     },
-    saveCanvasState() {
-      this.canvasPrevState = this.canvas.toJSON()
-    },
-    generateImage() {
-      this.href = this.canvas.toDataURL({
-        format: 'png',
-        quality: 0.8,
-      })
-    },
-    assignCanvas() {
-      const ref = this.$refs.can
-      const canvas = new fabric.Canvas(ref)
 
-      this.canvas = canvas
+    updateBackgroundImage() {
+      // this.$refs.publishArea.blur();
+
+      // this.background =
+      //   this.imageSelected.generateDataUrl('image/jpeg', 0.8);
+
+      // setTimeout(() => this.drawTextInImage(), 500);
     },
+
+    restoreCanvas() {
+      const keys = Object.keys(initialData)
+      keys.forEach((key) => this[key] = initialData[key]);
+    },
+
+    handlerFontColor(color) {
+      this.textarea.color = color;
+    },
+
     changeFontFamily() {
-      const { fontFamilies } = this.editorOptions
-      let indexFont = fontFamilies.indexOf(this.text.element.fontFamily)
-      indexFont = (indexFont + 1 < fontFamilies.length) ? indexFont + 1 : 0
-
-      this.saveCanvasState()
-      this.text.element.fontFamily = fontFamilies[indexFont]
-
-      console.log(this.text.element.fontFamily)
     },
+
     toggleFontBold() {
-      const toggleBold = !this.text.element.fontWeight ? 'bold' : ''
-
-      this.saveCanvasState()
-      this.text.element.fontWeight = toggleBold
-
-      this.canvas.renderAll()
+      this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
     },
-    initialize(canvas) {
-      const data = `/statics/wallpaper.jpg`
-      const { fontFamily, fontSize, fill } = this.text
 
-      const textImage = new fabric.IText('Escribe aqui...', {
-        left: (this.screen.width / 2) - (30 * 2),
-        top: (this.screen.height / 2) - 30,
-        fontFamily,
-        fontSize,
-        fill,
-        caching: false,
-      })
-      canvas.add(textImage)
-      this.text.element = textImage
-
-      this.text.element.hasControls = false
-      canvas.renderAll()
-
-      fabric.Image.fromURL(data, (img) => {
-        canvas.setBackgroundImage(img, canvas.renderAll.bind(canvas), {
-
-          scaleX: canvas.width / img.width,
-          scaleY: canvas.height / img.height
-        })
-
-        this.saveCanvasState()
-      })
-    },
-    touchStart(e) {
-
+    _updatePrevCanvas() {
+       this.prevCanvasStack.textarea.push({...this.textarea})
     }
+  },
+  watch: {
+    textarea: {
+      handler(textarea) {
+        this.$refs.textarea.style.fontSize = `${textarea.fontSize}px`
+
+        this.$refs.textarea.style.color = `${textarea.color}`
+
+        this.$refs.textarea.style.fontWeight = `${textarea.fontWeight}`
+      },
+      deep: true,
+    },
   },
   created() {
     EventBus.$emit('toggleUI', false)
   },
   mounted() {
-    this.assignCanvas()
-    this.initialize(this.canvas)
-
-    this.canvas.selection = false
-
-    //mouse zoom
-    this.canvas.on('mouse:wheel', (opt) => {
-      console.log('wheel', opt)
-      var delta = opt.e.deltaY
-      var pointer = this.canvas.getPointer(opt.e)
-      var zoom = this.canvas.getZoom()
-      zoom = zoom - delta / 200
-      // limit zoom to 4x in
-      if (zoom > 4) zoom = 4
-      // limit zoom to 1x out
-      if (zoom < 1) {
-        zoom = 1
-        this.canvas.setViewportTransform([1, 0, 0, 1, 0, 0])
-      }
-      this.canvas.zoomToPoint({
-        x: opt.e.offsetX,
-        y: opt.e.offsetY
-      }, zoom)
-      opt.e.preventDefault()
-      opt.e.stopPropagation()
-    })
-
-    let pausePanning = false
-    let zoomStartScale = 0
-    this.canvas.on({
-        'touch:end': function(e) {
-          console.log('touch end')
-        },
-        'touch:drag': (e) => {
-          console.log('DRAGEVENT', e)
-
-          if (e.e.type === 'touchstart') {
-            console.log('start')
-            this.$notify('start')
-            // var point = new fabric.Point(0,12);
-            // this.canvas.zoomToPoint(point, 3);
-            const touchesTotal =  e.e.touches.length
-
-            // Validate at least 2 touch
-            if (e.e.touches) {
-              pausePanning = true;
-              var point = new fabric.Point(e.self.x, e.self.y);
-              if (e.self.state == "start") {
-                  zoomStartScale = canvas.getZoom();
-              }
-              var delta = zoomStartScale * e.self.scale;
-              canvas.zoomToPoint(point, delta);
-              pausePanning = false;
-            }
-          } else {
-            this.$notify(e.e.touches.length)
-
-            if (pausePanning == false && undefined != e.self.x && undefined != e.self.x) {
-                let currentX = e.self.x;
-                let currentY = e.self.y;
-                let xChange = currentX - lastX;
-                let yChange = currentY - lastY;
-
-                if( (Math.abs(currentX - lastX) <= 50) && (Math.abs(currentY - lastY) <= 50)) {
-                    var delta = new fabric.Point(xChange, yChange);
-                    canvas.relativePan(delta);
-                }
-
-                let lastX = e.self.x;
-                let lastY = e.self.y;
-            }
-          }
-        }
-    })
-
+    // console.log(this.$refs.can)
   }
 }
 </script>
 <style lang="scss" scoped>
+
+.publish-container {
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+.textarea-container {
+  position: absolute;
+  top: calc(50vh - 80px);
+  left: calc(50vw - 100px);
+  width: 250px;
+  height: 100px;
+  color: white;
+  font-size: 20px;
+
+  & textarea {
+    width: 100%;
+    resize: none;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba($color: #000000, $alpha: 1.0);
+  }
+}
+
 .van-tabbar--fixed {
   display: none !important;
 }
