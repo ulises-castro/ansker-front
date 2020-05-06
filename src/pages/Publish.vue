@@ -37,7 +37,7 @@
         <div
           class="color-container"
           v-for="(color, index) in editorOptions.fontColors"
-          :key="index" @click="textarea.color = color">
+          :key="index" @click="handlerFontColor(color)">
           <div class="" :style="{'cursor': 'pointer', 'background-color': color}">
           </div>
         </div>
@@ -45,7 +45,7 @@
 
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="restorePrevCanvas" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
+      <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
     </div>
 
   </div>
@@ -63,16 +63,21 @@ const initialTextArea = {
   color: '#FFF'
 }
 
+const initialData = {
+  textarea: initialTextArea,
+  prevCanvasStack: {
+    textarea: [{ ...initialTextArea }],
+  },
+}
+
 export default {
   name: 'Publish',
   components: { Cropper },
   data() {
     return {
+      ...initialData,
       imageSelected: {},
       canvasPrevState: false,
-      prevCanvasStack: {
-        textarea: [{...initialTextArea}]
-      },
       screen: {
         width: window.innerWidth,
         height: window.innerHeight,
@@ -92,10 +97,6 @@ export default {
           '#2A0449', '#fff', '#000'
         ]
       },
-      textarea: initialTextArea,
-      notWatch:{
-        textarea: false
-      }
     }
   },
   methods: {
@@ -112,41 +113,50 @@ export default {
       // setTimeout(() => this.drawTextInImage(), 500);
     },
 
+    restoreCanvas() {
+      this.$data = {
+        ...this.$data,
+        initialData
+      }
+    },
+
+    handlerFontColor(color) {
+      this.textarea.color = color;
+      this._updatePrevCanvas()
+    },
+
     changeFontFamily() {
-
+      // this._updatePrevCanvas()
     },
 
-    restorePrevCanvas() {
-      const prevCanvasStack = { ...this.prevCanvasStack }
-      const keys = Object.keys(prevCanvasStack)
+    // restorePrevCanvas() {
+    //   const prevCanvasStack = { ...this.prevCanvasStack }
+    //   const keys = Object.keys(prevCanvasStack)
 
-      keys.forEach(key => {
-        const stackLength = prevCanvasStack[key].length
+    //   keys.forEach(key => {
+    //     const stackLength = prevCanvasStack[key].length
 
-        if (stackLength > 1) {
-          const lastChanges = prevCanvasStack[key][stackLength - 2]
-          this.notWatch.textarea = true
-          this[key] = lastChanges
-          prevCanvasStack[key].pop()
-        }
-      })
+    //     if (stackLength > 1) {
+    //       const lastChanges = prevCanvasStack[key][stackLength - 2]
+    //       this[key] = lastChanges
+    //       prevCanvasStack[key].pop()
+    //     }
+    //   })
 
-      this.prevCanvasStack = prevCanvasStack
-    },
+    //   this.prevCanvasStack = prevCanvasStack
+    // },
 
     toggleFontBold() {
       this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
+
+      this._updatePrevCanvas()
+    },
+
+    _updatePrevCanvas() {
+       this.prevCanvasStack.textarea.push({...this.textarea})
     }
   },
   watch: {
-    textarea: {
-      deep: true,
-      handler(textarea, oldTextArea) {
-        if (this.notWatch.textarea) return this.notWatch.textarea = false
-
-        this.prevCanvasStack.textarea.push({...textarea})
-      }
-    }
   },
   created() {
     EventBus.$emit('toggleUI', false)
