@@ -1,5 +1,17 @@
 <template>
   <div  class="publish-container" ref="container">
+
+    <div class="textarea-container" style="z-index: 100">
+      <textarea
+        ref="textarea"
+        maxlength="180"
+        minlength="10"
+        placeholder="Escribe"
+        id="story"
+        name="story">It was a dark and stormy night...
+      </textarea>
+    </div>
+
     <cropper
       ref="can"
       v-model="imageSelected"
@@ -50,9 +62,7 @@
 
   </div>
 </template>
-
 <script>
-// import { fabric } from 'fabric'
 import Cropper from 'src/components/cropper'
 import EventBus from 'src/eventBus.js'
 
@@ -114,42 +124,19 @@ export default {
     },
 
     restoreCanvas() {
-      this.$data = {
-        ...this.$data,
-        initialData
-      }
+      const keys = Object.keys(initialData)
+      keys.forEach((key) => this[key] = initialData[key]);
     },
 
     handlerFontColor(color) {
       this.textarea.color = color;
-      this._updatePrevCanvas()
     },
 
     changeFontFamily() {
-      // this._updatePrevCanvas()
     },
-
-    // restorePrevCanvas() {
-    //   const prevCanvasStack = { ...this.prevCanvasStack }
-    //   const keys = Object.keys(prevCanvasStack)
-
-    //   keys.forEach(key => {
-    //     const stackLength = prevCanvasStack[key].length
-
-    //     if (stackLength > 1) {
-    //       const lastChanges = prevCanvasStack[key][stackLength - 2]
-    //       this[key] = lastChanges
-    //       prevCanvasStack[key].pop()
-    //     }
-    //   })
-
-    //   this.prevCanvasStack = prevCanvasStack
-    // },
 
     toggleFontBold() {
       this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
-
-      this._updatePrevCanvas()
     },
 
     _updatePrevCanvas() {
@@ -157,6 +144,16 @@ export default {
     }
   },
   watch: {
+    textarea: {
+      handler(textarea) {
+        this.$refs.textarea.style.fontSize = `${textarea.fontSize}px`
+
+        this.$refs.textarea.style.color = `${textarea.color}`
+
+        this.$refs.textarea.style.fontWeight = `${textarea.fontWeight}`
+      },
+      deep: true,
+    },
   },
   created() {
     EventBus.$emit('toggleUI', false)
@@ -172,6 +169,24 @@ export default {
   height: 100vh;
   width: 100vw;
   overflow-x: hidden;
+}
+
+.textarea-container {
+  position: absolute;
+  top: calc(50vh - 80px);
+  left: calc(50vw - 100px);
+  width: 250px;
+  height: 100px;
+  color: white;
+  font-size: 20px;
+
+  & textarea {
+    width: 100%;
+    resize: none;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba($color: #000000, $alpha: 1.0);
+  }
 }
 
 .van-tabbar--fixed {

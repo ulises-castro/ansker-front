@@ -18,17 +18,6 @@
       <slot name="placeholder"></slot>
     </div>
 
-    <div class="textarea-container" style="z-index: 100">
-      <textarea
-        ref="textarea"
-        maxlength="180"
-        minlength="10"
-        placeholder="Escribe"
-        id="story"
-        name="story">It was a dark and stormy night...
-      </textarea>
-    </div>
-
     <canvas ref="canvas"
       @click.stop.prevent="_handleClick"
       @dblclick.stop.prevent="_handleDblClick"
@@ -218,18 +207,6 @@ export default {
   },
 
   watch: {
-    textarea: {
-      handler(textarea) {
-        // console.log('sdfa', textarea, this.$refs)
-        
-        this.$refs.textarea.style.fontSize = `${textarea.fontSize}px`
-
-        this.$refs.textarea.style.color = `${textarea.color}`
-
-        this.$refs.textarea.style.fontWeight = `${textarea.fontWeight}`
-      },
-      deep: true,
-    },
     outputWidth: function () {
       this.onDimensionChange()
     },
@@ -1405,25 +1382,6 @@ export default {
 
 <style lang="scss">
 // https://github.com/tobiasahlin/SpinKit/blob/master/scss/spinners/10-fading-circle.scss
-
-
-.textarea-container {
-  position: absolute;
-  top: calc(50vh - 80px);
-  left: calc(50vw - 100px);
-  width: 250px;
-  height: 100px;
-  color: white;
-  font-size: 20px;
-
-  & textarea {
-    width: 100%;
-    resize: none;
-    height: 100%;
-    background: transparent;
-    border: 2px solid rgba($color: #000000, $alpha: 1.0);
-  }
-}
 
 .sk-fading-circle {
   $circleCount: 12;
