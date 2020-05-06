@@ -71,7 +71,7 @@ export default {
       imageSelected: {},
       canvasPrevState: false,
       prevCanvasStack: {
-        textarea: [initialTextArea]
+        textarea: [{...initialTextArea}]
       },
       screen: {
         width: window.innerWidth,
@@ -93,6 +93,9 @@ export default {
         ]
       },
       textarea: initialTextArea,
+      notWatch:{
+        textarea: false
+      }
     }
   },
   methods: {
@@ -118,11 +121,13 @@ export default {
       const keys = Object.keys(prevCanvasStack)
 
       keys.forEach(key => {
-        if (prevCanvasStack[key].length) {
+        const stackLength = prevCanvasStack[key].length
+
+        if (stackLength > 1) {
+          const lastChanges = prevCanvasStack[key][stackLength - 2]
+          this.notWatch.textarea = true
+          this[key] = lastChanges
           prevCanvasStack[key].pop()
-          const lastChanges = prevCanvasStack[key].pop()
-          console.log(lastChanges)
-          this.textarea = lastChanges
         }
       })
 
@@ -137,7 +142,9 @@ export default {
     textarea: {
       deep: true,
       handler(textarea, oldTextArea) {
-        this.prevCanvasStack.textarea.push({textarea})
+        if (this.notWatch.textarea) return this.notWatch.textarea = false
+
+        this.prevCanvasStack.textarea.push({...textarea})
       }
     }
   },
