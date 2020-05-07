@@ -18,30 +18,30 @@
       <van-button
         v-if="showDoneButton"
         @click="updateTextAreaValue"
-        size="small" plain type="primary button">
+        size="small" plain type="primary button shadow-2 text-shadow-1">
         Cancel
       </van-button>
 
       <van-button
         v-if="showDoneButton"
         @click="updateTextAreaValue"
-        size="small" plain type="primary button">
+        size="small" plain type="primary button shadow-2 text-shadow-1">
         Done
       </van-button>
-
     </div>
 
     <cropper
       ref="can"
-      v-model="imageSelected"
-      :width="this.screen.width"
-      :height="this.screen.height"
+      v-model="croppa"
+      :width="screen.width"
+      :height="screen.height"
       :quality="2"
       :zoom-speed="10"
       :disable-rotation="true"
       :show-remove-button="false"
       :prevent-white-space="true"
-      initial-image="/statics/wallpaper.jpg"
+      :canvas-color="backgroundColor"
+      :initial-image="imageSelected"
       placeholder="Seleccionar imagén"
       :textarea="textarea"
       @file-choose="alert('file choose')"
@@ -51,7 +51,6 @@
       @image-remove="removeBackgroundImage"
       @loading-start="isLoading = true"
       @loading-end="isLoading = false"
-      @new-image-drawn="updateBackgroundImage"
       @zoom="updateBackgroundImage"
       @move="updateBackgroundImage"></cropper>
 
@@ -59,14 +58,24 @@
       <van-slider
       active-color="#fff"
       button-size="22px"
-      :max="40"
+      :max="32"
       :min="18"
       v-model="textarea.fontSize" vertical />
     </div>
-    <div ref="toolbar" v-if="!showDoneButton" class="toolbar row justify-around">
-      <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
-      <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
+    <div ref="toolbar" v-if="!showDoneButton" class="toolbar ">
+      <div class="row justify-around">
+        <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
+        <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
+        <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
+      </div>
+      <div class="row" @onClick="showBackgroundOptions">
+        <div class="row col-8">
+          <div v-for="bgColor in backgroundColors" :key="bgColor" @click="updateBackgroudColor(bgColor)" class="col-4" :style="{background: bgColor, height: '80px'}"></div>
+        </div>
+        <div class="row justify-center align-center col-4">
+          <van-uploader :after-read="afterReadImage" />
+        </div>
+      </div>
     </div>
 
   </div>
@@ -96,8 +105,11 @@ export default {
   data() {
     return {
       ...initialData,
+      showBackgroundOptions: false,
+      backgroundColor: '',
       showDoneButton: false,
-      imageSelected: {},
+      croppa: {},
+      imageSelected: '/statics/wallpaper.jpg',
       canvasPrevState: false,
       screen: {
         width: window.innerWidth,
@@ -107,6 +119,10 @@ export default {
         fontFamily: false,
         fontColor: !false,
       },
+      backgroundColors: [
+        '#019A9D', '#D9B801', '#E8045A', '#B2028A',
+        '#2A0449',
+      ],
       editorOptions: {
         fontFamilies: [
           'Arial',
@@ -121,13 +137,16 @@ export default {
       // this.background = ''
     },
 
-    updateBackgroundImage() {
-      // this.$refs.publishArea.blur();
+    updateBackgroudColor(color) {
+      this.imageSelected = ''
+      this.backgroundColor = color
+      this.croppa.refresh()
+    },
 
-      // this.background =
-      //   this.imageSelected.generateDataUrl('image/jpeg', 0.8);
-
-      // setTimeout(() => this.drawTextInImage(), 500);
+    afterReadImage(image) {
+      console.log(image)
+      this.imageSelected = image.content
+      this.croppa.refresh()
     },
 
     restoreCanvas() {
@@ -203,14 +222,15 @@ export default {
 
 .header-buttons {
   position: absolute;
+  width: 100%;
+  padding: 0 10px;
   top: 15px;
-  right: 15px;
   z-index: 10;
 
   .button {
     background: transparent;
     color: white;
-    border: 1px solid white;
+    border: 2px solid white;
     font-weight: bold;
   }
 }
@@ -228,7 +248,7 @@ export default {
   position: absolute;
   width: 100%;
   padding: 5px;
-  bottom: 100px;
+  bottom: 0px;
   background: rgba(255, 255, 255, 0.5);
 }
 
@@ -255,7 +275,7 @@ span.arial {
   &-font-colors {
     position: absolute;
     display: flex;
-    bottom: 50px;
+    bottom: 80px;
 
     .color-container {
       display: block;
