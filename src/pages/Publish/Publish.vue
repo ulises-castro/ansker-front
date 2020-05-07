@@ -31,7 +31,7 @@
     </div>
 
     <cropper
-      ref="can"
+      ref="canvas"
       placeholder=""
       v-model="croppa"
       :quality="2"
@@ -43,7 +43,7 @@
       :show-remove-button="true"
       :prevent-white-space="true"
       :disable-click-choose="true"
-      :canvas-color="backgroundColor"
+      canvas-color="transparent"
       :initial-image="imageSelected"
       @file-choose="alert('file choose')"
       @file-size-exceed="alert('file size exceeds')"
@@ -66,6 +66,7 @@
 
     <van-popup
       v-model="showBackgroundOptions"
+      overlay-class="overlay-transparent"
       round
       position="bottom" :style="{ height: '30%' }">
       <div class="full-width q-pa-md text-center">
@@ -91,6 +92,7 @@
 
   </div>
 </template>
+
 <script>
 import Cropper from 'src/components/cropper'
 import EventBus from 'src/eventBus.js'
@@ -157,7 +159,7 @@ export default {
       this.imageSelected = ''
 
       this.backgroundColor = color
-      this.croppa.refresh()
+      this.$refs.canvas.styles.backgroundColor = color
     },
 
     handlerFontColor(color) {
@@ -179,6 +181,10 @@ export default {
     updateTextAreaValue() {
       this.showDoneButton = false
       this.textarea.value = this.$refs.textarea.value
+    },
+
+    updateBackgroundImage() {
+
     },
 
     _updatePrevCanvas() {
@@ -203,6 +209,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss" scoped>
 
 .publish-container {
@@ -243,7 +250,6 @@ export default {
     font-weight: bold;
   }
 }
-
 
 .van-tabbar--fixed {
   display: none !important;
