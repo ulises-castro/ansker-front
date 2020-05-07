@@ -8,7 +8,7 @@
         maxlength="180"
         minlength="10"
         :value="textarea.value"
-        placeholder="Escribe"
+        placeholder="Escribe aqui..."
         id="story"
         name="story">
       </textarea>
@@ -32,18 +32,19 @@
 
     <cropper
       ref="can"
+      placeholder=""
       v-model="croppa"
+      :textarea="textarea"
       :width="screen.width"
       :height="screen.height"
       :quality="2"
       :zoom-speed="10"
       :disable-rotation="true"
-      :show-remove-button="false"
+      :show-remove-button="true"
       :prevent-white-space="true"
       :canvas-color="backgroundColor"
       :initial-image="imageSelected"
-      placeholder="Seleccionar imagén"
-      :textarea="textarea"
+      :disable-click-choose="true"
       @file-choose="alert('file choose')"
       @file-size-exceed="alert('file size exceeds')"
       @file-type-mismatch="alert('file type mismatches')"
@@ -54,7 +55,7 @@
       @zoom="updateBackgroundImage"
       @move="updateBackgroundImage"></cropper>
 
-    <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
+    <div :class="['shadow-5 control-font-size', showDoneButton ? 'control-bottom' : '']" :style="{ height: '130px' }">
       <van-slider
       active-color="#fff"
       button-size="22px"
@@ -62,19 +63,32 @@
       :min="18"
       v-model="textarea.fontSize" vertical />
     </div>
+
+<van-popup
+  v-if="!showDoneButton"
+  v-model="showBackgroundOptions"
+  round
+  :overlay="false"
+  position="bottom" :style="{ height: '30%' }">
+  <div class="full-width q-pa-sm text-center">
+    Seleccionar color de fondo
+  </div>
+  <div v-for="bgColor in backgroundColors" :key="bgColor">
+    <div @click="updateBackgroudColor(bgColor)" class="row" :style="`background: ${bgColor}; height: 100%`">dsf</div>
+  </div>
+</van-popup>
+
     <div ref="toolbar" v-if="!showDoneButton" class="toolbar ">
-      <div class="row justify-around">
-        <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
-        <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
+      <div class="row justify-around fit items-center text-shadow-2">
+        <q-icon @click="croppa.chooseFile()" name="las la-camera" color="white" class="q-mr-sm" size="30px" />
+
+        <q-icon @click="updateBackgroudColor" name="las la-palette" color="white" class="q-mr-sm" size="30px"/>
+
+        <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="35px" />
+        <q-icon @click="toggleFontBold" name="fas fa-bold" color="white" class="q-mr-sm" size="25px" />
+
+
         <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
-      </div>
-      <div class="row" @onClick="showBackgroundOptions">
-        <div class="row col-8">
-          <div v-for="bgColor in backgroundColors" :key="bgColor" @click="updateBackgroudColor(bgColor)" class="col-4" :style="{background: bgColor, height: '80px'}"></div>
-        </div>
-        <div class="row justify-center align-center col-4">
-          <van-uploader :after-read="afterReadImage" />
-        </div>
       </div>
     </div>
 
@@ -105,7 +119,7 @@ export default {
   data() {
     return {
       ...initialData,
-      showBackgroundOptions: false,
+      showBackgroundOptions: true,
       backgroundColor: '',
       showDoneButton: false,
       croppa: {},
@@ -120,8 +134,7 @@ export default {
         fontColor: !false,
       },
       backgroundColors: [
-        '#019A9D', '#D9B801', '#E8045A', '#B2028A',
-        '#2A0449',
+        '#0e5181', '#028f92', '#c7ac0f', '#E8045A', '#B2028A',
       ],
       editorOptions: {
         fontFamilies: [
@@ -139,6 +152,7 @@ export default {
 
     updateBackgroudColor(color) {
       this.imageSelected = ''
+
       this.backgroundColor = color
       this.croppa.refresh()
     },
@@ -168,8 +182,6 @@ export default {
     updateTextAreaValue() {
       this.showDoneButton = false
       this.textarea.value = this.$refs.textarea.value
-      // console.log()
-      // this.$refs.textarea
     },
 
     _updatePrevCanvas() {
@@ -185,6 +197,10 @@ export default {
       },
       deep: true,
     },
+    // showDoneButton(showDoneButton) {
+    //   this.showBackgroundOptions = !showDoneButton
+    //   this.showBackgroundOptions = !showDoneButton
+    // }
   },
   created() {
     EventBus.$emit('toggleUI', false)
@@ -248,8 +264,14 @@ export default {
   position: absolute;
   width: 100%;
   padding: 5px;
+  height: 60px;
   bottom: 0px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.4);
+  // background: #f7f8fa;
+
+  i {
+    color: #a0a0a0;
+  }
 }
 
 span.arial {
@@ -270,6 +292,11 @@ span.arial {
     top: calc((100vh / 2) - 100px) ;
     left: 30px;
     z-index: 10;
+  }
+
+  &-bottom {
+    position: absolute;
+    bottom: 20px !important;
   }
 
   &-font-colors {
