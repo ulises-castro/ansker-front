@@ -4,12 +4,31 @@
     <div class="textarea-container" style="z-index: 100">
       <textarea
         ref="textarea"
+        @focus="showDoneButton = true"
         maxlength="180"
         minlength="10"
+        :value="textarea.value"
         placeholder="Escribe"
         id="story"
-        name="story">It was a dark and stormy night...
+        name="story">
       </textarea>
+    </div>
+
+    <div class="header-buttons row justify-between">
+      <van-button
+        v-if="showDoneButton"
+        @click="updateTextAreaValue"
+        size="small" plain type="primary button">
+        Cancel
+      </van-button>
+
+      <van-button
+        v-if="showDoneButton"
+        @click="updateTextAreaValue"
+        size="small" plain type="primary button">
+        Done
+      </van-button>
+
     </div>
 
     <cropper
@@ -20,7 +39,7 @@
       :quality="2"
       :zoom-speed="10"
       :disable-rotation="true"
-      :show-remove-button="!false"
+      :show-remove-button="false"
       :prevent-white-space="true"
       initial-image="/statics/wallpaper.jpg"
       placeholder="Seleccionar imagén"
@@ -38,23 +57,13 @@
 
     <div class="shadow-5 control-font-size" :style="{ height: '130px' }">
       <van-slider
-      :active-color="textarea.color"
+      active-color="#fff"
       button-size="22px"
       :max="40"
       :min="18"
       v-model="textarea.fontSize" vertical />
     </div>
-    <div class="toolbar row justify-around">
-      <div class="control-font-colors" v-if="showEditor.fontColor">
-        <div
-          class="color-container"
-          v-for="(color, index) in editorOptions.fontColors"
-          :key="index" @click="handlerFontColor(color)">
-          <div class="" :style="{'cursor': 'pointer', 'background-color': color}">
-          </div>
-        </div>
-      </div>
-
+    <div ref="toolbar" v-if="!showDoneButton" class="toolbar row justify-around">
       <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="toggleFontBold" name="las la-bold" color="white" class="q-mr-sm" size="30px" />
       <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
@@ -70,7 +79,8 @@ const initialTextArea = {
   fontFamily: 'Lato',
   fontWeight: '',
   fontSize: 20,
-  color: '#FFF'
+  color: '#FFF',
+  value: 'as',
 }
 
 const initialData = {
@@ -86,6 +96,7 @@ export default {
   data() {
     return {
       ...initialData,
+      showDoneButton: false,
       imageSelected: {},
       canvasPrevState: false,
       screen: {
@@ -102,10 +113,6 @@ export default {
           'sans-serif',
           'Lato',
           'Helvetica'],
-        fontColors: [
-          '#019A9D', '#D9B801', '#E8045A', '#B2028A',
-          '#2A0449', '#fff', '#000'
-        ]
       },
     }
   },
@@ -139,6 +146,13 @@ export default {
       this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
     },
 
+    updateTextAreaValue() {
+      this.showDoneButton = false
+      this.textarea.value = this.$refs.textarea.value
+      // console.log()
+      // this.$refs.textarea
+    },
+
     _updatePrevCanvas() {
        this.prevCanvasStack.textarea.push({...this.textarea})
     }
@@ -147,8 +161,6 @@ export default {
     textarea: {
       handler(textarea) {
         this.$refs.textarea.style.fontSize = `${textarea.fontSize}px`
-
-        this.$refs.textarea.style.color = `${textarea.color}`
 
         this.$refs.textarea.style.fontWeight = `${textarea.fontWeight}`
       },
@@ -188,6 +200,21 @@ export default {
     border: 2px solid rgba($color: #000000, $alpha: 1.0);
   }
 }
+
+.header-buttons {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  z-index: 10;
+
+  .button {
+    background: transparent;
+    color: white;
+    border: 1px solid white;
+    font-weight: bold;
+  }
+}
+
 
 .van-tabbar--fixed {
   display: none !important;
@@ -245,5 +272,4 @@ span.arial {
     }
   }
 }
-  
 </style>
