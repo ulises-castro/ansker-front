@@ -1,5 +1,5 @@
 <template>
-  <div  class="publish-container" ref="container">
+  <div  class="publish-container overflow-hidden" ref="container">
 
     <div class="textarea-container" style="z-index: 100">
       <textarea
@@ -34,17 +34,17 @@
       ref="can"
       placeholder=""
       v-model="croppa"
+      :quality="2"
+      :zoom-speed="10"
       :textarea="textarea"
       :width="screen.width"
       :height="screen.height"
-      :quality="2"
-      :zoom-speed="10"
       :disable-rotation="true"
       :show-remove-button="true"
       :prevent-white-space="true"
+      :disable-click-choose="true"
       :canvas-color="backgroundColor"
       :initial-image="imageSelected"
-      :disable-click-choose="true"
       @file-choose="alert('file choose')"
       @file-size-exceed="alert('file size exceeds')"
       @file-type-mismatch="alert('file type mismatches')"
@@ -70,11 +70,11 @@
   round
   :overlay="false"
   position="bottom" :style="{ height: '30%' }">
-  <div class="full-width q-pa-sm text-center">
-    Seleccionar color de fondo
+  <div class="full-width q-pa-md text-center">
+    <b>Seleccionar color de fondo</b>
   </div>
-  <div v-for="bgColor in backgroundColors" :key="bgColor">
-    <div @click="updateBackgroudColor(bgColor)" class="row" :style="`background: ${bgColor}; height: 100%`">dsf</div>
+  <div v-for="bgColor in backgroundColors" :key="bgColor" style="height: 50%">
+    <div @click="updateBackgroudColor(bgColor)" class="row fit" :style="`background: ${bgColor}`"></div>
   </div>
 </van-popup>
 
@@ -86,7 +86,6 @@
 
         <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="35px" />
         <q-icon @click="toggleFontBold" name="fas fa-bold" color="white" class="q-mr-sm" size="25px" />
-
 
         <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
       </div>

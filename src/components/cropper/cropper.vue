@@ -1,6 +1,6 @@
 <template>
   <div ref="wrapper"
-    :class="`croppa-container ${img ? 'croppa--has-target' : ''} ${passive ? 'croppa--passive' : ''} ${disabled ? 'croppa--disabled' : ''} ${disableClickToChoose ? 'croppa--disabled-cc' : ''} ${disableDragToMove && disableScrollToZoom ? 'croppa--disabled-mz' : ''} ${fileDraggedOver ? 'croppa--dropzone' : ''}`"
+    :class="`croppa-container ${img ? 'croppa--has-target' : ''} ${passive ? 'croppa--passive' : ''} ${disabled ? 'croppa--disabled' : ''} ${disableClickChoose ? 'croppa--disabled-cc' : ''} ${disableDragToMove && disableScrollToZoom ? 'croppa--disabled-mz' : ''} ${fileDraggedOver ? 'croppa--dropzone' : ''}`"
     @dragenter.stop.prevent="_handleDragEnter"
     @dragleave.stop.prevent="_handleDragLeave"
     @dragover.stop.prevent="_handleDragOver"
@@ -734,7 +734,7 @@ export default {
 
     _handleClick (evt) {
       this.emitNativeEvent(evt)
-      if (!this.hasImage() && !this.disableClickToChoose && !this.disabled && !this.supportTouch && !this.passive) {
+      if (!this.hasImage() && !this.disableClickChoose && !this.disabled && !this.supportTouch && !this.passive) {
         this.chooseFile()
       }
     },
@@ -962,7 +962,7 @@ export default {
 
       if (this.disabled) return
       // simulate click with touch on mobile devices
-      if (!this.hasImage() && !this.disableClickToChoose) {
+      if (!this.hasImage() && !this.disableClickChoose) {
         this.tabStart = new Date().valueOf()
         return
       }
@@ -998,7 +998,7 @@ export default {
         pointerMoveDistance = Math.sqrt(Math.pow(pointerCoord.x - this.pointerStartCoord.x, 2) + Math.pow(pointerCoord.y - this.pointerStartCoord.y, 2)) || 0
       }
       if (this.disabled) return
-      if (!this.hasImage() && !this.disableClickToChoose) {
+      if (!this.hasImage() && !this.disableClickChoose) {
         let tabEnd = new Date().valueOf()
         if ((pointerMoveDistance < CLICK_MOVE_THRESHOLD) && tabEnd - this.tabStart < MIN_MS_PER_CLICK && this.supportTouch) {
           this.chooseFile()
