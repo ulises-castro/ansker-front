@@ -64,25 +64,23 @@
       v-model="textarea.fontSize" vertical />
     </div>
 
-<van-popup
-  v-if="!showDoneButton"
-  v-model="showBackgroundOptions"
-  round
-  :overlay="false"
-  position="bottom" :style="{ height: '30%' }">
-  <div class="full-width q-pa-md text-center">
-    <b>Seleccionar color de fondo</b>
-  </div>
-  <div v-for="bgColor in backgroundColors" :key="bgColor" style="height: 50%">
-    <div @click="updateBackgroudColor(bgColor)" class="row fit" :style="`background: ${bgColor}`"></div>
-  </div>
-</van-popup>
+    <van-popup
+      v-model="showBackgroundOptions"
+      round
+      position="bottom" :style="{ height: '30%' }">
+      <div class="full-width q-pa-md text-center">
+        <b>Seleccionar color de fondo</b>
+      </div>
+      <div v-for="bgColor in backgroundColors" :key="bgColor" style="height: 50%">
+        <div @click="updateBackgroudColor(bgColor)" class="row fit" :style="`background: ${bgColor}`"></div>
+      </div>
+    </van-popup>
 
     <div ref="toolbar" v-if="!showDoneButton" class="toolbar ">
       <div class="row justify-around fit items-center text-shadow-2">
         <q-icon @click="croppa.chooseFile()" name="las la-camera" color="white" class="q-mr-sm" size="30px" />
 
-        <q-icon @click="updateBackgroudColor" name="las la-palette" color="white" class="q-mr-sm" size="30px"/>
+        <q-icon @click="showBackgroundOptions = true" name="las la-palette" color="white" class="q-mr-sm" size="30px"/>
 
         <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="35px" />
         <q-icon @click="toggleFontBold" name="fas fa-bold" color="white" class="q-mr-sm" size="25px" />
@@ -149,22 +147,17 @@ export default {
       // this.background = ''
     },
 
-    updateBackgroudColor(color) {
-      this.imageSelected = ''
-
-      this.backgroundColor = color
-      this.croppa.refresh()
-    },
-
     afterReadImage(image) {
       console.log(image)
       this.imageSelected = image.content
       this.croppa.refresh()
     },
 
-    restoreCanvas() {
-      const keys = Object.keys(initialData)
-      keys.forEach((key) => this[key] = initialData[key]);
+    updateBackgroudColor(color) {
+      this.imageSelected = ''
+
+      this.backgroundColor = color
+      this.croppa.refresh()
     },
 
     handlerFontColor(color) {
@@ -176,6 +169,11 @@ export default {
 
     toggleFontBold() {
       this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
+    },
+
+    restoreCanvas() {
+      const keys = Object.keys(initialData)
+      keys.forEach((key) => this[key] = initialData[key]);
     },
 
     updateTextAreaValue() {
@@ -196,10 +194,6 @@ export default {
       },
       deep: true,
     },
-    // showDoneButton(showDoneButton) {
-    //   this.showBackgroundOptions = !showDoneButton
-    //   this.showBackgroundOptions = !showDoneButton
-    // }
   },
   created() {
     EventBus.$emit('toggleUI', false)

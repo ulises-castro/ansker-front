@@ -43,7 +43,7 @@ const routes = [{
   {
     path: '/publish',
     name: 'Publish',
-    component: () => import('pages/Publish.vue')
+    component: () => import('pages/Publish/Publish.vue')
   },
   {
     path: '/authenticate/google',
