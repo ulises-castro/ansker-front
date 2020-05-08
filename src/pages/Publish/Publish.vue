@@ -69,20 +69,6 @@
       @DOMMouseScroll.stop="croppa._handleWheel"
       @wheel.stop="croppa._handleWheel"
       @mousewheel.stop="croppa._handleWhel">
-      <div @click="_clickOnFontSize" :class="['control-font-size col-12 row justify-center items-center q-py-lg  shadow-5']">
-        <q-icon name="las la-font" color="white" class="q-mr-sm" size="22px" />
-        <div style="width: 40%">
-          <van-slider
-          active-color="#fff"
-          button-size="22px"
-          :max="32"
-          :min="18"
-          v-model="textarea.fontSize"
-          />
-        </div>
-        <q-icon name="las la-font" color="white" class="q-ml-sm" size="30px" />
-      </div>
-
       <div class="col-12 textarea-container" style="z-index: 100">
         <textarea
           class="text-shadow-1"
