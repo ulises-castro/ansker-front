@@ -1,19 +1,6 @@
 <template>
   <div  class="publish-container overflow-hidden" ref="container">
 
-    <div class="textarea-container" style="z-index: 100">
-      <textarea
-        ref="textarea"
-        @focus="showDoneButton = true"
-        maxlength="180"
-        minlength="10"
-        v-model="textarea.value"
-        placeholder="Escribe aqui..."
-        id="story"
-        name="story">
-      </textarea>
-    </div>
-
     <div class="header-buttons ">
       <div  v-if="showDoneButton" class="row justify-between">
         <van-button
@@ -53,7 +40,7 @@
       :width="screen.width"
       :height="screen.height"
       :disable-rotation="true"
-      :show-remove-button="true"
+      :show-remove-button="false"
       :prevent-white-space="true"
       :disable-click-choose="true"
       canvas-color="transparent"
@@ -68,13 +55,47 @@
       @zoom="updateBackgroundImage"
       @move="updateBackgroundImage"></cropper>
 
-    <div :class="['shadow-5 control-font-size', showDoneButton ? 'control-bottom' : '']" :style="{ height: '130px' }">
-      <van-slider
-      active-color="#fff"
-      button-size="22px"
-      :max="32"
-      :min="18"
-      v-model="textarea.fontSize" vertical />
+    <div class="texteditor-container row full-width"
+      @mousedown.stop.prevent="croppa._handlePointerStart"
+      @mouseup.stop.prevent="croppa._handlePointerEnd"
+      @touchstart.stop="croppa._handlePointerStart"
+      @pointerstart.stop.prevent="croppa._handlePointerStart"
+      @touchend.stop.prevent="croppa._handlePointerEnd"
+      @touchcancel.stop.prevent="croppa._handlePointerEnd"
+      @pointerend.stop.prevent="croppa._handlePointerEnd"
+      @pointercancel.stop.prevent="croppa._handlePointerEnd"
+      @touchmove.stop="croppa._handlePointerMove"
+      @mousemove.stop.prevent="croppa._handlePointerMove"
+      @DOMMouseScroll.stop="croppa._handleWheel"
+      @wheel.stop="croppa._handleWheel"
+      @mousewheel.stop="croppa._handleWhel">
+      <div @click="_clickOnFontSize" :class="['control-font-size col-12 row justify-center items-center q-py-lg  shadow-5']">
+        <q-icon name="las la-font" color="white" class="q-mr-sm" size="22px" />
+        <div style="width: 40%">
+          <van-slider
+          active-color="#fff"
+          button-size="22px"
+          :max="32"
+          :min="18"
+          v-model="textarea.fontSize"
+          />
+        </div>
+        <q-icon name="las la-font" color="white" class="q-ml-sm" size="30px" />
+      </div>
+
+      <div class="col-12 textarea-container" style="z-index: 100">
+        <textarea
+          class="text-shadow-1"
+          ref="textarea"
+          @focus="showDoneButton = true"
+          maxlength="180"
+          minlength="10"
+          v-model="textarea.value"
+          placeholder="Escribe aqui..."
+          id="story"
+          name="story">
+        </textarea>
+      </div>
     </div>
 
     <van-popup
@@ -90,13 +111,14 @@
       </div>
     </van-popup>
 
-    <div ref="toolbar" v-if="!showDoneButton" class="toolbar ">
+    <div ref="toolbar" v-if="!showDoneButton" class="toolbar">
       <div class="row justify-around fit items-center text-shadow-2">
         <q-icon @click="croppa.chooseFile()" name="las la-camera" color="white" class="q-mr-sm" size="30px" />
 
         <q-icon @click="showBackgroundOptions = true" name="las la-palette" color="white" class="q-mr-sm" size="30px"/>
 
         <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="35px" />
+
         <q-icon @click="toggleFontBold" name="fas fa-bold" color="white" class="q-mr-sm" size="25px" />
 
         <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
@@ -132,7 +154,7 @@ export default {
   data() {
     return {
       ...initialData,
-      showBackgroundOptions: true,
+      showBackgroundOptions: false,
       backgroundColor: '',
       showDoneButton: false,
       croppa: {},
@@ -164,6 +186,11 @@ export default {
     }
   },
   methods: {
+    _handlePointerStart(evt) {
+      const canvas = this.$refs.canvas
+      console.log(canvas, this.croppa)
+    },
+
     removeBackgroundImage() {
       // this.background = ''
     },
@@ -242,24 +269,6 @@ export default {
   overflow-x: hidden;
 }
 
-.textarea-container {
-  position: absolute;
-  top: calc(50vh - 100px);
-  left: calc(50vw - 110px);
-  width: 280px;
-  height: 150px;
-  color: white;
-  font-size: 20px;
-
-  & textarea {
-    width: 100%;
-    resize: none;
-    height: 100%;
-    background: transparent;
-    border: 0px solid rgba($color: #000000, $alpha: 1.0);
-  }
-}
-
 .header-buttons {
   position: absolute;
   width: 100%;
@@ -290,7 +299,6 @@ export default {
   height: 60px;
   bottom: 0px;
   background: rgba(255, 255, 255, 0.4);
-
 }
 
 span.arial {
@@ -305,17 +313,34 @@ span.arial {
   font-family: sans-serif;
 }
 
-.control {
-  &-font-size {
-    position: absolute;
-    top: calc((100vh / 2) - 100px) ;
-    left: 30px;
-    z-index: 10;
-  }
+.texteditor-container {
+  position: absolute;
+  top: 35vh;
+}
 
-  &-bottom {
-    position: absolute;
-    bottom: 20px !important;
+.textarea-container {
+  height: 40vh;
+  color: white;
+  font-size: 20px;
+
+  & textarea {
+    width: 100%;
+    resize: none;
+    height: 100%;
+    background: transparent;
+    border: 2px solid rgba($color: #000000, $alpha: 1.0);
+
+    &::placeholder {
+      color: white;
+      opacity: 0.7;
+    }
+  }
+}
+
+.control {
+
+  &-font-size {
+    z-index: 10;
   }
 
   &-font-colors {
@@ -338,4 +363,5 @@ span.arial {
     }
   }
 }
+
 </style>
