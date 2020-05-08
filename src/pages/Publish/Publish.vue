@@ -7,27 +7,40 @@
         @focus="showDoneButton = true"
         maxlength="180"
         minlength="10"
-        :value="textarea.value"
+        v-model="textarea.value"
         placeholder="Escribe aqui..."
         id="story"
         name="story">
       </textarea>
     </div>
 
-    <div class="header-buttons row justify-between">
-      <van-button
-        v-if="showDoneButton"
-        @click="updateTextAreaValue"
-        size="small" plain type="primary button shadow-2 text-shadow-1">
-        Cancel
-      </van-button>
+    <div class="header-buttons ">
+      <div  v-if="showDoneButton" class="row justify-between">
+        <van-button
+          @click="updateTextAreaValue"
+          size="small" plain type="primary button shadow-2 text-shadow-1">
+          Cancel
+        </van-button>
 
-      <van-button
-        v-if="showDoneButton"
-        @click="updateTextAreaValue"
-        size="small" plain type="primary button shadow-2 text-shadow-1">
-        Done
-      </van-button>
+        <div class="row items-center text-weight-bold text-white text-shadow-1">
+          <span>
+            {{ textareaLength }} / 180
+          </span>
+        </div>
+
+        <van-button
+          @click="updateTextAreaValue(true)"
+          size="small" plain type="primary button shadow-2 text-shadow-1">
+          Done
+        </van-button>
+      </div>
+      <div class="row reverse" v-else>
+        <van-button
+          @click="updateTextAreaValue(true)"
+          size="small" plain type="primary button shadow-2 text-shadow-1">
+          Publicar
+        </van-button>
+      </div>
     </div>
 
     <cropper
@@ -102,7 +115,8 @@ const initialTextArea = {
   fontWeight: '',
   fontSize: 20,
   color: '#FFF',
-  value: 'as',
+  oldValue: '',
+  value: '',
 }
 
 const initialData = {
@@ -144,6 +158,11 @@ export default {
       },
     }
   },
+  computed: {
+    textareaLength() {
+      return this.textarea.value.length
+    }
+  },
   methods: {
     removeBackgroundImage() {
       // this.background = ''
@@ -159,7 +178,8 @@ export default {
       this.imageSelected = ''
 
       this.backgroundColor = color
-      this.$refs.canvas.styles.backgroundColor = color
+      this.$refs.canvas.$el.style.backgroundColor = color
+      this.croppa.refresh()
     },
 
     handlerFontColor(color) {
@@ -178,9 +198,13 @@ export default {
       keys.forEach((key) => this[key] = initialData[key]);
     },
 
-    updateTextAreaValue() {
+    updateTextAreaValue(update = false) {
       this.showDoneButton = false
-      this.textarea.value = this.$refs.textarea.value
+
+      if (update)
+        this.textarea.oldValue = this.textarea.value
+      else
+        this.textarea.value = this.textarea.oldValue
     },
 
     updateBackgroundImage() {
@@ -220,10 +244,10 @@ export default {
 
 .textarea-container {
   position: absolute;
-  top: calc(50vh - 80px);
-  left: calc(50vw - 100px);
-  width: 250px;
-  height: 100px;
+  top: calc(50vh - 100px);
+  left: calc(50vw - 110px);
+  width: 280px;
+  height: 150px;
   color: white;
   font-size: 20px;
 
@@ -232,7 +256,7 @@ export default {
     resize: none;
     height: 100%;
     background: transparent;
-    border: 2px solid rgba($color: #000000, $alpha: 1.0);
+    border: 0px solid rgba($color: #000000, $alpha: 1.0);
   }
 }
 
@@ -266,11 +290,7 @@ export default {
   height: 60px;
   bottom: 0px;
   background: rgba(255, 255, 255, 0.4);
-  // background: #f7f8fa;
 
-  i {
-    color: #a0a0a0;
-  }
 }
 
 span.arial {
