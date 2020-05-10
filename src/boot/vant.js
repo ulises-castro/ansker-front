@@ -9,6 +9,7 @@ import {
   Slider,
   Picker,
   Search,
+  Dialog,
   Button,
   NavBar,
   Notify,
@@ -43,6 +44,7 @@ Vue.use(Picker)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
+Vue.use(Dialog)
 Vue.use(Tabbar)
 Vue.use(Uploader)
 Vue.use(ShareSheet)
