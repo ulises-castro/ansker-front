@@ -70,7 +70,7 @@ export default {
   },
   disabled: Boolean,
   disableDragAndDrop: Boolean,
-  disableClickToChoose: Boolean,
+  disableClickChoose: Boolean,
   disableDragToMove: Boolean,
   disableScrollToZoom: Boolean,
   disablePinchToZoom: Boolean,
