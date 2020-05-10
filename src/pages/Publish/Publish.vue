@@ -141,6 +141,7 @@ export default {
     return {
       ...initialData,
       showBackgroundOptions: false,
+      editText: false,
       backgroundColor: '',
       showDoneButton: false,
       croppa: {},
