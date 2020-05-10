@@ -1,41 +1,28 @@
 <template>
-  <div  class="publish-container overflow-hidden" ref="container">
+  <div class="publish-container overflow-hidden" ref="container" :style="{backgroundColor}">
 
-    <div class="header-buttons ">
-      <div  v-if="showDoneButton" class="row justify-between">
-        <van-button
-          @click="updateTextAreaValue"
-          size="small" plain type="primary button shadow-2 text-shadow-1">
-          Cancel
-        </van-button>
-
-        <div class="row items-center text-weight-bold text-white text-shadow-1">
-          <span>
-            {{ textareaLength }} / 180
-          </span>
-        </div>
-
-        <van-button
-          @click="updateTextAreaValue(true)"
-          size="small" plain type="primary button shadow-2 text-shadow-1">
-          Done
-        </van-button>
+    <div class="header-buttons row justify-end">
+      <div class="row items-center text-weight-bold text-white text-shadow-1 q-mr-lg">
+        <span>
+          {{ textareaLength }} / 180
+        </span>
       </div>
-      <div class="row reverse" v-else>
-        <van-button
-          @click="updateTextAreaValue(true)"
-          size="small" plain type="primary button shadow-2 text-shadow-1">
-          Publicar
-        </van-button>
-      </div>
+
+      <van-button
+        @click="updateTextAreaValue(true)"
+        size="small" plain type="primary button shadow-2 text-shadow-1">
+        Publicar
+        <q-icon name="lar la-paper-plane" color="#333333" class="" size="18px" />
+      </van-button>
     </div>
 
     <div class="texteditor-container row full-width">
       <div class="col-12 textarea-container" style="z-index: 100">
         <textarea
-          class="text-shadow-1"
+          class="text-shadow-1 q-pa-lg"
           ref="textarea"
           @focus="showDoneButton = true"
+          @blur="showDoneButton = false"
           maxlength="180"
           minlength="10"
           v-model="textarea.value"
@@ -59,11 +46,11 @@
       </div>
     </van-popup>
 
-    <van-dialog v-model="showArentAvailable" title="Proximamente">
+    <van-dialog v-model="showArentAvailable" title="Seguimos trabajando">
         <template #default>
           <div class="q-pa-md">
-            <p>
-              Ansker sigue en desarrollo, pronto tendremos nuevas mejoras, esta es solo la version beta
+            <p class="text-center">
+              Pronto tendremos mas mejoras
             </p>
             <div class="row full-width justify-center items-center">
               <q-icon name="las la-camera" color="#333333" class="q-mr-sm" size="30px" />
@@ -76,13 +63,13 @@
 
     <div ref="toolbar" v-if="!showDoneButton" class="toolbar">
       <div class="row justify-around fit items-center text-shadow-2">
-        <q-icon @click="showArentAvailable = true" name="las la-camera" color="white" class="q-mr-sm" size="30px" />
+        <q-icon @click="showArentAvailable = true" name="las la-camera" color="white" class="q-mr-sm opacity-3" size="30px" />
 
         <q-icon @click="showBackgroundOptions = true" name="las la-palette" color="white" class="q-mr-sm" size="30px"/>
 
-        <q-icon @click="showArentAvailable = true" name="las la-font" color="white" class="q-mr-sm" size="35px" />
+        <q-icon @click="showArentAvailable = true" name="las la-font" color="white" class="q-mr-sm opacity-3" size="35px" />
 
-        <q-icon @click="showArentAvailable = true" name="fas fa-bold" color="white" class="q-mr-sm" size="25px" />
+        <q-icon @click="showArentAvailable = true" name="fas fa-bold" color="white" class="q-mr-sm opacity-3" size="25px" />
       </div>
     </div>
 
@@ -116,7 +103,7 @@ export default {
   data() {
     return {
       ...initialData,
-      showArentAvailable: true,
+      showArentAvailable: false,
       showBackgroundOptions: false,
       editText: false,
       showDoneButton: false,
@@ -231,6 +218,10 @@ span.arial {
     height: 100%;
     background: transparent;
     border: 2px solid rgba($color: #000000, $alpha: 1.0);
+    white-space: normal;
+    text-align: justify;
+    -moz-text-align-last: center;
+    text-align-last: center;
 
     &::placeholder {
       color: white;
