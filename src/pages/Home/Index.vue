@@ -12,7 +12,7 @@
       <van-button
         @click="openJoinUs = true"
         round
-        type=" join-button bg-white text-primary text-weight-bold no-border"
+        type=" join-button bg-white text-primary text-weight-bold no-border q-mx-sm"
         size="large"
         :loading="
           auth.isLoading.google ||
@@ -21,6 +21,11 @@
       >
         <span class="text-h5 text-weight-bolder">Unirme</span>
       </van-button>
+      <div 
+        @click="openJoinUs = true"
+        class="full-width q-pa-md text-center cursor-pointer">
+        <u class="text-white text-weight-bold" style="font-size: 1.2em cursor-pointer">Ingresar</u>
+      </div>
     </section>
     <van-popup
       round

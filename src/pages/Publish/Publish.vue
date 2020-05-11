@@ -9,7 +9,7 @@
       </div>
 
       <van-button
-        @click="updateTextAreaValue(true)"
+        @click="publish"
         size="small" plain type="primary button shadow-2 text-shadow-1">
         Publicar
         <q-icon name="lar la-paper-plane" color="#333333" class="" size="18px" />
@@ -138,6 +138,8 @@ export default {
       this.backgroundColor = color
       this.$refs.canvas.$el.style.backgroundColor = color
     },
+    publish() {
+    }
   },
   watch: {
   },
