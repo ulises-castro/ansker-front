@@ -1,6 +1,7 @@
 import Catch from 'await-to-decorater'
 import {
-  get
+  get,
+  post
 } from './api'
 
 class Publication {
@@ -22,6 +23,11 @@ class Publication {
 
   @Catch()
   userHadLiked() {
+  }
+
+  @Catch()
+  sendPublish() {
+    return get(`publish/:country/:city`)
   }
 }
 
