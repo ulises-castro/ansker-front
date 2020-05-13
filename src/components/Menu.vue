@@ -38,18 +38,22 @@
     <Share :showShare="showShare" :shareText="shareText" ></Share>
 
     <van-dialog v-model="showArentAvailable" title="Pronto tendremos mas mejoras">
-        <template #default>
           <div class="q-pa-md">
             <p class="text-center">
               Siguienos en nuestras redes sociales
             </p>
             <div class="row full-width justify-center items-center">
-              <q-icon name="img:/statics/icons/social/whatsapp.svg" color="#333333" class="q-mr-sm" size="30px" />
-              <q-icon name="img:statics/icons/social/facebook.svg" color="#333" class="q-mr-sm" size="25px" />
-              <q-icon name="img:statics/icons/social/twitter.png" color="#333" class="q-mr-sm" size="25px" />
+              <a target="blank" href="https://facebook.com/ansker.me">
+                <q-icon name="img:statics/icons/social/facebook.svg" color="#333" class="" size="40px" />
+              </a>
+              <a target="blank" href="https://instagram.com/anskerme_official/">
+                <q-icon name="img:/statics/icons/social/instagram.svg" color="#333333" class="q-ml-lg" size="40px" />
+              </a>
+              <a target="blank" href="https://twitter.com/ansker_me">
+              <q-icon name="img:statics/icons/social/twitter.png" color="#333" class="q-ml-lg" size="40px" />
+              </a>
             </div>
           </div>
-        </template>
     </van-dialog>
 
   </section>

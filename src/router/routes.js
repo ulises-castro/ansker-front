@@ -6,7 +6,7 @@
 const routes = [{
     path: '/',
     name: 'Home',
-    component: () => import('pages/Home/Index.vue')
+    component: () => import('pages/Home/Home.vue')
   },
   {
     path: '/discover',
@@ -14,7 +14,7 @@ const routes = [{
     meta: {
       requiresAuth: true,
     },
-    component: () => import('pages/Discover/Index.vue')
+    component: () => import('pages/Discover/Discover.vue')
   },
   {
     path: '/Publish',
@@ -30,7 +30,7 @@ const routes = [{
     meta: {
       requiresAuth: true,
     },
-    component: () => import('pages/Settings/Index.vue')
+    component: () => import('pages/Settings/Settings.vue')
   },
   {
     path: '/contact',
