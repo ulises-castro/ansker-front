@@ -123,6 +123,7 @@ export default {
         fontColor: !false,
       },
       backgroundColor: initialData.backgroundColors[0],
+      backgroundColorSelected: initialData.backgroundColors[0],
       editorOptions: {
         fontFamilies: [
           'Arial',
@@ -141,6 +142,7 @@ export default {
     updateBackgroudColor(color) {
       const lightColor = shadeColor(color, -25)
 
+      this.backgroundColorSelected = color
       this.backgroundColor = `radial-gradient(circle, ${lightColor} 2%, ${color} 123%)`
     },
     backToDiscover() {

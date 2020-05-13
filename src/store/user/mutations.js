@@ -10,3 +10,7 @@ export function logout (state, token) {
   state.token = false
   state.isLogged = false
 }
+
+export function updateSelectedCity (state, selectedCity) {
+  state.selectedCity = selectedCity
+}

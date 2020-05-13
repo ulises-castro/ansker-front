@@ -74,7 +74,7 @@
       <div
         v-for="(city, index) in citiesSearchFound"
         :key="index"
-        @click="updateCitySelected(city)"
+        @click="updateSelectedCity(city)"
         class="p10 cities"
         style="background: white"
       >
@@ -125,6 +125,9 @@
 import Publication from 'src/components/Publication'
 import { City } from 'src/services'
 
+import { mapGetters, mapActions } from 'vuex'
+
+
 export default {
   name: "Discover",
   props: ['props.'],
@@ -173,10 +176,13 @@ export default {
     setTimeout(() => this.publications = publications, 2000)
   },
   methods: {
-    updateCitySelected(city) {
-      this.citySelected = city;
-      this.citySearchValue = city.name;
-      this.citiesSearchFound = [];
+    ...mapActions('User', ['selectCity']),
+    updateSelectedCity(city) {
+      this.citySelected = city
+      this.citySearchValue = city.name
+      this.citiesSearchFound = []
+
+      this.selectCity(city)
     },
     async fetchPublications() {
       // const publications = await Publication.getAllByCity()
