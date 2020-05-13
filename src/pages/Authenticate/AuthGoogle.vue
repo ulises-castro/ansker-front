@@ -18,9 +18,12 @@ export default {
   methods: {
     async init() {
       Loading.show()
-      const urlParams = queryString.parse(window.location.search)
 
-      console.log(`The code is: ${urlParams.code}`)
+      const extractCode = window.location.href.split('?')
+      console.log(window.location, extractCode)
+      const urlParams = queryString.parse(extractCode[1])
+
+      console.log(`The code is:`, urlParams)
 
       const [ err, googleData ] = await Auth.googleLogin(urlParams.code)
 
@@ -28,7 +31,7 @@ export default {
       if (err) {
         this.$router.push({ name: 'Home' })
 
-        return handlerError(err)
+        return this.handlerError(err)
       }
 
       this.getTokenAndsignIn(googleData.data.access_token)
@@ -37,7 +40,7 @@ export default {
       console.log(this.$route.params)
       const [err, token] = await Auth.signInGoogle(access_token)
 
-      if (err) return handlerError(err)
+      if (err) return this.handlerError(err)
 
       this.$notify({ type: 'success', message: 'Welcome to  Ansker' })
 

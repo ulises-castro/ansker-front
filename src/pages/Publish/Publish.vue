@@ -1,25 +1,28 @@
 <template>
-  <div class="publish-container overflow-hidden" ref="container" :style="{backgroundColor}">
+  <div class="publish-container" ref="container" :style="{'background': backgroundColor}">
 
-    <div class="header-buttons row justify-end">
-      <div class="row items-center text-weight-bold text-white text-shadow-1 q-mr-lg">
-        <span>
+    <div class="header-buttons row justify-between">
+      <div class="row text-shadow-1" @click="backToDiscover">
+        <q-icon name="las la-times text-white" color="#333333" class="" size="28px" />
+      </div>
+      <div class="row items-center text-weight-bold text-white text-shadow-1">
+        <span class="q-px-md">
           {{ textareaLength }} / 180
         </span>
+        <van-button
+          @click="publish"
+          size="small" plain type="primary button shadow-2 text-shadow-1">
+          Publicar
+          <q-icon name="lar la-paper-plane" color="#333333" class="" size="18px" />
+        </van-button>
       </div>
 
-      <van-button
-        @click="publish"
-        size="small" plain type="primary button shadow-2 text-shadow-1">
-        Publicar
-        <q-icon name="lar la-paper-plane" color="#333333" class="" size="18px" />
-      </van-button>
     </div>
 
     <div class="texteditor-container row full-width">
       <div class="col-12 textarea-container" style="z-index: 100">
         <textarea
-          class="text-shadow-1 q-pa-lg"
+          class="q-pa-lg"
           ref="textarea"
           @focus="showDoneButton = true"
           @blur="showDoneButton = false"
@@ -46,7 +49,7 @@
       </div>
     </van-popup>
 
-    <van-dialog v-model="showArentAvailable" title="Seguimos trabajando">
+    <van-dialog v-model="showArentAvailable" title="Seguimos trabajando arduamente">
         <template #default>
           <div class="q-pa-md">
             <p class="text-center">
@@ -78,6 +81,7 @@
 
 <script>
 import EventBus from 'src/eventBus.js'
+import { shadeColor } from 'src/utils'
 
 const initialTextArea = {
   fontFamily: 'Lato',
@@ -94,7 +98,7 @@ const initialData = {
     textarea: [{ ...initialTextArea }],
   },
   backgroundColors: [
-    '#0e5181', '#028f92', '#c7ac0f', '#E8045A', '#B2028A',
+    '#0e5181', '#028f92', '#247a3e',
   ],
 }
 
@@ -135,16 +139,21 @@ export default {
   },
   methods: {
     updateBackgroudColor(color) {
-      this.backgroundColor = color
-      this.$refs.canvas.$el.style.backgroundColor = color
+      const lightColor = shadeColor(color, -25)
+
+      this.backgroundColor = `radial-gradient(circle, ${lightColor} 2%, ${color} 123%)`
+    },
+    backToDiscover() {
+      EventBus.$emit('showUI', true)
+      this.$router.push({ name: 'Discover' })
     },
     publish() {
-    }
+    },
   },
   watch: {
   },
   created() {
-    EventBus.$emit('toggleUI', false)
+    EventBus.$emit('showUI', false)
   },
   mounted() {
     // console.log(this.$refs.can)
@@ -153,7 +162,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .publish-container {
   height: 100vh;
   width: 100vw;
@@ -231,6 +239,8 @@ span.arial {
     }
   }
 }
+
+// background: linear-gradient(180deg, rgba(25,100,156,1) 31%, rgba(14,81,129,1) 72%);
 
 .control {
 

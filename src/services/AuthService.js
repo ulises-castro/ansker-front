@@ -11,9 +11,11 @@ class Auth {
   }
 
   getGoogleLink() {
+    let authLink = 'authenticate/google'
+
     const stringifiedParams = queryString.stringify({
       client_id: process.env.GOOGLE_ID,
-      redirect_uri: `${process.env.BASE_URL}/authenticate/google`,
+      redirect_uri: `${process.env.BASE_URL}/${authLink}`,
       scope: [
         'https://www.googleapis.com/auth/userinfo.email',
         'https://www.googleapis.com/auth/userinfo.profile',
@@ -28,6 +30,7 @@ class Auth {
 
   @Catch()
   googleLogin(code) {
+    console.log(code)
     return get('auth/google', {
       code
     })

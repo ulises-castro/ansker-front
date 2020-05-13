@@ -17,6 +17,14 @@ const routes = [{
     component: () => import('pages/Discover/Index.vue')
   },
   {
+    path: '/Publish',
+    name: 'Publish',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('pages/Publish/Publish.vue')
+  },
+  {
     path: '/settings',
     name: 'Settings',
     meta: {

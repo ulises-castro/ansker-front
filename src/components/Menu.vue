@@ -10,12 +10,12 @@
             <van-icon name="home-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item :to="{ name: 'Home' }" badge="5">
+        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5">
           <template #icon>
             <van-icon name="location-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item :to="{ name: 'Home' }" badge="5">
+        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5">
           <template #icon>
             <van-icon name="friends-o" size="32"/>
           </template>
@@ -37,6 +37,21 @@
 
     <Share :showShare="showShare" :shareText="shareText" ></Share>
 
+    <van-dialog v-model="showArentAvailable" title="Pronto tendremos mas mejoras">
+        <template #default>
+          <div class="q-pa-md">
+            <p class="text-center">
+              Siguienos en nuestras redes sociales
+            </p>
+            <div class="row full-width justify-center items-center">
+              <q-icon name="img:/statics/icons/social/whatsapp.svg" color="#333333" class="q-mr-sm" size="30px" />
+              <q-icon name="img:statics/icons/social/facebook.svg" color="#333" class="q-mr-sm" size="25px" />
+              <q-icon name="img:statics/icons/social/twitter.png" color="#333" class="q-mr-sm" size="25px" />
+            </div>
+          </div>
+        </template>
+    </van-dialog>
+
   </section>
 </template>
 
@@ -50,6 +65,7 @@ export default {
   data() {
     return {
       active: 0,
+      showArentAvailable: false,
       shareText: 'Comparte con personas de tu alrededor de forma anónima',
       showSettings: false,
       showShare: false,
@@ -108,6 +124,7 @@ export default {
   justify-content: space-evenly;
   bottom: 0;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  z-index: 100;
 
   .icon-link {
     padding: 10px 10px;

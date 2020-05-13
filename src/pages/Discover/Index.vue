@@ -127,7 +127,7 @@ import { City } from 'src/services'
 
 export default {
   name: "Discover",
-  props: ['handlerError'],
+  props: ['props.'],
   components: {
     Publication,
   },
@@ -191,7 +191,7 @@ export default {
 
       const [err, citiesData] = await City.searchCity(citySearchValue)
 
-      if (err) return handlerError(err)
+      if (err) return this.handlerError(err)
 
       const { cities } = citiesData.data
 
