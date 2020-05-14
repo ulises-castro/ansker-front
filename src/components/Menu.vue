@@ -10,12 +10,12 @@
             <van-icon name="home-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5">
+        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5" class="opacity-3">
           <template #icon>
             <van-icon name="location-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5">
+        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5" class="opacity-3">
           <template #icon>
             <van-icon name="friends-o" size="32"/>
           </template>
@@ -44,8 +44,8 @@
         </p>
         <div class="row full-width justify-center items-center">
           <a target="blank" href="https://facebook.com/ansker.me">
-            <q-icon name="img:statics/icons/social/facebook.svg" color="#333" class="" size="40px" />
-          </a>
+            <q-icon name="img:statics/icons/social/facebook.svg" color="#333" size="40px" />
+          </a>  
           <a target="blank" href="https://instagram.com/anskerme_official/">
             <q-icon name="img:/statics/icons/social/instagram.svg" color="#333333" class="q-ml-lg" size="40px" />
           </a>

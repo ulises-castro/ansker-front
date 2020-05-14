@@ -65,7 +65,7 @@
         size="18px"
         color="#54a0c0"
         style="margin-top: 3px"
-        v-if="isLoadingCities"
+        v-if="isLoadingCities && citySearchValue.length > 3"
         slot="left-icon"
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>

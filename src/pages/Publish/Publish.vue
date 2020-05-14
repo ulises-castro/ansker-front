@@ -1,5 +1,5 @@
 <template>
-  <div class="publish-container" ref="container" :style="{'background': backgroundColor}">
+  <div class="publish-container" ref="container" :style="{'background': backgroundGradientColor}">
 
     <div class="header-buttons row justify-between">
       <div class="row text-shadow-1" @click="backToDiscover">
@@ -123,7 +123,6 @@ export default {
         fontColor: !false,
       },
       backgroundColor: initialData.backgroundColors[0],
-      backgroundColorSelected: initialData.backgroundColors[0],
       editorOptions: {
         fontFamilies: [
           'Arial',
@@ -136,14 +135,18 @@ export default {
   computed: {
     textareaLength() {
       return this.textarea.value.length
-    }
+    },
+    backgroundGradientColor() {
+      const lightColor = shadeColor(this.backgroundColor, -25)
+
+      return `radial-gradient(circle, ${lightColor} 2%, ${this.backgroundColor} 123%)`
+    },
   },
   methods: {
     updateBackgroudColor(color) {
       const lightColor = shadeColor(color, -25)
 
-      this.backgroundColorSelected = color
-      this.backgroundColor = `radial-gradient(circle, ${lightColor} 2%, ${color} 123%)`
+      this.backgroundColor = color
     },
     backToDiscover() {
       EventBus.$emit('showUI', true)
