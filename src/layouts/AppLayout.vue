@@ -7,6 +7,7 @@
       left-text="Regresar"
       @click-left="toggleNotifications"
       :left-arrow="showBackButton"
+      style="z-index: 101"
     >
       <div
         v-if="!showBackButton"

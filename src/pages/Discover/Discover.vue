@@ -173,6 +173,7 @@ export default {
           image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
         },
     ]
+
     setTimeout(() => this.publications = publications, 2000)
   },
   methods: {

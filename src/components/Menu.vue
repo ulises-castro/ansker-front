@@ -5,17 +5,17 @@
         class="has-text-weight-bolds"
         active-color="#239bce"
         v-model="active">
-        <van-tabbar-item :to="{ name: 'Home' }" badge="10">
+        <van-tabbar-item :to="{ name: 'Home' }">
           <template #icon>
             <van-icon name="home-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5" class="opacity-3">
+        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" class="opacity-3">
           <template #icon>
             <van-icon name="location-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" badge="5" class="opacity-3">
+        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" class="opacity-3">
           <template #icon>
             <van-icon name="friends-o" size="32"/>
           </template>
@@ -45,13 +45,26 @@
         <div class="row full-width justify-center items-center">
           <a target="blank" href="https://facebook.com/ansker.me">
             <q-icon name="img:statics/icons/social/facebook.svg" color="#333" size="40px" />
-          </a>  
+          </a>
           <a target="blank" href="https://instagram.com/anskerme_official/">
             <q-icon name="img:/statics/icons/social/instagram.svg" color="#333333" class="q-ml-lg" size="40px" />
           </a>
           <a target="blank" href="https://twitter.com/ansker_me">
             <q-icon name="img:statics/icons/social/twitter.png" color="#333" class="q-ml-lg" size="40px" />
           </a>
+        </div>
+        <div class="row justify-center text-center q-pt-lg">
+          <span>
+            Unete al grupo oficial y comparte tus dudas y/o sugerencias
+          </span>
+          <div class="q-pt-md">
+            <a target="blank" href="https://t.me/anskerme">
+              <q-icon name="img:statics/icons/social/telegram.png" color="#333" size="50px" />
+            </a>
+            <p class="text-center text-blue-8 q-ma-none">
+              Telegram
+            </p>
+          </div>
         </div>
       </div>
     </van-dialog>

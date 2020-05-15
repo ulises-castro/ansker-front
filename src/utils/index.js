@@ -1,10 +1,11 @@
 export const jsonParseStored = (key, defaultValue = false) => {
   const valueStored = localStorage[key]
 
-  if (valueStored && typeof valueStored !== 'string') return JSON.parse(valueStored)
-  else if (valueStored) return valueStored
-
-  return defaultValue
+  try {
+    return JSON.parse(valueStored)
+  } catch {
+    return defaultValue
+  }
 }
 
 export const shadeColor = (color, percent) => {
@@ -26,3 +27,9 @@ export const shadeColor = (color, percent) => {
 
   return `#${RR}${GG}${BB}`;
 }
+
+export const backgroundGradientColor = (color) => {
+  const lightColor = shadeColor(this.backgroundColor, -25)
+
+  return `radial-gradient(circle, ${lightColor} 2%, ${color} 123%)`
+},

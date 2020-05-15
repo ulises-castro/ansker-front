@@ -12,5 +12,6 @@ export function logout (state, token) {
 }
 
 export function updateSelectedCity (state, selectedCity) {
+  localStorage.selectedCity = JSON.stringify(selectedCity)
   state.selectedCity = selectedCity
 }

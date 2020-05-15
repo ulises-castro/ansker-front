@@ -81,7 +81,9 @@
 
 <script>
 import EventBus from 'src/eventBus.js'
-import { shadeColor } from 'src/utils'
+import { backgroundGradientColor } from 'src/utils'
+import Publication from 'src/services/PublicationService'
+import { mapGetters, mapActions } from 'vuex'
 
 const initialTextArea = {
   fontFamily: 'Lato',
@@ -136,11 +138,12 @@ export default {
     textareaLength() {
       return this.textarea.value.length
     },
-    backgroundGradientColor() {
+    background() {
       const lightColor = shadeColor(this.backgroundColor, -25)
 
       return `radial-gradient(circle, ${lightColor} 2%, ${this.backgroundColor} 123%)`
     },
+    ...mapGetters('User', ['selectedCity']),
   },
   methods: {
     updateBackgroudColor(color) {
@@ -152,7 +155,27 @@ export default {
       EventBus.$emit('showUI', true)
       this.$router.push({ name: 'Discover' })
     },
-    publish() {
+    async publish() {
+      const { backgroundColor } = this
+      const content = this.textarea.value
+      const { loc, country, name } = this.selectedCity
+      console.table(this.selectedCity)
+
+      if (content.length < 10) {
+        return this.$notify('Debes escribir al menos 10 letras')
+      }
+
+      const [err, publishRes] = await Publication.publish({
+        content,
+        backgroundColor,
+        location: loc,
+        city: name,
+        countryCode: country,
+      })
+
+      if (err) return err
+
+      this.$router.push({ name: 'Publication' })
     },
   },
   watch: {

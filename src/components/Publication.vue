@@ -16,7 +16,7 @@
       </div>
     </div>
     <div
-      @click="gopublication(publication.id)"
+      @click="goPublication(publication.id)"
       class="publication-body">
       <span style="text-shadow: 0px 0px 14px #9e9e9e;">
         {{ publication.content }}
@@ -24,7 +24,7 @@
     </div>
     <div @click="showJoinUs" class="publication-actions">
       <div
-        @click="gopublication(publication.id)"
+        @click="goPublication(publication.id)"
         class="icon-link has-background-white">
         <router-link :to="{ name: '', params: {} }">
           <q-icon name="las la-hourglass-half" color="grey-1" class="q-mr-sm" size="22px" />
@@ -35,7 +35,7 @@
       </div>
 
       <div
-        @click="gopublication(publication.id)"
+        @click="openComments"
         class="icon-link">
         <router-link :to="{ name: '', params: {} }">
           <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="22px" />
@@ -59,20 +59,30 @@
       :actions="actions"
       @cancel="onCancel"
     />
-    <!-- <van-popup v-model="showOptions" position="bottom" :overlay="true">
-      <van-picker
-        show-toolbar
-        title="Opciones"
-        :columns="columns"
-        @cancel="onCancel"
-        @confirm="onConfirm"
-      />
-    </van-popup> -->
+    <van-popup
+      v-model="showComments"
+      get-container="#app"
+      closeable
+      close-icon="close"
+      position="bottom"
+      :style="{ height: '85%' }"
+    >
+      <div>
+        <div class="q-pa-md">
+          <p class="text-center q-mb-none"> Comentarios </p>
+        </div>
+        <q-separator inset />
+        <div v-for="(comment, index) in comments" :key="index">
+          <comment :comment="comment"></comment>
+        </div>
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
 // import { get, post } from "@/api";
+import comment from 'src/components/Comment'
 
 export default {
   name: "publication",
@@ -82,10 +92,22 @@ export default {
       required: true
     }
   },
+  components: ['comment'],
   data() {
     return {
       showOptions: false,
       isUserLogged: true,
+      showComments: false,
+      comments: [
+        {
+          publishAt: new Date(),
+          content: 'Prueba amigo',
+        },
+        {
+          publishAt: new Date(),
+          content: 'Prueba amigo 2',
+        },
+      ],
       actions: [
         {
           name: "Marcar como indebido"
@@ -110,6 +132,9 @@ export default {
     handlerShowOptions() {
       this.showOptions = true
     },
+    openComments() {
+      this.showComments = true
+    },
     showJoinUs() {
       if (!this.isUserLogged) {
         this.$emit("openShowJoinUs");
@@ -128,11 +153,11 @@ export default {
       const operation = !this.publication.userLiked ? -1 : 1;
       this.publication.likes += operation;
     },
-    gopublication() {
+    goPublication() {
       const { publicationId } = this.publication;
 
       this.$router.push({
-        name: "publication",
+        name: "Publication",
         params: { publicationId }
       });
     }

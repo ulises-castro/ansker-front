@@ -5,6 +5,12 @@ import {
 } from './api'
 
 class Publication {
+
+  @Catch()
+  getOne(id) {
+    return get(`publication/${id}`)
+  }
+
   @Catch()
   getLikes() {
   }
@@ -26,8 +32,9 @@ class Publication {
   }
 
   @Catch()
-  sendPublish() {
-    return get(`publish/:country/:city`)
+  publish(data) {
+    console.log(data)
+    return post(`publication/publish`, data)
   }
 }
 
