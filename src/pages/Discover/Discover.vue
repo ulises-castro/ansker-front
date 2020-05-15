@@ -151,6 +151,10 @@ export default {
   },
   created() {
     this.fetchPublications()
+
+    if (this.selectedCity.name) {
+      this.citySearchValue = this.selectedCity.name
+    }
   },
   mounted() {
     const publications = [
@@ -175,6 +179,9 @@ export default {
     ]
 
     setTimeout(() => this.publications = publications, 2000)
+  },
+  computed: {
+    ...mapGetters('User', ['selectedCity'])
   },
   methods: {
     ...mapActions('User', ['selectCity']),
