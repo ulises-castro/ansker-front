@@ -29,7 +29,7 @@ export const shadeColor = (color, percent) => {
 }
 
 export const backgroundGradientColor = (color) => {
-  const lightColor = shadeColor(this.backgroundColor, -25)
+  const lightColor = shadeColor(color, -25)
 
   return `radial-gradient(circle, ${lightColor} 2%, ${color} 123%)`
 }

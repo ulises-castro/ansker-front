@@ -10,7 +10,7 @@ import { mapActions } from 'vuex'
 
 export default {
   name: 'Publication',
-  components: ['publication'],
+  components: { publication },
   data() {
     return {
       publication: [],

@@ -1,5 +1,5 @@
 <template>
-  <div class="publish-container" ref="container" :style="{'background': backgroundGradientColor}">
+  <div class="publish-container" ref="container" :style="{ background }">
 
     <div class="header-buttons row justify-between">
       <div class="row text-shadow-1" @click="backToDiscover">
@@ -139,16 +139,12 @@ export default {
       return this.textarea.value.length
     },
     background() {
-      const lightColor = shadeColor(this.backgroundColor, -25)
-
-      return `radial-gradient(circle, ${lightColor} 2%, ${this.backgroundColor} 123%)`
+      return backgroundGradientColor(this.backgroundColor)
     },
     ...mapGetters('User', ['selectedCity']),
   },
   methods: {
     updateBackgroudColor(color) {
-      const lightColor = shadeColor(color, -25)
-
       this.backgroundColor = color
     },
     backToDiscover() {
@@ -175,7 +171,8 @@ export default {
 
       if (err) return err
 
-      this.$router.push({ name: 'Publication' })
+      EventBus.$emit('showUI', true)
+      this.$router.push({ name: 'Discover' })
     },
   },
   watch: {

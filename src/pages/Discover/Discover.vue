@@ -70,16 +70,18 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
-    <aside v-if="citiesSearchFound.length" class="width100 q-px-md">
-      <div
-        v-for="(city, index) in citiesSearchFound"
-        :key="index"
-        @click="updateSelectedCity(city)"
-        class="p10 cities"
-        style="background: white"
-      >
-        {{ city.name }} -
-        {{ city.countryName }} {{ city.flag }}
+    <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
+      <div class="full-width q-px-md">
+        <div
+          v-for="(city, index) in citiesSearchFound"
+          :key="index"
+          @click="updateSelectedCity(city)"
+          class="q-px-lg cities"
+          style="background: white"
+        >
+          {{ city.name }} -
+          {{ city.countryName }} {{ city.flag }}
+        </div>
       </div>
     </aside>
     <section class="publications q-pt-md" style="padding-bottom: 55px">
@@ -88,41 +90,13 @@
           <publication :publication="publication"></publication>
         </div>
       </div>
-
-      <div v-else>
-        <q-card v-for="skeleton in skeletons" :key="skeleton" flat bordered square >
-          <q-skeleton height="250px" square animation="fade">
-            <div style="height: 180px">
-              <div class="row justify-end q-px-sm">
-                <q-icon name="las la-ellipsis-h" color="grey-1" class="q-mr-sm" size="25px" />
-              </div>
-            </div>
-            <div class="q-pa-sm row items-center justify-between no-wrap full-width" style="position: absolute; bottom: 0">
-              <div class="row items-center">
-                <q-icon name="las la-hourglass-half" color="grey-1" class="q-mr-sm" size="20px" />
-                <q-skeleton type="text" width="30px" />
-              </div>
-
-              <div class="row items-center">
-                <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="20px" />
-                <q-skeleton type="text" width="30px" />
-              </div>
-
-              <div class="row items-center">
-                <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="20px" />
-                <q-skeleton type="text" width="30px" />
-              </div>
-            </div>
-
-          </q-skeleton>
-        </q-card>
-      </div>
     </section>
 
   </section>
 </template>
 <script>
-import Publication from 'src/components/Publication'
+import Publication from 'src/services/PublicationService'
+import publication from 'src/components/Publication'
 import { City } from 'src/services'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -132,7 +106,7 @@ export default {
   name: "Discover",
   props: ['props.'],
   components: {
-    Publication,
+    publication,
   },
   data() {
     return {
@@ -150,50 +124,50 @@ export default {
     }
   },
   created() {
-    this.fetchPublications()
-
     if (this.selectedCity.name) {
+      this.citySelected = this.selectedCity
       this.citySearchValue = this.selectedCity.name
     }
   },
   mounted() {
-    const publications = [
-        {
-          id: 1,
-          content: 'Hay mas casos de coronavirus de ha dicho el gobierno!!!',
-          likes: {},
-          image: 'https://ichef.bbci.co.uk/news/410/cpsprodpb/823A/production/_111083333_060312069-1.jpg'
-        },
-        {
-          id: 2,
-          content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {},
-          image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
-        },
-        {
-          id: 3,
-          content: 'Un vecino tiene coronavirus, cuidense!',
-          likes: {},
-          image: 'https://static01.nyt.com/images/2020/02/15/business/17coronavirus-lockdownES-1/15china-tracking-1-articleLarge.jpg?quality=75&auto=webp&disable=upscale'
-        },
-    ]
-
-    setTimeout(() => this.publications = publications, 2000)
+    this.fetchPublications()
   },
   computed: {
     ...mapGetters('User', ['selectedCity'])
   },
+  watch: {
+    citySearchValue(newCityValue) {
+      if (!newCityValue) {
+        this.restoreSelectedCity()
+        this.fetchPublications()
+      }
+    },
+  },
   methods: {
     ...mapActions('User', ['selectCity']),
+    restoreSelectedCity() {
+      this.citiesSearchFound = []
+      this.citySearchValue = ''
+      this.citySelected = {}
+
+      this.selectCity({})
+    },
     updateSelectedCity(city) {
       this.citySelected = city
       this.citySearchValue = city.name
       this.citiesSearchFound = []
 
       this.selectCity(city)
+      this.fetchPublications()
     },
     async fetchPublications() {
-      // const publications = await Publication.getAllByCity()
+
+      const fetchBy = this.citySearchValue ? 'getAllByCity' : 'getAll'
+      const [err, publicationsResponse] = await Publication[fetchBy](this.selectedCity.country, this.selectedCity.name)
+
+      if (err) this.handlerError(err)
+
+      this.publications = publicationsResponse.data.publications
     },
     async onSearchCity() {
       const { citySearchValue } = this
@@ -217,10 +191,18 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.publications {}
-
 .cities {
-  font-size: 0.9em;
-  padding: 5px;
+  font-size: 1em;
+  padding: 15px;
+
+  &:last-child {
+    padding-bottom: 20px;
+  }
+}
+
+.citiesFound {
+  background: white;
+  position: absolute;
+  z-index: 1000;
 }
 </style>

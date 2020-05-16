@@ -10,12 +10,12 @@
             <van-icon name="home-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" class="opacity-3">
+        <van-tabbar-item @click="showArentAvailable = true, active = 0" :to="{ name: 'Home' }" class="opacity-3">
           <template #icon>
             <van-icon name="location-o" size="32"/>
           </template>
         </van-tabbar-item>
-        <van-tabbar-item @click="showArentAvailable = true" :to="{ name: 'Home' }" class="opacity-3">
+        <van-tabbar-item @click="showArentAvailable = true, active = 0" :to="{ name: 'Home' }" class="opacity-3">
           <template #icon>
             <van-icon name="friends-o" size="32"/>
           </template>
@@ -32,7 +32,7 @@
       @select="selectedMenu"
       :actions="settingsMenu"
       cancel-text="Cancel"
-      @cancel="choiseShare = false"
+      @cancel="choiseShare = false, active = 0"
     />
 
     <Share :showShare="showShare" :shareText="shareText" ></Share>
