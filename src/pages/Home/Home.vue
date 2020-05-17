@@ -99,6 +99,9 @@ export default {
   created() {
   },
   methods: {
+    ...mapActions('User',[
+      'login',
+    ]),
     checkLoginState() {
       this.auth.isLoading.facebook = true
 
@@ -135,9 +138,6 @@ export default {
 
       this.$router.push({ name: 'Discover' })
     },
-    ...mapActions('User',[
-      'login',
-    ])
   }
 }
 </script>

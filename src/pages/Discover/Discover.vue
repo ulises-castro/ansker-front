@@ -101,7 +101,6 @@ export default {
   data() {
     return {
       publications: [{}, {}, {}, {}, {}],
-      skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
       citySearchValue: '',
@@ -122,7 +121,8 @@ export default {
     this.fetchPublications()
   },
   computed: {
-    ...mapGetters('User', ['selectedCity'])
+    ...mapGetters('User', ['selectedCity']),
+    ...mapGetters('Theme', ['showDiscoverShare', 'showHotCities'])
   },
   watch: {
     citySearchValue(newCityValue) {
