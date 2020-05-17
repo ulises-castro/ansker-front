@@ -1,6 +1,6 @@
 <template>
   <section>
-    <van-collapse :border="false" v-model="activeCitiesHot" style="padding-top: 50px">
+    <van-collapse :border="false" v-model="activeHotCities" style="padding-top: 50px">
       <van-collapse-item
         :border="false"
         title-class="text-weight-bold"
@@ -76,6 +76,18 @@
       </div>
     </aside>
     <section class="publications q-pt-md" style="padding-bottom: 55px">
+      <div v-if="showDiscoverShare" class="text-white text-center row" style="background: rgb(38, 128, 146); border: 1px solid #e4e4e4; border-bottom: 1px solid">
+        <h5 class="full-width text-center q-mt-lg q-mb-sm">
+          Ayudanos a difundir
+        </h5>
+        <span class="full-width q-pa-sm" style="font-size: 1em">
+          Compartiendo a Ansker con tus amigos
+        </span>
+        <div class="row justify-center full-width q-py-md">
+          <button @click="share" class="btn-white text-blue-5 text-bold q-mr-lg"> Compartir </button>
+          <button @click="hideDiscoverShare" class="btn-white text-blue-5 text-bold"> Ocultar </button>
+        </div>
+      </div>
       <div v-if="publications.length">
         <div v-for="publication in publications" :key="publication.id">
           <publication :publication="publication"></publication>
@@ -83,11 +95,15 @@
       </div>
     </section>
 
+    <share :propShowShare="propShowShare" :shareText="shareText"></share>
+
   </section>
 </template>
 <script>
 import Publication from 'src/services/PublicationService'
 import publication from 'src/components/Publication'
+import ShareMixin from 'src/mixins/share'
+import share from 'components/Share'
 import { City } from 'src/services'
 
 import { mapGetters, mapActions } from 'vuex'
@@ -96,8 +112,10 @@ export default {
   name: "Discover",
   props: ['handlerError'],
   components: {
+    share,
     publication,
   },
+  mixins: [ ShareMixin ],
   data() {
     return {
       publications: [{}, {}, {}, {}, {}],
@@ -107,7 +125,7 @@ export default {
       citySelected: {},
       citiesNotFound: false,
       isLoadingCities: false,
-      activeCitiesHot: ["cities"],
+      activeHotCities: [],
       citiesSearchFound: []
     }
   },
@@ -119,6 +137,8 @@ export default {
   },
   mounted() {
     this.fetchPublications()
+
+    this.activeHotCities = this.showHotCities
   },
   computed: {
     ...mapGetters('User', ['selectedCity']),
@@ -131,9 +151,14 @@ export default {
         this.fetchPublications()
       }
     },
+    activeHotCities() {
+      const hidden = (!this.activeHotCities.length)
+      this.hideHotCities(hidden)
+    }
   },
   methods: {
     ...mapActions('User', ['selectCity']),
+    ...mapActions('Theme', ['hideDiscoverShare', 'hideHotCities']),
     restoreSelectedCity() {
       this.citiesSearchFound = []
       this.citySearchValue = ''

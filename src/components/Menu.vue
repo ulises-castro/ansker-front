@@ -35,7 +35,7 @@
       @cancel="choiseShare = false, active = 0"
     />
 
-    <Share :propsShowShare="propsShowShare" :shareText="shareText" ></Share>
+    <Share :propShowShare="propShowShare" :shareText="shareText" ></Share>
 
     <van-dialog v-model="showArentAvailable" title="Pronto tendremos mas mejoras">
       <div class="q-pa-md">
@@ -73,24 +73,24 @@
 
 <script>
 import { mapActions } from 'vuex'
+import ShareMixin from 'src/mixins/share'
 import Share from 'components/Share'
 
 export default {
-  name: "Menu",
+  name: 'Menu',
   components: { Share },
+  mixins: [ShareMixin],
   data() {
     return {
       active: 0,
       showArentAvailable: false,
-      shareText: 'Comparte con personas de tu alrededor de forma anónima',
       showSettings: false,
-      propsShowShare: false,
       settingsMenu: [
-        { name: 'Ayuda', action: "help" },
-        { name: 'Contactanos', action: "goContact" },
-        { name: 'Configuración', action: "setting"},
-        { name: 'Compartir con tus amigos', action: "share" },
-        { name: 'Cerrar sesión', action: "goLogout", color: '#D32F30' },
+        { name: 'Ayuda', action: 'help' },
+        { name: 'Contactanos', action: 'goContact' },
+        { name: 'Configuración', action: 'setting'},
+        { name: 'Compartir con tus amigos', action: 'share' },
+        { name: 'Cerrar sesión', action: 'goLogout', color: '#D32F30' },
       ]
     };
   },
@@ -104,26 +104,9 @@ export default {
 
       this.$router.push({ name: 'Home'})
     },
-    share() {
-      this.choiceShare()
-    },
+
     goContact() {
       this.$router.push({ name: 'Contact' })
-    },
-    choiceShare() {
-      if (navigator.share) {
-        navigator.share({
-          title: this.shareText,
-          text: 'Comparte con tu alrededor anónimamente',
-          url: 'https://ansker.me'
-        })
-        .then(() => {
-          this.$notify({  type: 'success', message: 'Thanks for sharing!'});
-        })
-        .catch(console.error);
-      } else {
-        this.propsShowShare = true
-      }
     },
     ...mapActions('User', ['logout']),
   }

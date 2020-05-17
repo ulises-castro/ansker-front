@@ -4,9 +4,8 @@ export function hideDiscoverShare (state) {
   updateShowElements(state.showElements)
 }
 
-export function toggleHotCities (state) {
-  state.showElements.hotCities = !state.showElements.hotCities
-
+export function hideHotCities (state, hide) {
+  state.showElements.hotCities = !hide
   updateShowElements(state.showElements)
 }
 

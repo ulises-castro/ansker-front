@@ -1,5 +1,9 @@
 export function showHotCities (state) {
-  return state.showElements.hotCities
+  if (state.showElements.hotCities) {
+    return ['cities']
+  }
+
+  return []
 }
 
 export function showDiscoverShare (state) {

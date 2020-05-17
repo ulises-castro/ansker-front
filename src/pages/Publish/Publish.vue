@@ -265,8 +265,6 @@ span.arial {
   }
 }
 
-// background: linear-gradient(180deg, rgba(25,100,156,1) 31%, rgba(14,81,129,1) 72%);
-
 .control {
 
   &-font-size {
