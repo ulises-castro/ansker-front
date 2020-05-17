@@ -10,3 +10,8 @@ export function logout (state, token) {
   state.token = false
   state.isLogged = false
 }
+
+export function updateSelectedCity (state, selectedCity) {
+  localStorage.selectedCity = JSON.stringify(selectedCity)
+  state.selectedCity = selectedCity
+}

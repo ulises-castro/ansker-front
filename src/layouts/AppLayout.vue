@@ -7,6 +7,7 @@
       left-text="Regresar"
       @click-left="toggleNotifications"
       :left-arrow="showBackButton"
+      style="z-index: 101"
     >
       <div
         v-if="!showBackButton"
@@ -37,7 +38,7 @@ export default {
   methods: {
     goPublish() {
       // TODO: fix this because publish isnt detect Implement to
-      this.$router.push({ name: 'Publish '})
+      this.$router.push({ name: 'Publish'})
     },
     hideMenu() {
     },

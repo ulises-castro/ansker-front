@@ -31,18 +31,18 @@ export default {
   },
   methods: {
     handlerError(err) {
-      if (err.response.data.message) {
+      if (err.response && err.response.data.message) {
         return this.$notify(`${err.response.data.message}`)
       }
 
       return this.$notify(`No pudimos procesar tu solitud, por favor intente más tarde`)
     },
-    toggleUI() {
-      this.showMenu = false
-      this.showHeader = false
+    showUI(show) {
+      this.showMenu = show
+      this.showHeader = show
     },
     listenEventBus() {
-      EventBus.$on('toggleUI', this.toggleUI);
+      EventBus.$on('showUI', this.showUI)
     },
   },
   created() {

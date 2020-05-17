@@ -4,6 +4,8 @@
 const path = require('path')
 const fs = require('fs')
 
+const BackUrl = (false) ? 'https://localanskerme.me:3030/api/' : 'https://192.168.0.160:3030/api/'
+
 module.exports = function (ctx) {
   return {
     // app boot file (/src/boot)
@@ -63,9 +65,8 @@ module.exports = function (ctx) {
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
-
       env: ctx.dev ? { // so on dev we'll have
-        API: JSON.stringify('https://localanskerme.me:3030/api/'),
+        API: JSON.stringify(BackUrl),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('https://localanskerme.me:3030'),
@@ -113,6 +114,7 @@ module.exports = function (ctx) {
         cert: fs.readFileSync('/home/alex/ssl/mydev.dev+5.pem'),
         ca: fs.readFileSync('/home/alex/.local/share/mkcert/rootCA.pem'),
       },
+      host: "0.0.0.0",
       // https: false,
       port: 1297,
       open: false, // opens browser window automatically

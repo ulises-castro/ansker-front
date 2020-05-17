@@ -1,79 +1,31 @@
 <template>
-  <div  class="publish-container overflow-hidden" ref="container">
+  <div class="publish-container" ref="container" :style="{ background }">
 
-    <div class="header-buttons ">
-      <div  v-if="showDoneButton" class="row justify-between">
-        <van-button
-          @click="updateTextAreaValue"
-          size="small" plain type="primary button shadow-2 text-shadow-1">
-          Cancel
-        </van-button>
-
-        <div class="row items-center text-weight-bold text-white text-shadow-1">
-          <span>
-            {{ textareaLength }} / 180
-          </span>
-        </div>
-
-        <van-button
-          @click="updateTextAreaValue(true)"
-          size="small" plain type="primary button shadow-2 text-shadow-1">
-          Done
-        </van-button>
+    <div class="header-buttons row justify-between">
+      <div class="row text-shadow-1" @click="backToDiscover">
+        <q-icon name="las la-times text-white" color="#333333" class="" size="28px" />
       </div>
-      <div class="row reverse" v-else>
+      <div class="row items-center text-weight-bold text-white text-shadow-1">
+        <span class="q-px-md">
+          {{ textareaLength }} / 180
+        </span>
         <van-button
-          @click="updateTextAreaValue(true)"
+          @click="publish"
           size="small" plain type="primary button shadow-2 text-shadow-1">
           Publicar
+          <q-icon name="lar la-paper-plane" color="#333333" class="" size="18px" />
         </van-button>
       </div>
+
     </div>
 
-    <cropper
-      ref="canvas"
-      placeholder=""
-      v-model="croppa"
-      :quality="2"
-      :zoom-speed="10"
-      :textarea="textarea"
-      :width="screen.width"
-      :height="screen.height"
-      :disable-rotation="true"
-      :show-remove-button="false"
-      :prevent-white-space="true"
-      :disable-click-choose="true"
-      canvas-color="transparent"
-      :initial-image="imageSelected"
-      @file-choose="alert('file choose')"
-      @file-size-exceed="alert('file size exceeds')"
-      @file-type-mismatch="alert('file type mismatches')"
-      @new-image="alert('new image attatched')"
-      @image-remove="removeBackgroundImage"
-      @loading-start="isLoading = true"
-      @loading-end="isLoading = false"
-      @zoom="updateBackgroundImage"
-      @move="updateBackgroundImage"></cropper>
-
-    <div class="texteditor-container row full-width"
-      @mousedown.stop.prevent="croppa._handlePointerStart"
-      @mouseup.stop.prevent="croppa._handlePointerEnd"
-      @touchstart.stop="croppa._handlePointerStart"
-      @pointerstart.stop.prevent="croppa._handlePointerStart"
-      @touchend.stop.prevent="croppa._handlePointerEnd"
-      @touchcancel.stop.prevent="croppa._handlePointerEnd"
-      @pointerend.stop.prevent="croppa._handlePointerEnd"
-      @pointercancel.stop.prevent="croppa._handlePointerEnd"
-      @touchmove.stop="croppa._handlePointerMove"
-      @mousemove.stop.prevent="croppa._handlePointerMove"
-      @DOMMouseScroll.stop="croppa._handleWheel"
-      @wheel.stop="croppa._handleWheel"
-      @mousewheel.stop="croppa._handleWhel">
+    <div class="texteditor-container row full-width">
       <div class="col-12 textarea-container" style="z-index: 100">
         <textarea
-          class="text-shadow-1"
+          class="q-pa-lg"
           ref="textarea"
           @focus="showDoneButton = true"
+          @blur="showDoneButton = false"
           maxlength="180"
           minlength="10"
           v-model="textarea.value"
@@ -97,17 +49,30 @@
       </div>
     </van-popup>
 
+    <van-dialog v-model="showArentAvailable" title="Seguimos trabajando arduamente">
+        <template #default>
+          <div class="q-pa-md">
+            <p class="text-center">
+              Pronto tendremos mas mejoras
+            </p>
+            <div class="row full-width justify-center items-center">
+              <q-icon name="las la-camera" color="#333333" class="q-mr-sm" size="30px" />
+              <q-icon name="las la-font" color="#333" class="q-mr-sm" size="35px" />
+              <q-icon name="fas fa-bold" color="#333" class="q-mr-sm" size="25px" />
+            </div>
+          </div>
+        </template>
+    </van-dialog>
+
     <div ref="toolbar" v-if="!showDoneButton" class="toolbar">
       <div class="row justify-around fit items-center text-shadow-2">
-        <q-icon @click="croppa.chooseFile()" name="las la-camera" color="white" class="q-mr-sm" size="30px" />
+        <q-icon @click="showArentAvailable = true" name="las la-camera" color="white" class="q-mr-sm opacity-3" size="30px" />
 
         <q-icon @click="showBackgroundOptions = true" name="las la-palette" color="white" class="q-mr-sm" size="30px"/>
 
-        <q-icon @click="changeFontFamily" name="las la-font" color="white" class="q-mr-sm" size="35px" />
+        <q-icon @click="showArentAvailable = true" name="las la-font" color="white" class="q-mr-sm opacity-3" size="35px" />
 
-        <q-icon @click="toggleFontBold" name="fas fa-bold" color="white" class="q-mr-sm" size="25px" />
-
-        <q-icon @click="restoreCanvas" name="las la-redo-alt" color="white" class="q-mr-sm" size="30px" />
+        <q-icon @click="showArentAvailable = true" name="fas fa-bold" color="white" class="q-mr-sm opacity-3" size="25px" />
       </div>
     </div>
 
@@ -115,8 +80,10 @@
 </template>
 
 <script>
-import Cropper from 'src/components/cropper'
 import EventBus from 'src/eventBus.js'
+import { backgroundGradientColor } from 'src/utils'
+import Publication from 'src/services/PublicationService'
+import { mapGetters, mapActions } from 'vuex'
 
 const initialTextArea = {
   fontFamily: 'Lato',
@@ -132,17 +99,19 @@ const initialData = {
   prevCanvasStack: {
     textarea: [{ ...initialTextArea }],
   },
+  backgroundColors: [
+    '#0e5181', '#028f92', '#247a3e',
+  ],
 }
 
 export default {
   name: 'Publish',
-  components: { Cropper },
   data() {
     return {
       ...initialData,
+      showArentAvailable: false,
       showBackgroundOptions: false,
       editText: false,
-      backgroundColor: '',
       showDoneButton: false,
       croppa: {},
       imageSelected: '/statics/wallpaper.jpg',
@@ -155,9 +124,7 @@ export default {
         fontFamily: false,
         fontColor: !false,
       },
-      backgroundColors: [
-        '#0e5181', '#028f92', '#c7ac0f', '#E8045A', '#B2028A',
-      ],
+      backgroundColor: initialData.backgroundColors[0],
       editorOptions: {
         fontFamilies: [
           'Arial',
@@ -170,77 +137,48 @@ export default {
   computed: {
     textareaLength() {
       return this.textarea.value.length
-    }
+    },
+    background() {
+      return backgroundGradientColor(this.backgroundColor)
+    },
+    ...mapGetters('User', ['selectedCity']),
   },
   methods: {
-    _handlePointerStart(evt) {
-      const canvas = this.$refs.canvas
-      console.log(canvas, this.croppa)
-    },
-
-    removeBackgroundImage() {
-      // this.background = ''
-    },
-
-    afterReadImage(image) {
-      console.log(image)
-      this.imageSelected = image.content
-      this.croppa.refresh()
-    },
-
     updateBackgroudColor(color) {
-      this.imageSelected = ''
-
       this.backgroundColor = color
-      this.$refs.canvas.$el.style.backgroundColor = color
-      this.croppa.refresh()
     },
-
-    handlerFontColor(color) {
-      this.textarea.color = color;
+    backToDiscover() {
+      EventBus.$emit('showUI', true)
+      this.$router.push({ name: 'Discover' })
     },
+    async publish() {
+      const { backgroundColor } = this
+      const content = this.textarea.value
+      const { loc, country, name } = this.selectedCity
+      console.table(this.selectedCity)
 
-    changeFontFamily() {
+      if (content.length < 10) {
+        return this.$notify('Debes escribir al menos 10 letras')
+      }
+
+      const [err, publishRes] = await Publication.publish({
+        content,
+        backgroundColor,
+        location: loc,
+        city: name,
+        countryCode: country,
+      })
+
+      if (err) return err
+
+      EventBus.$emit('showUI', true)
+      this.$router.push({ name: 'Discover' })
     },
-
-    toggleFontBold() {
-      this.textarea.fontWeight = (!this.textarea.fontWeight) ? 'bold' : ''
-    },
-
-    restoreCanvas() {
-      const keys = Object.keys(initialData)
-      keys.forEach((key) => this[key] = initialData[key]);
-    },
-
-    updateTextAreaValue(update = false) {
-      this.showDoneButton = false
-
-      if (update)
-        this.textarea.oldValue = this.textarea.value
-      else
-        this.textarea.value = this.textarea.oldValue
-    },
-
-    updateBackgroundImage() {
-
-    },
-
-    _updatePrevCanvas() {
-       this.prevCanvasStack.textarea.push({...this.textarea})
-    }
   },
   watch: {
-    textarea: {
-      handler(textarea) {
-        this.$refs.textarea.style.fontSize = `${textarea.fontSize}px`
-
-        this.$refs.textarea.style.fontWeight = `${textarea.fontWeight}`
-      },
-      deep: true,
-    },
   },
   created() {
-    EventBus.$emit('toggleUI', false)
+    EventBus.$emit('showUI', false)
   },
   mounted() {
     // console.log(this.$refs.can)
@@ -249,7 +187,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .publish-container {
   height: 100vh;
   width: 100vw;
@@ -316,6 +253,10 @@ span.arial {
     height: 100%;
     background: transparent;
     border: 2px solid rgba($color: #000000, $alpha: 1.0);
+    white-space: normal;
+    text-align: justify;
+    -moz-text-align-last: center;
+    text-align-last: center;
 
     &::placeholder {
       color: white;
@@ -323,6 +264,8 @@ span.arial {
     }
   }
 }
+
+// background: linear-gradient(180deg, rgba(25,100,156,1) 31%, rgba(14,81,129,1) 72%);
 
 .control {
 
