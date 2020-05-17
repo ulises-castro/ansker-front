@@ -22,7 +22,7 @@
         </van-tabbar-item>
         <van-tabbar-item @click="showSettings = true">
           <template #icon>
-            <van-icon name="setting-o" size="32"/>
+            <van-icon name="apps-o" size="32"/>
           </template>
         </van-tabbar-item>
       </van-tabbar>
@@ -86,10 +86,10 @@ export default {
       showArentAvailable: false,
       showSettings: false,
       settingsMenu: [
-        { name: 'Ayuda', action: 'help' },
+        { name: 'Ayuda', action: 'help', disabled: true },
         { name: 'Contactanos', action: 'goContact' },
-        { name: 'Configuración', action: 'setting'},
         { name: 'Compartir con tus amigos', action: 'share' },
+        { name: 'Configuración', action: 'setting', disabled: true },
         { name: 'Cerrar sesión', action: 'goLogout', color: '#D32F30' },
       ]
     };
