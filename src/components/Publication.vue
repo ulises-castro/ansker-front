@@ -63,6 +63,16 @@
         <div v-for="(comment, index) in comments" :key="index">
           <comment :comment="comment"></comment>
         </div>
+        <div>
+          <van-form validate-first>
+          <van-field
+            v-model="newComment"
+            name="validateComment"
+            placeholder="Escribir un comentario"
+            :rules="[{ validateComment, message: 'Error message' }]"
+          />
+          </van-form>
+        </div>
       </div>
     </van-popup>
   </section>
@@ -116,6 +126,8 @@ export default {
       showOptions: false,
       isUserLogged: true,
       showComments: false,
+      validateComment: '/\d[^_]{2,500}/',
+      newComment: '',
       comments: [
         {
           publishAt: new Date(),

@@ -1,14 +1,14 @@
 <template>
   <section>
-    <van-collapse :border="false" v-model="activeCitiesHot">
+    <van-collapse :border="false" v-model="activeCitiesHot" style="padding-top: 50px">
       <van-collapse-item
         :border="false"
         title-class="text-weight-bold"
         title="Ciudades hot"
-        name="1"
+        name="cities"
       >
         <aside class="row justify-center wrap space-between">
-          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
+          <div @click="selectHotCity(0)" class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
               height="38"
               width="38"
@@ -18,27 +18,7 @@
             <small class="full-width text-center is-size-7">Manzanillo</small>
           </div>
 
-          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
-            <img
-              height="38"
-              width="38"
-              style="border-radius: 50%"
-              src="statics/cities/mx-guadalajara.jpg"
-            />
-            <small class="full-width text-center is-size-7">Guadalajara</small>
-          </div>
-
-          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
-            <img
-              height="38"
-              width="38"
-              style="border-radius: 50%"
-              src="statics/cities/mx-tijuana.jpg"
-            />
-            <small class="full-width text-center is-size-7">Tijuana</small>
-          </div>
-
-          <div class="row justify-center wrap" style="min-width: 50px max-width: 70px">
+          <div @click="selectHotCity(1)" class="row justify-center wrap" style="min-width: 50px max-width: 70px">
             <img
               height="38"
               width="38"
@@ -47,6 +27,17 @@
             />
             <small class="full-width text-center is-size-7">Colima</small>
           </div>
+
+          <div @click="restoreSelectedCity" class="row justify-center wrap" style="min-width: 50px max-width: 70px">
+            <img
+              height="38"
+              width="38"
+              style="border-radius: 50%"
+              src="statics/cities/global.jpg"
+            />
+            <small class="full-width text-center is-size-7">Global</small>
+          </div>
+
         </aside>
       </van-collapse-item>
     </van-collapse>
@@ -101,17 +92,15 @@ import { City } from 'src/services'
 
 import { mapGetters, mapActions } from 'vuex'
 
-
 export default {
   name: "Discover",
-  props: ['props.'],
+  props: ['handlerError'],
   components: {
     publication,
   },
   data() {
     return {
-      publications: [
-      ],
+      publications: [{}, {}, {}, {}, {}],
       skeletons: [1,2,3,4,5,6,7,8,9,10],
       isLoading: true,
       showPublishSecretModal: false,
@@ -119,7 +108,7 @@ export default {
       citySelected: {},
       citiesNotFound: false,
       isLoadingCities: false,
-      activeCitiesHot: ["1"],
+      activeCitiesHot: ["cities"],
       citiesSearchFound: []
     }
   },
@@ -151,6 +140,16 @@ export default {
       this.citySelected = {}
 
       this.selectCity({})
+    },
+    selectHotCity(citySelected) {
+      const cities = [
+        {"cityId":3996663,"name":"Manzanillo","altName":"","country":"MX","featureCode":"PPLA2","adminCode":"08","population":110735,"loc":{"type":"Point","coordinates":[-104.34214,19.11695]},"countryName":"Mexico","flag":"🇲🇽"},
+        {"cityId":4013516,"name":"Colima","altName":"","country":"MX","featureCode":"PPLA","adminCode":"08","population":127235,"loc":{"type":"Point","coordinates":[-103.72714,19.24997]},"countryName":"Mexico","flag":"🇲🇽"}
+      ]
+
+      const city = cities[citySelected]
+
+      this.updateSelectedCity(city)
     },
     updateSelectedCity(city) {
       this.citySelected = city

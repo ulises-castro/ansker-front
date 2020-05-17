@@ -35,7 +35,7 @@
       @cancel="choiseShare = false, active = 0"
     />
 
-    <Share :showShare="showShare" :shareText="shareText" ></Share>
+    <Share :propsShowShare="propsShowShare" :shareText="shareText" ></Share>
 
     <van-dialog v-model="showArentAvailable" title="Pronto tendremos mas mejoras">
       <div class="q-pa-md">
@@ -84,7 +84,7 @@ export default {
       showArentAvailable: false,
       shareText: 'Comparte con personas de tu alrededor de forma anónima',
       showSettings: false,
-      showShare: false,
+      propsShowShare: false,
       settingsMenu: [
         { name: 'Ayuda', action: "help" },
         { name: 'Contactanos', action: "goContact" },
@@ -114,6 +114,7 @@ export default {
       if (navigator.share) {
         navigator.share({
           title: this.shareText,
+          text: 'Comparte con tu alrededor anónimamente',
           url: 'https://ansker.me'
         })
         .then(() => {
@@ -121,7 +122,7 @@ export default {
         })
         .catch(console.error);
       } else {
-        this.showShare = true
+        this.propsShowShare = true
       }
     },
     ...mapActions('User', ['logout']),

@@ -96,6 +96,8 @@ export default {
       }
     }
   },
+  created() {
+  },
   methods: {
     checkLoginState() {
       this.auth.isLoading.facebook = true

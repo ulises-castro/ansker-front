@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     handlerError(err) {
-      if (err.response.data.message) {
+      if (err.response && err.response.data.message) {
         return this.$notify(`${err.response.data.message}`)
       }
 
