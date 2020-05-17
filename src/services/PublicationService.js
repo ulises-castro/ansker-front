@@ -21,13 +21,15 @@ class Publication {
   }
 
   @Catch()
-  getAllByCity(countryCode, city) {
-    return get(`publication/filter/${countryCode}/${city}`)
+  getAllByCity(params) {
+    const { countryCode, city } = params
+
+    return get(`publication/filter/${countryCode}/${city}/${params.pageNumber}`)
   }
 
   @Catch()
-  getAll() {
-    return get(`publication/filter/all`)
+  getAll(params) {
+    return get(`publication/filter/all/${params.pageNumber}`)
   }
 
   @Catch()

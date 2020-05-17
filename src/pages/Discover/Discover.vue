@@ -93,6 +93,18 @@
           <publication :publication="publication"></publication>
         </div>
       </div>
+
+      <div v-if="notMoreToLoad" class="text-white text-center row" style="background: rgb(38, 128, 146); border: 1px solid #e4e4e4; border-bottom: 1px solid">
+        <h5 class="full-width text-center q-mt-lg q-mb-sm">
+          Hemos llegado al final
+        </h5>
+        <span class="full-width q-pa-sm" style="font-size: 1em">
+          Te invitamos a publicar una historia
+        </span>
+        <div class="row justify-center full-width q-py-md">
+          <button @click="handlerGoPublish" class="btn-white text-blue-5 text-bold q-mr-lg"> Ir a publicar </button>
+        </div>
+      </div>
     </section>
 
     <share :propShowShare="propShowShare" :shareText="shareText"></share>
@@ -126,7 +138,9 @@ export default {
       citiesNotFound: false,
       isLoadingCities: false,
       activeHotCities: [],
-      citiesSearchFound: []
+      notMoreToLoad: false,
+      citiesSearchFound: [],
+      pageNumber: 1,
     }
   },
   created() {
@@ -139,6 +153,11 @@ export default {
     this.fetchPublications()
 
     this.activeHotCities = this.showHotCities
+
+    window.addEventListener('scroll', this.infinityScrollPaginator)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.infinityScrollPaginator)
   },
   computed: {
     ...mapGetters('User', ['selectedCity']),
@@ -151,6 +170,10 @@ export default {
         this.fetchPublications()
       }
     },
+    citySelected() {
+      this.pageNumber = 1
+      this.notMoreToLoad = false
+    },
     activeHotCities() {
       const hidden = (!this.activeHotCities.length)
       this.hideHotCities(hidden)
@@ -159,6 +182,19 @@ export default {
   methods: {
     ...mapActions('User', ['selectCity']),
     ...mapActions('Theme', ['hideDiscoverShare', 'hideHotCities']),
+    infinityScrollPaginator(evt) {
+      const html = document.getElementsByTagName("html")[0]
+      const bottomOfWindow = (html.scrollTop + window.innerHeight >= html.offsetHeight)
+
+      if (bottomOfWindow && !this.notMoreToLoad) {
+        this.publications.push({})
+        this.pageNumber++
+        this.fetchPublications()
+      }
+    },
+    handlerGoPublish() {
+      this.$router.push({ name: 'Publish' })
+    },
     restoreSelectedCity() {
       this.citiesSearchFound = []
       this.citySearchValue = ''
@@ -185,13 +221,24 @@ export default {
       this.fetchPublications()
     },
     async fetchPublications() {
-
       const fetchBy = this.citySearchValue ? 'getAllByCity' : 'getAll'
-      const [err, publicationsResponse] = await Publication[fetchBy](this.selectedCity.country, this.selectedCity.name)
+      const [err, publicationsResponse] = await Publication[fetchBy]({
+        countryCode: this.selectedCity.country,
+        city: this.selectedCity.name,
+        pageNumber: this.pageNumber
+      })
 
       if (err) this.handlerError(err)
 
-      this.publications = publicationsResponse.data.publications
+      const loadedPublications = publicationsResponse.data.publications
+      this.publications = this.publications.filter(publication => Object.keys(publication).length)
+
+      if (loadedPublications.length) {
+
+        this.publications.push(...loadedPublications)
+      } else {
+        this.notMoreToLoad = true
+      }
     },
     async onSearchCity() {
       const { citySearchValue } = this
