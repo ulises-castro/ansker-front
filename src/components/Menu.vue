@@ -35,7 +35,7 @@
       @cancel="choiseShare = false, active = 0"
     />
 
-    <Share :propShowShare="propShowShare" :shareText="shareText" ></Share>
+    <Share :propShowShare="propShowShare" :shareText="shareText"></Share>
 
     <van-dialog v-model="showArentAvailable" title="Pronto tendremos mas mejoras">
       <div class="q-pa-md">
@@ -86,7 +86,7 @@ export default {
       showArentAvailable: false,
       showSettings: false,
       settingsMenu: [
-        { name: 'Ayuda', action: 'help', disabled: true },
+        { name: 'Ayuda', action: 'goContact',  },
         { name: 'Contactanos', action: 'goContact' },
         { name: 'Compartir con tus amigos', action: 'share' },
         { name: 'Configuración', action: 'setting', disabled: true },

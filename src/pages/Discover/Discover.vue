@@ -171,8 +171,7 @@ export default {
       }
     },
     citySelected() {
-      this.pageNumber = 1
-      this.notMoreToLoad = false
+
     },
     activeHotCities() {
       const hidden = (!this.activeHotCities.length)
@@ -184,10 +183,10 @@ export default {
     ...mapActions('Theme', ['hideDiscoverShare', 'hideHotCities']),
     infinityScrollPaginator(evt) {
       const html = document.getElementsByTagName("html")[0]
-      const bottomOfWindow = (html.scrollTop + window.innerHeight >= html.offsetHeight)
+      const bottomOfWindow = ((html.scrollTop + window.innerHeight) + 1 >= html.offsetHeight)
+      console.log('hola', bottomOfWindow, html.scrollTop + window.innerHeight, html.offsetHeight)
 
       if (bottomOfWindow && !this.notMoreToLoad) {
-        this.publications.push({})
         this.pageNumber++
         this.fetchPublications()
       }
@@ -195,12 +194,20 @@ export default {
     handlerGoPublish() {
       this.$router.push({ name: 'Publish' })
     },
+    restoreCitiesParams() {
+      this.publications = [{}, {}, {}]
+      this.pageNumber = 1
+      this.notMoreToLoad = false
+    },
     restoreSelectedCity() {
+      this.restoreCitiesParams()
+
       this.citiesSearchFound = []
       this.citySearchValue = ''
       this.citySelected = {}
 
       this.selectCity({})
+      this.fetchPublications()
     },
     selectHotCity(citySelected) {
       const cities = [
@@ -208,6 +215,7 @@ export default {
         {"cityId":4013516,"name":"Colima","altName":"","country":"MX","featureCode":"PPLA","adminCode":"08","population":127235,"loc":{"type":"Point","coordinates":[-103.72714,19.24997]},"countryName":"Mexico","flag":"🇲🇽"}
       ]
 
+      this.restoreCitiesParams()
       const city = cities[citySelected]
 
       this.updateSelectedCity(city)
