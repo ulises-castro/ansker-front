@@ -96,9 +96,6 @@ const initialTextArea = {
 
 const initialData = {
   textarea: initialTextArea,
-  prevCanvasStack: {
-    textarea: [{ ...initialTextArea }],
-  },
   backgroundColors: [
     '#0e5181', '#028f92', '#247a3e',
   ],
@@ -113,26 +110,20 @@ export default {
       showBackgroundOptions: false,
       editText: false,
       showDoneButton: false,
-      croppa: {},
-      imageSelected: '/statics/wallpaper.jpg',
-      canvasPrevState: false,
-      screen: {
-        width: window.innerWidth,
-        height: window.innerHeight,
-      },
-      showEditor: {
-        fontFamily: false,
-        fontColor: !false,
-      },
       backgroundColor: initialData.backgroundColors[0],
-      editorOptions: {
-        fontFamilies: [
-          'Arial',
-          'sans-serif',
-          'Lato',
-          'Helvetica'],
-      },
     }
+  },
+  created() {
+    EventBus.$emit('showUI', false)
+  },
+  mounted() {
+  },
+  watch: {
+    'textarea.value'(newValue) {
+      const regex = /<.*?>|(_)|~|`|\/{2,}/gi;
+
+      this.textarea.value = newValue.replace(regex, '')
+    },
   },
   computed: {
     textareaLength() {
@@ -144,6 +135,7 @@ export default {
     ...mapGetters('User', ['selectedCity']),
   },
   methods: {
+
     updateBackgroudColor(color) {
       this.backgroundColor = color
     },
@@ -175,14 +167,7 @@ export default {
       this.$router.push({ name: 'Discover' })
     },
   },
-  watch: {
-  },
-  created() {
-    EventBus.$emit('showUI', false)
-  },
-  mounted() {
-    // console.log(this.$refs.can)
-  }
+
 }
 </script>
 

@@ -3,8 +3,8 @@
     <van-collapse :border="false" v-model="activeHotCities" style="padding-top: 50px">
       <van-collapse-item
         :border="false"
-        title-class="text-weight-bold"
-        title="Ciudades hot"
+        title-class="text-weight-bold text-center"
+        title="Ciudades activas"
         name="cities"
       >
         <aside class="row justify-center wrap space-between">
@@ -41,7 +41,7 @@
         </aside>
       </van-collapse-item>
     </van-collapse>
-
+<!-- 
     <van-search
       v-model="citySearchValue"
       placeholder="Filtrar por ciudad"
@@ -61,6 +61,7 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
+
     <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
       <div class="full-width q-px-md">
         <div
@@ -74,7 +75,8 @@
           {{ city.countryName }} {{ city.flag }}
         </div>
       </div>
-    </aside>
+    </aside> -->
+
     <section class="publications q-pt-md" style="padding-bottom: 55px">
       <div v-if="showDiscoverShare" class="text-white text-center row" style="background: rgb(38, 128, 146); border: 1px solid #e4e4e4; border-bottom: 1px solid">
         <h5 class="full-width text-center q-mt-lg q-mb-sm">
