@@ -46,7 +46,7 @@ const routes = [{
     meta: {
       requiresAuth: true,
     },
-    component: () => import('pages/Contact/Index.vue')
+    component: () => import('pages/Contact/Contact.vue')
   },
   {
     path: '/authenticate/google',

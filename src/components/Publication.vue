@@ -27,7 +27,9 @@
           <router-link :to="{ name: '', params: {} }">
             <q-icon name="las la-comments" color="grey-1" class="q-mr-sm" size="24px" />
           </router-link>
-          <span class="indicator p-r-5"> 10 </span>
+          <span class="indicator p-r-5">
+            {{ publication.comments }}
+          </span>
         </div>
         <div
           @click="like"
@@ -36,7 +38,7 @@
             <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="18px" />
           </router-link>
           <span class="p-r-5 indicator">
-            22
+            {{ publication.likes }}
           </span>
         </div>
       </div>
@@ -65,12 +67,25 @@
         </div>
         <div>
           <van-form validate-first>
-          <van-field
-            v-model="newComment"
-            name="validateComment"
-            placeholder="Escribir un comentario"
-            :rules="[{ validateComment, message: 'Error message' }]"
-          />
+            <van-field
+              v-model="newComment"
+              ref="newComment"
+              rows="2"
+              @click="openNewComment"
+              autosize
+              label=""
+              name="validateComment"
+              type="textarea"
+              autofocus
+              maxlength="500"
+              placeholder="Escribir un comentario"
+              :show-word-limit="showCommentBtn"
+              :rules="[{ validateComment, message: 'Error message' }]"
+            >
+            </van-field>
+            <div v-if="showCommentBtn" class="row justify-end q-py-sm">
+              <van-button  @click="sendMessage" size="large" type="primary">Comentar</van-button>
+            </div>
           </van-form>
         </div>
       </div>
@@ -125,6 +140,7 @@ export default {
     return {
       showOptions: false,
       isUserLogged: true,
+      showCommentBtn: false,
       showComments: false,
       validateComment: '/\d[^_]{2,500}/',
       newComment: '',
@@ -149,6 +165,11 @@ export default {
   mounted() {
     // this.showJoinUs();
   },
+  watch: {
+    showComments(show) {
+      this.showCommentBtn = !show
+    }
+  },
   computed: {
     background() {
       return backgroundGradientColor(this.publication.backgroundColor)
@@ -171,6 +192,10 @@ export default {
       }
 
       return false;
+    },
+    openNewComment() {
+      this.showCommentBtn = true
+      this.$refs.newComment.focus()
     },
     async like() {
       if (this.showJoinUs) return;
