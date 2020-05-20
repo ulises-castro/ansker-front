@@ -14,7 +14,7 @@
         {{ publication.content }}
       </span>
     </div>
-    <div @click="showJoinUs" class="publication-actions row">
+    <div class="publication-actions row">
       <div class="col-4">
         <span class="text-white text-bold q-pl-md">
           {{ publication.location.city }}
@@ -169,7 +169,6 @@ export default {
     };
   },
   mounted() {
-    // this.showJoinUs();
   },
   watch: {
     showComments(show) {
@@ -201,20 +200,11 @@ export default {
     openComments() {
       this.showComments = true
     },
-    showJoinUs() {
-      if (!this.isUserLogged) {
-        this.$emit("openShowJoinUs");
-        return true;
-      }
-
-      return false;
-    },
     openNewComment() {
       this.showCommentBtn = true
       this.$refs.newComment.focus()
     },
     async like() {
-      if (this.showJoinUs) return;
       const { publicationId } = this.publication;
 
       const { data } = await post("publication/liked", { publicationId });
