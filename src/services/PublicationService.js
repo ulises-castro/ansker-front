@@ -41,6 +41,12 @@ class Publication {
     console.log(data)
     return post(`publication/publish`, data)
   }
+
+  @Catch()
+  report(publicationId) {
+    return post(`publication/report`, publicationId)
+  }
+
 }
 
 export default new Publication()

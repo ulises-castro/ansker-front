@@ -46,6 +46,7 @@
     <van-action-sheet
       v-model="showOptions"
       description="Selecciona una opción"
+      @select="selectedAction"
       :actions="actions"
       @cancel="onCancel"
     />
@@ -125,6 +126,7 @@
 <script>
 // import { get, post } from "@/api";
 import { backgroundGradientColor } from 'src/utils'
+import Publication from 'src/services/PublicationService'
 import comment from 'src/components/Comment'
 
 export default {
@@ -133,6 +135,9 @@ export default {
     publication: {
       type: Object,
       required: true
+    },
+    handlerError: {
+      type: Function,
     }
   },
   components: { comment },
@@ -156,7 +161,8 @@ export default {
       ],
       actions: [
         {
-          name: "Marcar como indebido"
+          name: "Reportar publicación",
+          action: 'report'
         },
       ],
       screenWidth: window.innerWidth
@@ -176,8 +182,18 @@ export default {
     }
   },
   methods: {
-    onCancel() {
+    async report() {
+      const { publicationId } = this.publication
+      const [err, response] = await Publication.report({ publicationId })
 
+      if (err) this.handlerError(err)
+
+      this.$notify({ type: 'success', message: 'Has reportado esta publicación correctamente' })
+    },
+    selectedAction(menu) {
+      this[menu.action]()
+    },
+    onCancel() {
     },
     handlerShowOptions() {
       this.showOptions = true
