@@ -168,8 +168,8 @@ export default {
       screenWidth: window.innerWidth
     };
   },
-  // mounted() {
-  // },
+  mounted() {
+  },
   watch: {
     showComments(show) {
       this.showCommentBtn = !show
