@@ -124,7 +124,6 @@
 </template>
 
 <script>
-// import { get, post } from "@/api";
 import { backgroundGradientColor } from 'src/utils'
 import Publication from 'src/services/PublicationService'
 import comment from 'src/components/Comment'

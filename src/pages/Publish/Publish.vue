@@ -147,7 +147,6 @@ export default {
       const { backgroundColor } = this
       const content = this.textarea.value
       const { loc, country, name } = this.selectedCity
-      console.table(this.selectedCity)
 
       if (content.length < 10) {
         return this.$notify('Debes escribir al menos 10 letras')

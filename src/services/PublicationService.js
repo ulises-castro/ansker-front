@@ -38,7 +38,6 @@ class Publication {
 
   @Catch()
   publish(data) {
-    // console.log(data)
     return post(`publication/publish`, data)
   }
 

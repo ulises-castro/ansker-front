@@ -24,14 +24,6 @@ const routes = [{
     },
     component: () => import('pages/Publish/Publish.vue')
   },
-  // {
-  //   path: '/publication/:id',
-  //   name: 'Publication',
-  //   meta: {
-  //     requiresAuth: true,
-  //   },
-  //   component: () => import('pages/Publication/Publication.vue')
-  // },
   {
     path: '/settings',
     name: 'Settings',

@@ -17,9 +17,9 @@ const ShareMixin = {
           url: 'https://ansker.me'
         })
         .then(() => {
-          this.$notify({  type: 'success', message: 'Thanks for sharing!'});
+          this.$notify({  type: 'success', message: 'Thanks for sharing!'})
         })
-        .catch(console.error);
+        .catch()
       } else {
         this.propShowShare = new Date()
       }
