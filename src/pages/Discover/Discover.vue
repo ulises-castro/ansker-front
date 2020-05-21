@@ -186,7 +186,6 @@ export default {
     infinityScrollPaginator(evt) {
       const html = document.getElementsByTagName("html")[0]
       const bottomOfWindow = ((html.scrollTop + window.innerHeight) + 1 >= html.offsetHeight)
-      console.log('hola', bottomOfWindow, html.scrollTop + window.innerHeight, html.offsetHeight)
 
       if (bottomOfWindow && !this.notMoreToLoad) {
         this.pageNumber++

@@ -128,8 +128,6 @@ export default {
 
       const [err, facebookUser] = await Auth.signInFacebook(tokenFB)
 
-      console.log(err, facebookUser)
-
       if (err || !facebookUser.data) return this.$notify('Ocurrio un error, intentalo más tarde')
 
       this.$notify({ type: 'success', message: 'Welcome to  Ansker' })

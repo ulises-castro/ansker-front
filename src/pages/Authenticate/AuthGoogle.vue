@@ -20,14 +20,10 @@ export default {
       Loading.show()
 
       const extractCode = window.location.href.split('?')
-      console.log(window.location, extractCode)
       const urlParams = queryString.parse(extractCode[1])
-
-      console.log(`The code is:`, urlParams)
 
       const [ err, googleData ] = await Auth.googleLogin(urlParams.code)
 
-      console.log(googleData)
       if (err) {
         this.$router.push({ name: 'Home' })
 
@@ -37,7 +33,6 @@ export default {
       this.getTokenAndsignIn(googleData.data.access_token)
     },
     async getTokenAndsignIn(access_token) {
-      console.log(this.$route.params)
       const [err, token] = await Auth.signInGoogle(access_token)
 
       if (err) return this.handlerError(err)

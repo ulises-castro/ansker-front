@@ -30,7 +30,6 @@ class Auth {
 
   @Catch()
   googleLogin(code) {
-    console.log(code)
     return get('auth/google', {
       code
     })
