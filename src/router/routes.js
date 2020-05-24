@@ -6,7 +6,7 @@
 const routes = [{
     path: '/',
     name: 'Home',
-    component: () => import('pages/Home/Index.vue')
+    component: () => import('pages/Home/Home.vue')
   },
   {
     path: '/discover',
@@ -14,23 +14,23 @@ const routes = [{
     meta: {
       requiresAuth: true,
     },
-    component: () => import('pages/Discover/Index.vue')
+    component: () => import('pages/Discover/Discover.vue')
   },
-  // {
-  //   path: '/Publish',
-  //   name: 'Publish',
-  //   meta: {
-  //     requiresAuth: true,
-  //   },
-  //   component: () => import('pages/Publish/Index.vue')
-  // },
+  {
+  path: '/Publish',
+    name: 'Publish',
+    meta: {
+      requiresAuth: true,
+    },
+    component: () => import('pages/Publish/Publish.vue')
+  },
   {
     path: '/settings',
     name: 'Settings',
     meta: {
       requiresAuth: true,
     },
-    component: () => import('pages/Settings/Index.vue')
+    component: () => import('pages/Settings/Settings.vue')
   },
   {
     path: '/contact',
@@ -38,12 +38,7 @@ const routes = [{
     meta: {
       requiresAuth: true,
     },
-    component: () => import('pages/Contact/Index.vue')
-  },
-  {
-    path: '/publish',
-    name: 'Publish',
-    component: () => import('pages/Publish.vue')
+    component: () => import('pages/Contact/Contact.vue')
   },
   {
     path: '/authenticate/google',

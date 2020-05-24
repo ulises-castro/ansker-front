@@ -2,8 +2,8 @@ import axios from 'axios'
 
 const apiUrl = process.env.API
 
-if (localStorage.authToken) {
-  axios.defaults.headers.common['Authorization'] = `token ${localStorage.authToken}`
+if (localStorage.token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${localStorage.token}`
 }
 
 const getUrl = (url) => {

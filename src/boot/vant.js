@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import {
   Icon,
+  Form,
   Popup,
   Image,
   Field,
@@ -9,6 +10,7 @@ import {
   Slider,
   Picker,
   Search,
+  Dialog,
   Button,
   NavBar,
   Notify,
@@ -17,6 +19,7 @@ import {
   Tabbar,
   Skeleton,
   Cell,
+  Uploader,
   CellGroup,
   TabbarItem,
   Collapse,
@@ -42,7 +45,10 @@ Vue.use(Picker)
 Vue.use(NavBar)
 Vue.use(Button)
 Vue.use(Search)
+Vue.use(Form)
+Vue.use(Dialog)
 Vue.use(Tabbar)
+Vue.use(Uploader)
 Vue.use(ShareSheet)
 Vue.use(Sticky)
 Vue.use(Notify)
