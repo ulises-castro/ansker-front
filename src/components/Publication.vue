@@ -66,7 +66,7 @@
         <div v-for="(comment, index) in comments" :key="index">
           <comment :comment="comment"></comment>
         </div>
-        <div>
+        <div class="q-pt-sm">
           <van-form validate-first>
             <van-field
               v-model="newComment"
@@ -148,16 +148,7 @@ export default {
       showComments: false,
       validateComment: '/\d[^_]{2,500}/',
       newComment: '',
-      comments: [
-        {
-          publishAt: new Date(),
-          content: 'Prueba amigo',
-        },
-        {
-          publishAt: new Date(),
-          content: 'Prueba amigo 2',
-        },
-      ],
+      comments: [{}, {}, {}],
       actions: [
         {
           name: "Reportar publicación",
@@ -201,6 +192,12 @@ export default {
 
       if (err) this.handlerError(err)
 
+      const comment = {
+        content,
+        publishAt: new Date(),
+        userAuthor: true,
+      }
+
       this.comments.push(comment)
     },
     handlerShowOptions() {
@@ -214,9 +211,9 @@ export default {
     async loadComments() {
       const [err, commentsData] = await Publication.fetchComments(this.publication.publicationId)
 
-      if (err, commentsData) this.handlerError(err)
+      if (err) this.handlerError(err)
 
-      this.comments = commentsData.data
+      this.comments = commentsData.data.comments
     },
     openNewComment() {
       this.showCommentBtn = true
