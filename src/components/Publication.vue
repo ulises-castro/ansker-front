@@ -208,6 +208,15 @@ export default {
     },
     openComments() {
       this.showComments = true
+
+      this.loadComments()
+    },
+    async loadComments() {
+      const [err, commentsData] = await Publication.fetchComments(this.publication.publicationId)
+
+      if (err, commentsData) this.handlerError(err)
+
+      this.comments = commentsData.data
     },
     openNewComment() {
       this.showCommentBtn = true
