@@ -85,7 +85,7 @@
             >
             </van-field>
             <div v-if="showCommentBtn" class="row justify-end q-py-sm">
-              <van-button  @click="sendMessage" size="large" type="primary">Comentar</van-button>
+              <van-button  @click="sendComment" size="large" type="primary">Comentar</van-button>
             </div>
           </van-form>
         </div>
@@ -192,6 +192,16 @@ export default {
       this[menu.action]()
     },
     onCancel() {
+    },
+    async sendComment() {
+      const content = this.newComment
+      const { publicationId } = this.publication
+
+      const [err, response] = await Publication.publishComment({ content, publicationId })
+
+      if (err) this.handlerError(err)
+
+      this.comments.push(comment)
     },
     handlerShowOptions() {
       this.showOptions = true

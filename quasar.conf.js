@@ -4,7 +4,7 @@
 const path = require('path')
 const fs = require('fs')
 
-const BackUrl = (false) ? 'https://localanskerme.me:3030/api/' : 'https://192.168.0.160:3030/api/'
+const BackUrl = (false) ? 'https://localanskerme.me:3030/api/' : 'https://192.168.1.65:3030/api/'
 
 module.exports = function (ctx) {
   return {
