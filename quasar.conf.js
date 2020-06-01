@@ -4,7 +4,7 @@
 const path = require('path')
 const fs = require('fs')
 
-const BackUrl = (false) ? 'https://localanskerme.me:3030/api/' : 'https://192.168.0.160:3030/api/'
+const BackUrl = (false) ? 'https://localanskerme.me:3030/api/' : 'https://192.168.1.65:3030/api/'
 
 module.exports = function (ctx) {
   return {
@@ -72,7 +72,7 @@ module.exports = function (ctx) {
         SOCKET: JSON.stringify('https://localanskerme.me:3030'),
         BASE_URL: JSON.stringify('https://localanskerme.me:1297')
       } : { // and on build (production):
-        API: JSON.stringify('https://ansker.me/api/'),
+        API: JSON.stringify('https://api.ansker.me/'),
         GOOGLE_ID: JSON.stringify(
           '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('https://ansker.me:3030'),

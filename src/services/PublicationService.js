@@ -46,6 +46,16 @@ class Publication {
     return post(`publication/report`, publicationId)
   }
 
+  @Catch()
+  publishComment(data) {
+    return post(`publication/comment/publish`, data)
+  }
+
+  @Catch()
+  fetchComments(publicationId) {
+    return get(`publication/comment/getAll/${publicationId}`, publicationId)
+  }
+
 }
 
 export default new Publication()

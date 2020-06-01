@@ -66,7 +66,7 @@
         <div v-for="(comment, index) in comments" :key="index">
           <comment :comment="comment"></comment>
         </div>
-        <div>
+        <div class="q-pt-sm">
           <van-form validate-first>
             <van-field
               v-model="newComment"
@@ -85,7 +85,7 @@
             >
             </van-field>
             <div v-if="showCommentBtn" class="row justify-end q-py-sm">
-              <van-button  @click="sendMessage" size="large" type="primary">Comentar</van-button>
+              <van-button  @click="sendComment" size="large" type="primary">Comentar</van-button>
             </div>
           </van-form>
         </div>
@@ -148,16 +148,7 @@ export default {
       showComments: false,
       validateComment: '/\d[^_]{2,500}/',
       newComment: '',
-      comments: [
-        {
-          publishAt: new Date(),
-          content: 'Prueba amigo',
-        },
-        {
-          publishAt: new Date(),
-          content: 'Prueba amigo 2',
-        },
-      ],
+      comments: [{}, {}, {}],
       actions: [
         {
           name: "Reportar publicación",
@@ -193,11 +184,36 @@ export default {
     },
     onCancel() {
     },
+    async sendComment() {
+      const content = this.newComment
+      const { publicationId } = this.publication
+
+      const [err, response] = await Publication.publishComment({ content, publicationId })
+
+      if (err) this.handlerError(err)
+
+      const comment = {
+        content,
+        publishAt: new Date(),
+        userAuthor: true,
+      }
+
+      this.comments.push(comment)
+    },
     handlerShowOptions() {
       this.showOptions = true
     },
     openComments() {
       this.showComments = true
+
+      this.loadComments()
+    },
+    async loadComments() {
+      const [err, commentsData] = await Publication.fetchComments(this.publication.publicationId)
+
+      if (err) this.handlerError(err)
+
+      this.comments = commentsData.data.comments
     },
     openNewComment() {
       this.showCommentBtn = true

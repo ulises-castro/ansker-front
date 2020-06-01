@@ -6,12 +6,6 @@
       @select="handlerShare"
       description="Comparte con tus amigos"
       :options="shareOptions" />
-
-    <!-- <div class="fb-share-button"
-      ref="fbShareButton"
-      data-href="https://ansker.me"
-      data-layout="button">
-    </div> -->
   </section>
 </template>
 <script>
