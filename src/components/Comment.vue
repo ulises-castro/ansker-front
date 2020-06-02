@@ -21,7 +21,7 @@
       <div v-else>
         <div class="w-full q-pa-md q-pb-sm">
           <div class="text-grey-10">
-            <span v-if="!comment.userAuthor">
+            <span v-if="!comment.userAuthor" style="background: blue; color: white; border-radius: 5px">
               Anónimo
             </span>
             <span v-else>
