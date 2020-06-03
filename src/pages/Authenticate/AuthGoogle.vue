@@ -41,6 +41,8 @@ export default {
 
       this.login(token.data.token)
 
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token.data.token}`
+
       this.$router.push({ name: 'Discover' })
     },
     ...mapActions('User',[
