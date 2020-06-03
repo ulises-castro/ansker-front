@@ -63,7 +63,7 @@ module.exports = function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: ctx.dev ? 'hash' : 'history', // available values: 'hash', 'history'
       env: ctx.dev ? { // so on dev we'll have
         API: JSON.stringify(BackUrl),
         GOOGLE_ID: JSON.stringify(
