@@ -25,6 +25,16 @@ const routes = [{
     component: () => import('pages/Publish/Publish.vue')
   },
   {
+    path: '/terms',
+    name: 'Terms',
+    component: () => import('pages/Home/Terms.vue')
+  },
+  {
+  path: '/policies',
+    name: 'Policy',
+    component: () => import('pages/Home/Policy.vue')
+  },
+  {
     path: '/settings',
     name: 'Settings',
     meta: {

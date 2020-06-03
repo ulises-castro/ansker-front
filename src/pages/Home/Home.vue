@@ -68,8 +68,13 @@
             class="text-primary"
             href="/terms"
             target="_blanket"
-          >Términos</a> y
-          <a class="text-primary" href="/policies" target="_blanket">Políticas de privacidad</a>
+          >
+            Términos
+          </a> y
+          <a class="text-primary"
+          href="/policies" target="_blanket">
+            Políticas de privacidad
+          </a>
         </small>
       </aside>
     </van-popup>
@@ -82,7 +87,7 @@ import { mapActions } from 'vuex'
 import { Auth } from "src/services"
 
 export default {
-  name: "PageIndex",
+  name: "Home",
   data() {
     return {
       showFooter: true,
