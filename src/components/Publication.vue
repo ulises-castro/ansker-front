@@ -185,8 +185,9 @@ export default {
       const [err, response] = await Publication.voteUp(this.publication.publicationId)
 
       this.publication.userVotedUp = !this.publication.userVotedUp
-      const operation = !this.publication.userVotedUp ? -1 : 1
-      this.publication.likes += operation
+      const operation = this.publication.userVotedUp ? 1 : -1
+
+      this.publication.votes += operation
     },
     selectedAction(menu) {
       this[menu.action]()
