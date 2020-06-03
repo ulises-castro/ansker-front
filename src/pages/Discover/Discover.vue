@@ -4,7 +4,7 @@
       <van-collapse-item
         :border="false"
         title-class="text-weight-bold text-center"
-        title="Ciudades activas"
+        title="Ciudades Top"
         name="cities"
       >
         <aside class="row justify-center wrap space-between">

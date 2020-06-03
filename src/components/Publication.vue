@@ -8,7 +8,6 @@
       </div>
     </div>
     <div
-      @click="goPublication(publication.id)"
       class="publication-body">
       <span>
         {{ publication.content }}
@@ -32,13 +31,14 @@
           </span>
         </div>
         <div
-          @click="like"
+          @click="voteUp"
           class="icon-link">
           <router-link :to="{ name: '', params: {} }">
-            <q-icon name="ti-heart" color="grey-1" class="q-mr-sm" size="18px" />
+            <q-icon v-if="!publication.userVotedUp" name="ti-heart" color="grey-1" class="q-mr-sm" size="18px" />
+            <q-icon v-else name="las la-heart" color="red-5" class="q-mr-sm" size="24px" />
           </router-link>
           <span class="p-r-5 indicator">
-            {{ publication.likes }}
+            {{ publication.votes }}
           </span>
         </div>
       </div>
@@ -179,6 +179,15 @@ export default {
 
       this.$notify({ type: 'success', message: 'Has reportado esta publicación correctamente' })
     },
+    async voteUp() {
+      const { publicationId } = this.publication
+
+      const [err, response] = await Publication.voteUp(this.publication.publicationId)
+
+      this.publication.userVotedUp = !this.publication.userVotedUp
+      const operation = !this.publication.userVotedUp ? -1 : 1
+      this.publication.likes += operation
+    },
     selectedAction(menu) {
       this[menu.action]()
     },
@@ -218,15 +227,6 @@ export default {
     openNewComment() {
       this.showCommentBtn = true
       this.$refs.newComment.focus()
-    },
-    async like() {
-      const { publicationId } = this.publication;
-
-      const { data } = await post("publication/liked", { publicationId });
-
-      this.publication.userLiked = !this.publication.userLiked;
-      const operation = !this.publication.userLiked ? -1 : 1;
-      this.publication.likes += operation;
     },
     goPublication() {
       const { publicationId } = this.publication;
