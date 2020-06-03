@@ -41,7 +41,7 @@
         </aside>
       </van-collapse-item>
     </van-collapse>
-<!-- 
+
     <van-search
       v-model="citySearchValue"
       placeholder="Filtrar por ciudad"
@@ -75,7 +75,7 @@
           {{ city.countryName }} {{ city.flag }}
         </div>
       </div>
-    </aside> -->
+    </aside>
 
     <section class="publications q-pt-md" style="padding-bottom: 55px">
       <div v-if="showDiscoverShare" class="text-white text-center row" style="background: rgb(38, 128, 146); border: 1px solid #e4e4e4; border-bottom: 1px solid">
