@@ -208,7 +208,6 @@ export default {
       this.citySelected = {}
 
       this.selectCity({})
-      this.fetchPublications()
     },
     selectHotCity(citySelected) {
       const cities = [
@@ -242,10 +241,12 @@ export default {
       const loadedPublications = publicationsResponse.data.publications
       this.publications = this.publications.filter(publication => Object.keys(publication).length)
 
-      if (loadedPublications.length) {
+      if (loadedPublications.length === 2) {
 
         this.publications.push(...loadedPublications)
       } else {
+        if (loadedPublications.length) this.publications.push(...loadedPublications)
+
         this.notMoreToLoad = true
       }
     },

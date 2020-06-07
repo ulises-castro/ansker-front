@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapActions } from 'vuex'
 import { Auth } from "src/services"
 
@@ -133,11 +134,13 @@ export default {
 
       const [err, facebookUser] = await Auth.signInFacebook(tokenFB)
 
-      if (err || !facebookUser.data) return this.$notify('Ocurrio un error, intentalo más tarde')
+      if (err || !facebookUser) return this.$notify('Ocurrio un error, intentalo más tarde')
 
       this.$notify({ type: 'success', message: 'Welcome to  Ansker' })
 
       this.login(facebookUser.data.token)
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${facebookUser.data.token}`
 
       this.$router.push({ name: 'Discover' })
     },
