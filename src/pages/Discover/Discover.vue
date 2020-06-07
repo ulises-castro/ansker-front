@@ -4,7 +4,7 @@
       <van-collapse-item
         :border="false"
         title-class="text-weight-bold text-center"
-        title="Ciudades Top"
+        title="Ciudades hot"
         name="cities"
       >
         <aside class="row justify-center wrap space-between">
@@ -44,7 +44,7 @@
 
     <van-search
       v-model="citySearchValue"
-      placeholder="Filtrar por ciudad"
+      placeholder="Buscar ciudad"
       shape="round"
       :error="citiesNotFound"
       :show-action="(citiesSearchFound.length > 0)"
@@ -86,8 +86,8 @@
           Compartiendo a Ansker con tus amigos
         </span>
         <div class="row justify-center full-width q-py-md">
-          <button @click="share" class="btn-white text-blue-5 text-bold q-mr-lg"> Compartir </button>
-          <button @click="hideDiscoverShare" class="btn-white text-blue-5 text-bold"> Ocultar </button>
+          <button @click="share" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)"> Compartir </button>
+          <button @click="hideDiscoverShare" class="btn-white text-bold" style="color: rgb(38, 128, 146)"> Ocultar </button>
         </div>
       </div>
       <div v-if="publications.length">
@@ -104,7 +104,7 @@
           Te invitamos a publicar una historia
         </span>
         <div class="row justify-center full-width q-py-md">
-          <button @click="handlerGoPublish" class="btn-white text-blue-5 text-bold q-mr-lg"> Ir a publicar </button>
+          <button @click="handlerGoPublish" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)"> Ir a publicar </button>
         </div>
       </div>
     </section>
@@ -201,6 +201,8 @@ export default {
       this.notMoreToLoad = false
     },
     restoreSelectedCity() {
+      if (!this.citySearchValue) return
+
       this.restoreCitiesParams()
 
       this.citiesSearchFound = []
@@ -221,6 +223,8 @@ export default {
       this.updateSelectedCity(city)
     },
     updateSelectedCity(city) {
+      this.restoreCitiesParams()
+
       this.citySelected = city
       this.citySearchValue = city.name
       this.citiesSearchFound = []
