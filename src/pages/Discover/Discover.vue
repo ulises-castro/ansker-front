@@ -104,7 +104,7 @@
           Te invitamos a publicar una historia
         </span>
         <div class="row justify-center full-width q-py-md">
-          <button @click="handlerGoPublish" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)"> Ir a publicar </button>
+          <button @click="handlerGoPublish" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)R"> Ir a publicar </button>
         </div>
       </div>
     </section>
