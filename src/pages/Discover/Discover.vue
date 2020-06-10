@@ -62,6 +62,12 @@
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
 
+    <q-btn-group outline>
+      <q-btn outline color="brown" label="First" />
+      <q-btn outline color="brown" label="Second" icon-right="watch_later" />
+      <q-btn outline color="brown" label="Third" />
+    </q-btn-group>
+
     <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
       <div class="full-width q-px-md">
         <div

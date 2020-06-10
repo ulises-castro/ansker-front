@@ -6,7 +6,7 @@
       </div>
       <p
         class="text-center slogan text-weight-bold text-white"
-      >Comparte lo que piensas con tu alrededor de manera anónima.</p>
+      >Ansker es una red social Q&A, en donde puedes hacer preguntas y compartir lo que piensas con tu alrededor de manera anónima o publica.</p>
     </section>
     <section class="row justify-center q-px-sm">
       <van-button
@@ -136,7 +136,7 @@ export default {
 
       if (err || !facebookUser) return this.$notify('Ocurrio un error, intentalo más tarde')
 
-      this.$notify({ type: 'success', message: 'Welcome to  Ansker' })
+      this.$notify({ type: 'success', message: 'Bienvenido a Ansker ;)' })
 
       this.login(facebookUser.data.token)
 
