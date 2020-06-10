@@ -62,11 +62,12 @@
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
 
-    <q-btn-group outline>
-      <q-btn outline color="brown" label="First" />
-      <q-btn outline color="brown" label="Second" icon-right="watch_later" />
-      <q-btn outline color="brown" label="Third" />
-    </q-btn-group>
+    <div class="w-full flex justify-center">
+      <div class="button-group flex">
+        <div class="q-pa-sm selected">Preguntas</div>
+        <div class="q-pa-sm">Opiniones</div>
+      </div>
+    </div>
 
     <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
       <div class="full-width q-px-md">
@@ -295,5 +296,19 @@ export default {
   background: white;
   position: absolute;
   z-index: 1000;
+}
+
+.button-group {
+  border: 2px solid rgb(103, 210, 231);
+  border-radius: 15px;
+  max-width: 250px;
+  font-weight: bold;
+  color: darken(rgb(103, 210, 231), 20%);
+}
+
+.button-group .selected {
+  background: rgb(107, 215, 236);
+  color: white;
+  border-radius: 8px 0 0 8px;
 }
 </style>
