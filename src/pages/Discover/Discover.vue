@@ -64,8 +64,10 @@
 
     <div class="w-full flex justify-center">
       <div class="button-group flex">
-        <div class="q-pa-sm selected">Preguntas</div>
-        <div class="q-pa-sm">Opiniones</div>
+        <div class="q-pa-sm"
+          @click="showQuestions  = false">Opiniones</div>
+        <div class="q-pa-sm selected"
+          @click="showQuestions  = true">Preguntas</div>
       </div>
     </div>
 
