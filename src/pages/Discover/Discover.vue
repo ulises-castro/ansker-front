@@ -95,8 +95,11 @@
           Compartiendo a Ansker con tus amigos
         </span>
         <div class="row justify-center full-width q-py-md">
-          <button @click="share" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)"> Compartir </button>
-          <button @click="hideDiscoverShare" class="btn-white text-bold" style="color: rgb(38, 128, 146)"> Ocultar </button>
+          <button @click="share" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)"> Compartir
+          </button>
+          <button @click="hideDiscoverShare" class="btn-white text-bold" style="color: rgb(38, 128, 146)">
+            Ocultar
+          </button>
         </div>
       </div>
       <div v-if="publications.length">
