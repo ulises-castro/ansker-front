@@ -38,6 +38,8 @@ import Vue from 'vue'
 import createApp from './app.js'
 
 
+import 'app/src-pwa/register-service-worker.js'
+
 
 
 import qboot_Booti18n from 'boot/i18n'
@@ -54,15 +56,14 @@ import qboot_Bootcomponents from 'boot/components'
 
 
 
-Vue.config.devtools = true
-Vue.config.productionTip = false
 
 
 
-console.info('[Quasar] Running SPA.')
 
-
-
+// Needed only for iOS PWAs
+if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream && window.navigator.standalone) {
+  import(/* webpackChunkName: "fastclick"  */ '@quasar/fastclick')
+}
 
 
 async function start () {

@@ -83,8 +83,11 @@
 </template>
 
 <script>
+/* eslint-disable */
 import axios from 'axios'
 import { mapActions } from 'vuex'
+import { messaging } from 'src/firebase'
+
 import { Auth } from "src/services"
 
 export default {
@@ -102,7 +105,18 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
+
+          messaging.requestPermission().then(() => {
+        console.log('Notification permission granted.')
+
+        // Get Token
+        messaging.getToken().then((token) => {
+          console.log(token)
+        })
+      }).catch((err) => {
+        console.log('Unable to get permission to notify.', err)
+      })
   },
   methods: {
     ...mapActions('User',[

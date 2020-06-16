@@ -61,7 +61,7 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
-
+<!-- 
     <div class="w-full flex justify-center">
       <div class="button-group flex">
         <div class="q-pa-sm"
@@ -69,7 +69,7 @@
         <div class="q-pa-sm selected"
           @click="showQuestions  = true">Preguntas</div>
       </div>
-    </div>
+    </div> -->
 
     <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
       <div class="full-width q-px-md">
