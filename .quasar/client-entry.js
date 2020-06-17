@@ -56,7 +56,13 @@ import qboot_Bootcomponents from 'boot/components'
 
 
 
+Vue.config.devtools = true
+Vue.config.productionTip = false
 
+
+
+console.info('[Quasar] Running PWA.')
+console.info('[Quasar] Forcing PWA into the network-first approach to not break Hot Module Replacement while developing.')
 
 
 

@@ -5,3 +5,7 @@ export function isLogged (state) {
 export function selectedCity (state) {
   return state.selectedCity
 }
+
+export function pushToken (state) {
+  return state.pushToken
+}

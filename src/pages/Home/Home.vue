@@ -85,8 +85,10 @@
 <script>
 /* eslint-disable */
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import { messaging } from 'src/firebase'
+
+import User from 'src/services/UserService'
 
 import { Auth } from "src/services"
 
@@ -106,22 +108,43 @@ export default {
     }
   },
   mounted() {
+    this.sendDevice('')
 
-          messaging.requestPermission().then(() => {
-        console.log('Notification permission granted.')
-
-        // Get Token
+    if ( !this.pushToken ) {
+      messaging.requestPermission().then(() => {
+      console.log('Notification permission granted.')
+      // Get Token
         messaging.getToken().then((token) => {
           console.log(token)
         })
       }).catch((err) => {
         console.log('Unable to get permission to notify.', err)
       })
+    }
+  },
+  computed: {
+    ...mapGetters('User', [
+      'pushToken'
+    ])
   },
   methods: {
     ...mapActions('User',[
       'login',
+      'setPushToken'
     ]),
+    // TODO: Choice from suscribe via notifications
+    async sendDevice(pushToken) {
+      const deviceData = {
+        ...this.$q.platform,
+        token: pushToken
+      }
+
+      const [err, responseData] = await User.sendDeviceUser(deviceData)
+
+      if (err) return this.$notify(err)
+
+      this.setPushToken(pushToken)
+    },
     checkLoginState() {
       this.auth.isLoading.facebook = true
 
