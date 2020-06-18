@@ -68,13 +68,13 @@ module.exports = function (ctx) {
       env: ctx.dev ? { // so on dev we'll have
         API: JSON.stringify(BackUrl),
         GOOGLE_ID: JSON.stringify(
-          '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
+          '1068324984301-fvmom0kcuv76qerlo8comedb0c2iaqgu.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('https://localanskerme.me:3030'),
         BASE_URL: JSON.stringify('https://localanskerme.me:1297')
       } : { // and on build (production):
         API: JSON.stringify('https://api.ansker.me/v1/'),
         GOOGLE_ID: JSON.stringify(
-          '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
+          '1068324984301-fvmom0kcuv76qerlo8comedb0c2iaqgu.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('https://ansker.me:3030'),
         BASE_URL: JSON.stringify('https://ansker.me')
       },
