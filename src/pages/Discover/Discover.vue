@@ -126,11 +126,14 @@
   </section>
 </template>
 <script>
+/* eslint-disable */
 import Publication from 'src/services/PublicationService'
 import publication from 'src/components/Publication'
 import ShareMixin from 'src/mixins/share'
+import { messaging } from 'src/firebase'
 import share from 'components/Share'
 import { City } from 'src/services'
+import User from 'src/services/UserService'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -164,6 +167,8 @@ export default {
     }
   },
   mounted() {
+    this.registerPushtoken()
+
     this.fetchPublications()
 
     this.activeHotCities = this.showHotCities
@@ -174,7 +179,7 @@ export default {
     window.removeEventListener('scroll', this.infinityScrollPaginator)
   },
   computed: {
-    ...mapGetters('User', ['selectedCity']),
+    ...mapGetters('User', ['selectedCity', 'pushToken']),
     ...mapGetters('Theme', ['showDiscoverShare', 'showHotCities'])
   },
   watch: {
@@ -193,8 +198,37 @@ export default {
     }
   },
   methods: {
-    ...mapActions('User', ['selectCity']),
+    ...mapActions('User', ['selectCity', 'setPushToken']),
     ...mapActions('Theme', ['hideDiscoverShare', 'hideHotCities']),
+    // TODO: Choice from suscribe via notifications
+    registerPushtoken() {
+      if ( !this.pushToken ) {
+        messaging.requestPermission().then(() => {
+        console.log('Notification permission granted.')
+        // Get Token
+
+          messaging.getToken().then((token) => {
+            console.log(token)
+
+            this.sendDevice(token)
+          })
+        }).catch((err) => {
+          console.log('Unable to get permission to notify.', err)
+        })
+      }
+    },
+    async sendDevice(token) {
+      const deviceData = {
+        ...this.$q.platform,
+        token
+      }
+
+      const [err, responseData] = await User.sendDeviceUser(deviceData)
+
+      if (err) return this.$notify(err)
+
+      this.setPushToken(token)
+    },
     infinityScrollPaginator(evt) {
       const html = document.getElementsByTagName("html")[0]
       const bottomOfWindow = ((html.scrollTop + window.innerHeight) + 1 >= html.offsetHeight)
