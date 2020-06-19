@@ -3,6 +3,8 @@
 const path = require('path')
 const fs = require('fs')
 
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
 const BackUrl = (!false) ? 'https://localanskerme.me:3030/v1/' : 'https://192.168.0.160:3030/v1/'
 
 module.exports = function (ctx) {
@@ -91,6 +93,8 @@ module.exports = function (ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       extendWebpack(cfg) {
+        cfg.plugins.push(new CopyWebpackPlugin([{ from: 'src/public/', to: '' }]))
+
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,

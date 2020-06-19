@@ -58,7 +58,8 @@ const routes = [{
   {
     path: '/authenticate/google/token',
     component: () => import('pages/Authenticate/AuthGoogle.vue')
-  }
+  },
+  { path: '/firebase-messaging-sw.js', redirect: '/manifiest.json' }
 ]
 
 // Always leave this as last one
