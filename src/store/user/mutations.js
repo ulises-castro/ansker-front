@@ -16,3 +16,9 @@ export function updateSelectedCity (state, selectedCity) {
 
   state.selectedCity = selectedCity
 }
+
+export function setPushToken (state, pushToken) {
+  localStorage.pushToken = pushToken
+
+  state.pushToken = pushToken
+}

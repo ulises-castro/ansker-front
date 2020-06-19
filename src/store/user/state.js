@@ -4,6 +4,7 @@ export default function () {
   return {
     isLogged: jsonParseStored('isLogged'),
     token: jsonParseStored('token', ''),
-    selectedCity: jsonParseStored('selectedCity', {})
+    selectedCity: jsonParseStored('selectedCity', {}),
+    pushToken: jsonParseStored('pushToken', '')
   }
 }

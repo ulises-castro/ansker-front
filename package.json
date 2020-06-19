@@ -19,6 +19,8 @@
     "canvas-exif-orientation": "^0.4.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-prettier": "^3.1.2",
+    "firebase": "^7.15.1",
+    "intro.js": "^2.9.3",
     "quasar": "^1.9.15",
     "query-string": "^6.11.1",
     "vant": "^2.6.1",

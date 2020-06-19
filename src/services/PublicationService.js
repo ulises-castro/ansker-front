@@ -21,6 +21,11 @@ class Publication {
   }
 
   @Catch()
+  voteUp(publicationId) {
+    return post(`publication/voteUp`, { publicationId })
+  }
+
+  @Catch()
   getAllByCity(params) {
     const { countryCode, city } = params
 

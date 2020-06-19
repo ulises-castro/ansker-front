@@ -1,10 +1,11 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
-
 const path = require('path')
 const fs = require('fs')
 
-const BackUrl = (false) ? 'https://localanskerme.me:3030/api/' : 'https://192.168.1.65:3030/api/'
+const CopyWebpackPlugin = require('copy-webpack-plugin')
+
+const BackUrl = (!false) ? 'https://localanskerme.me:3030/v1/' : 'https://192.168.0.160:3030/v1/'
 
 module.exports = function (ctx) {
   return {
@@ -64,17 +65,18 @@ module.exports = function (ctx) {
 
     // Full list of options: https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-build
     build: {
-      vueRouterMode: 'hash', // available values: 'hash', 'history'
+      vueRouterMode: ctx.dev ? 'hash' : 'history', // available values: 'hash', 'history'
+      // publicPath: '/',
       env: ctx.dev ? { // so on dev we'll have
         API: JSON.stringify(BackUrl),
         GOOGLE_ID: JSON.stringify(
-          '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
+          '1068324984301-fvmom0kcuv76qerlo8comedb0c2iaqgu.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('https://localanskerme.me:3030'),
         BASE_URL: JSON.stringify('https://localanskerme.me:1297')
       } : { // and on build (production):
-        API: JSON.stringify('https://api.ansker.me/'),
+        API: JSON.stringify('https://api.ansker.me/v1/'),
         GOOGLE_ID: JSON.stringify(
-          '875317885894-lqjuife4ju82kas9rgks65nlnqk6ivdd.apps.googleusercontent.com'),
+          '1068324984301-fvmom0kcuv76qerlo8comedb0c2iaqgu.apps.googleusercontent.com'),
         SOCKET: JSON.stringify('https://ansker.me:3030'),
         BASE_URL: JSON.stringify('https://ansker.me')
       },
@@ -83,6 +85,7 @@ module.exports = function (ctx) {
       // showProgress: false,
       // gzip: true,
       // analyze: true,
+      modern: true,
 
       // Options below are automatically set depending on the env, set them if you want to override
       // preloadChunks: false,
@@ -90,6 +93,8 @@ module.exports = function (ctx) {
 
       // https://quasar.dev/quasar-cli/cli-documentation/handling-webpack
       extendWebpack(cfg) {
+        cfg.plugins.push(new CopyWebpackPlugin([{ from: 'src/public/', to: '' }]))
+
         cfg.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
@@ -133,7 +138,7 @@ module.exports = function (ctx) {
 
     // https://quasar.dev/quasar-cli/developing-pwa/configuring-pwa
     pwa: {
-      workboxPluginMode: 'GenerateSW', // 'GenerateSW' or 'InjectManifest'
+      workboxPluginMode: 'InjectManifest', // 'GenerateSW' or 'InjectManifest'
       workboxOptions: {}, // only for GenerateSW
       manifest: {
         name: 'Ansker | Comparte con tu alreadedor',
@@ -143,6 +148,7 @@ module.exports = function (ctx) {
         orientation: 'portrait',
         background_color: '#ffffff',
         theme_color: '#027be3',
+        gcm_sender_id: '989384809387',
         icons: [{
             src: 'statics/icons/icon-128x128.png',
             sizes: '128x128',
@@ -240,7 +246,6 @@ module.exports = function (ctx) {
 
       builder: {
         // https://www.electron.build/configuration/configuration
-
         appId: 'ansker'
       },
 

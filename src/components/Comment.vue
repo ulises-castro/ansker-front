@@ -20,11 +20,11 @@
       </q-item>
       <div v-else>
         <div class="w-full q-pa-md q-pb-sm">
-          <div class="text-grey-10">
-            <span v-if="!comment.userAuthor">
+          <div class="text-grey-10 q-pb-sm">
+            <span v-if="!comment.userAuthor" class="tag" style="background: blue; color: white; border-radius: 5px">
               Anónimo
             </span>
-            <span v-else>
+            <span class="tag" style="background-color: red" v-else>
               Tú
             </span>
           </div>
@@ -50,3 +50,14 @@ export default {
   },
 }
 </script>
+<style lang="scss" scoped>
+
+.tag {
+  background-color: #2384cb !important;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 0.7rem;
+}
+
+</style>

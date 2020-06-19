@@ -6,7 +6,7 @@
       </div>
       <p
         class="text-center slogan text-weight-bold text-white"
-      >Comparte lo que piensas con tu alrededor de manera anónima.</p>
+      >Ansker es una red social Q&A, en donde puedes hacer preguntas y compartir lo que piensas con tu alrededor de manera anónima o publica.</p>
     </section>
     <section class="row justify-center q-px-sm">
       <van-button
@@ -68,8 +68,13 @@
             class="text-primary"
             href="/terms"
             target="_blanket"
-          >Términos</a> y
-          <a class="text-primary" href="/policies" target="_blanket">Políticas de privacidad</a>
+          >
+            Términos
+          </a> y
+          <a class="text-primary"
+          href="/policies" target="_blanket">
+            Políticas de privacidad
+          </a>
         </small>
       </aside>
     </van-popup>
@@ -78,11 +83,16 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+/* eslint-disable */
+import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
+
+import User from 'src/services/UserService'
+
 import { Auth } from "src/services"
 
 export default {
-  name: "PageIndex",
+  name: "Home",
   data() {
     return {
       showFooter: true,
@@ -96,11 +106,16 @@ export default {
       }
     }
   },
-  created() {
+  mounted() {
+  },
+  computed: {
+    ...mapGetters('User', [
+      'pushToken'
+    ])
   },
   methods: {
     ...mapActions('User',[
-      'login',
+      'login'
     ]),
     checkLoginState() {
       this.auth.isLoading.facebook = true
@@ -128,11 +143,13 @@ export default {
 
       const [err, facebookUser] = await Auth.signInFacebook(tokenFB)
 
-      if (err || !facebookUser.data) return this.$notify('Ocurrio un error, intentalo más tarde')
+      if (err || !facebookUser) return this.$notify('Ocurrio un error, intentalo más tarde')
 
-      this.$notify({ type: 'success', message: 'Welcome to  Ansker' })
+      this.$notify({ type: 'success', message: 'Bienvenido a Ansker ;)' })
 
       this.login(facebookUser.data.token)
+
+      axios.defaults.headers.common['Authorization'] = `Bearer ${facebookUser.data.token}`
 
       this.$router.push({ name: 'Discover' })
     },

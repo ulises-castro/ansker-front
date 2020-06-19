@@ -4,7 +4,7 @@
       <van-collapse-item
         :border="false"
         title-class="text-weight-bold text-center"
-        title="Ciudades activas"
+        title="Ciudades hot"
         name="cities"
       >
         <aside class="row justify-center wrap space-between">
@@ -41,10 +41,10 @@
         </aside>
       </van-collapse-item>
     </van-collapse>
-<!-- 
+
     <van-search
       v-model="citySearchValue"
-      placeholder="Filtrar por ciudad"
+      placeholder="Buscar ciudad"
       shape="round"
       :error="citiesNotFound"
       :show-action="(citiesSearchFound.length > 0)"
@@ -61,6 +61,15 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
+<!-- 
+    <div class="w-full flex justify-center">
+      <div class="button-group flex">
+        <div class="q-pa-sm"
+          @click="showQuestions  = false">Opiniones</div>
+        <div class="q-pa-sm selected"
+          @click="showQuestions  = true">Preguntas</div>
+      </div>
+    </div> -->
 
     <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
       <div class="full-width q-px-md">
@@ -75,7 +84,7 @@
           {{ city.countryName }} {{ city.flag }}
         </div>
       </div>
-    </aside> -->
+    </aside>
 
     <section class="publications q-pt-md" style="padding-bottom: 55px">
       <div v-if="showDiscoverShare" class="text-white text-center row" style="background: rgb(38, 128, 146); border: 1px solid #e4e4e4; border-bottom: 1px solid">
@@ -86,8 +95,11 @@
           Compartiendo a Ansker con tus amigos
         </span>
         <div class="row justify-center full-width q-py-md">
-          <button @click="share" class="btn-white text-blue-5 text-bold q-mr-lg"> Compartir </button>
-          <button @click="hideDiscoverShare" class="btn-white text-blue-5 text-bold"> Ocultar </button>
+          <button @click="share" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)"> Compartir
+          </button>
+          <button @click="hideDiscoverShare" class="btn-white text-bold" style="color: rgb(38, 128, 146)">
+            Ocultar
+          </button>
         </div>
       </div>
       <div v-if="publications.length">
@@ -104,7 +116,7 @@
           Te invitamos a publicar una historia
         </span>
         <div class="row justify-center full-width q-py-md">
-          <button @click="handlerGoPublish" class="btn-white text-blue-5 text-bold q-mr-lg"> Ir a publicar </button>
+          <button @click="handlerGoPublish" class="btn-white text-bold q-mr-lg" style="color: rgb(38, 128, 146)R"> Ir a publicar </button>
         </div>
       </div>
     </section>
@@ -114,11 +126,14 @@
   </section>
 </template>
 <script>
+/* eslint-disable */
 import Publication from 'src/services/PublicationService'
 import publication from 'src/components/Publication'
 import ShareMixin from 'src/mixins/share'
+import { messaging } from 'src/firebase'
 import share from 'components/Share'
 import { City } from 'src/services'
+import User from 'src/services/UserService'
 
 import { mapGetters, mapActions } from 'vuex'
 
@@ -152,6 +167,8 @@ export default {
     }
   },
   mounted() {
+    this.registerPushtoken()
+
     this.fetchPublications()
 
     this.activeHotCities = this.showHotCities
@@ -162,7 +179,7 @@ export default {
     window.removeEventListener('scroll', this.infinityScrollPaginator)
   },
   computed: {
-    ...mapGetters('User', ['selectedCity']),
+    ...mapGetters('User', ['selectedCity', 'pushToken']),
     ...mapGetters('Theme', ['showDiscoverShare', 'showHotCities'])
   },
   watch: {
@@ -181,8 +198,37 @@ export default {
     }
   },
   methods: {
-    ...mapActions('User', ['selectCity']),
+    ...mapActions('User', ['selectCity', 'setPushToken']),
     ...mapActions('Theme', ['hideDiscoverShare', 'hideHotCities']),
+    // TODO: Choice from suscribe via notifications
+    registerPushtoken() {
+      if ( !this.pushToken ) {
+        messaging.requestPermission().then(() => {
+        console.log('Notification permission granted.')
+        // Get Token
+
+          messaging.getToken().then((token) => {
+            console.log(token)
+
+            this.sendDevice(token)
+          })
+        }).catch((err) => {
+          console.log('Unable to get permission to notify.', err)
+        })
+      }
+    },
+    async sendDevice(token) {
+      const deviceData = {
+        ...this.$q.platform,
+        token
+      }
+
+      const [err, responseData] = await User.sendDeviceUser(deviceData)
+
+      if (err) return this.$notify(err)
+
+      this.setPushToken(token)
+    },
     infinityScrollPaginator(evt) {
       const html = document.getElementsByTagName("html")[0]
       const bottomOfWindow = ((html.scrollTop + window.innerHeight) + 1 >= html.offsetHeight)
@@ -201,6 +247,8 @@ export default {
       this.notMoreToLoad = false
     },
     restoreSelectedCity() {
+      if (!this.citySearchValue) return
+
       this.restoreCitiesParams()
 
       this.citiesSearchFound = []
@@ -208,7 +256,6 @@ export default {
       this.citySelected = {}
 
       this.selectCity({})
-      this.fetchPublications()
     },
     selectHotCity(citySelected) {
       const cities = [
@@ -222,6 +269,8 @@ export default {
       this.updateSelectedCity(city)
     },
     updateSelectedCity(city) {
+      this.restoreCitiesParams()
+
       this.citySelected = city
       this.citySearchValue = city.name
       this.citiesSearchFound = []
@@ -242,10 +291,12 @@ export default {
       const loadedPublications = publicationsResponse.data.publications
       this.publications = this.publications.filter(publication => Object.keys(publication).length)
 
-      if (loadedPublications.length) {
+      if (loadedPublications.length === 2) {
 
         this.publications.push(...loadedPublications)
       } else {
+        if (loadedPublications.length) this.publications.push(...loadedPublications)
+
         this.notMoreToLoad = true
       }
     },
@@ -284,5 +335,19 @@ export default {
   background: white;
   position: absolute;
   z-index: 1000;
+}
+
+.button-group {
+  border: 2px solid rgb(103, 210, 231);
+  border-radius: 15px;
+  max-width: 250px;
+  font-weight: bold;
+  color: darken(rgb(103, 210, 231), 20%);
+}
+
+.button-group .selected {
+  background: rgb(107, 215, 236);
+  color: white;
+  border-radius: 8px 0 0 8px;
 }
 </style>

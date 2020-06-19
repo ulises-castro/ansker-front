@@ -17,12 +17,22 @@ const routes = [{
     component: () => import('pages/Discover/Discover.vue')
   },
   {
-  path: '/Publish',
+  path: '/publish',
     name: 'Publish',
     meta: {
       requiresAuth: true,
     },
     component: () => import('pages/Publish/Publish.vue')
+  },
+  {
+    path: '/terms',
+    name: 'Terms',
+    component: () => import('pages/Home/Terms.vue')
+  },
+  {
+  path: '/policies',
+    name: 'Policy',
+    component: () => import('pages/Home/Policy.vue')
   },
   {
     path: '/settings',
@@ -48,7 +58,8 @@ const routes = [{
   {
     path: '/authenticate/google/token',
     component: () => import('pages/Authenticate/AuthGoogle.vue')
-  }
+  },
+  { path: '/firebase-messaging-sw.js', redirect: '/manifiest.json' }
 ]
 
 // Always leave this as last one
