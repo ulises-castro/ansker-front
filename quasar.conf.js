@@ -5,7 +5,7 @@ const fs = require('fs')
 
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-const BackUrl = (!false) ? 'https://localanskerme.me:3030/v1/' : 'https://192.168.0.160:3030/v1/'
+const BackUrl = (true) ? 'https://localanskerme.me:3030/v1/' : 'https://192.168.0.160:3030/v1/'
 
 module.exports = function (ctx) {
   return {
