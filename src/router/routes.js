@@ -12,7 +12,7 @@ const routes = [{
     path: '/discover',
     name: 'Discover',
     meta: {
-      requiresAuth: true,
+      requiresAuth: false,
     },
     component: () => import('pages/Discover/Discover.vue')
   },

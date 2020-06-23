@@ -57,8 +57,14 @@ class Publication {
   }
 
   @Catch()
-  fetchComments(publicationId) {
-    return get(`publication/comment/getAll/${publicationId}`, publicationId)
+  fetchComments(publicationId, isLoggedUser = false) {
+    if (isLoggedUser) return get(`publication/comment/getAll/${publicationId}`, publicationId)
+    else return get(`publication/comment/public/getAll/${publicationId}`, publicationId)
+  }
+
+  @Catch()
+  fetchCommentsByGuest(publicationId) {
+    return get(`publication/comment/getAllVisitor/${publicationId}`, publicationId)
   }
 
 }

@@ -128,6 +128,8 @@ import { backgroundGradientColor } from 'src/utils'
 import Publication from 'src/services/PublicationService'
 import comment from 'src/components/Comment'
 
+import { mapGetters } from 'vuex'
+
 export default {
   name: "publication",
   props: {
@@ -168,7 +170,8 @@ export default {
   computed: {
     background() {
       return backgroundGradientColor(this.publication.backgroundColor)
-    }
+    },
+    ...mapGetters['User', 'isLogged']
   },
   methods: {
     async report() {
@@ -219,7 +222,7 @@ export default {
       this.loadComments()
     },
     async loadComments() {
-      const [err, commentsData] = await Publication.fetchComments(this.publication.publicationId)
+      const [err, commentsData] = await Publication.fetchComments(this.publication.publicationId, this.isLogged)
 
       if (err) this.handlerError(err)
 
