@@ -119,14 +119,18 @@
         </div>
       </q-skeleton>
     </q-card>
-  </section>
 
+    <joinUs :openJoinUs="openJoinUs"></joinUs>
+
+  </section>
 </template>
 
 <script>
 import { backgroundGradientColor } from 'src/utils'
 import Publication from 'src/services/PublicationService'
-import comment from 'src/components/Comment'
+import comment from 'components/Comment'
+import joinUs from 'components/JoinUs.vue'
+
 
 import { mapGetters } from 'vuex'
 
@@ -141,11 +145,12 @@ export default {
       type: Function,
     }
   },
-  components: { comment },
+  components: { comment, joinUs },
   data() {
     return {
       showOptions: false,
       isUserLogged: true,
+      openJoinUs: false,
       showCommentBtn: false,
       showComments: false,
       validateComment: '/\d[^_]{2,500}/',
@@ -229,6 +234,8 @@ export default {
       this.comments = commentsData.data.comments
     },
     openNewComment() {
+      if (this.isLogged) return this.openJoinUs = true
+
       this.showCommentBtn = true
       this.$refs.newComment.focus()
     },

@@ -1,47 +1,25 @@
 <template>
   <section>
-    <van-collapse :border="false" v-model="activeHotCities" style="padding-top: 50px">
-      <van-collapse-item
-        :border="false"
-        title-class="text-weight-bold text-center"
-        title="Ciudades hot"
-        name="cities"
-      >
-        <aside class="row justify-center wrap space-between">
-          <div @click="selectHotCity(0)" class="row justify-center wrap" style="min-width: 50px max-width: 70px">
-            <img
-              height="38"
-              width="38"
-              style="border-radius: 50%"
-              src="statics/cities/mx-manzanillo.jpg"
-            />
-            <small class="full-width text-center is-size-7">Manzanillo</small>
-          </div>
 
-          <div @click="selectHotCity(1)" class="row justify-center wrap" style="min-width: 50px max-width: 70px">
-            <img
-              height="38"
-              width="38"
-              style="border-radius: 50%"
-              src="statics/cities/mx-colima.jpg"
-            />
-            <small class="full-width text-center is-size-7">Colima</small>
-          </div>
+  <aside class="scrolling-wrapper" style="padding: 60px 20px 10px 5px">
+    <q-chip clickable @click="selectHotCity(0)" color="primary" text-color="white" size="1rem">
+      Manzanillo
+    </q-chip>
 
-          <div @click="restoreSelectedCity" class="row justify-center wrap" style="min-width: 50px max-width: 70px">
-            <img
-              height="38"
-              width="38"
-              style="border-radius: 50%"
-              src="statics/cities/global.jpg"
-            />
-            <small class="full-width text-center is-size-7">Global</small>
-          </div>
+    <q-chip clickable @click="selectHotCity(1)" color="primary" text-color="white" size="1rem">
+      Colima
+    </q-chip>
 
-        </aside>
-      </van-collapse-item>
-    </van-collapse>
+    <q-chip clickable @click="selectHotCity(2)" color="primary" text-color="white" size="1rem">
+      Guadalajara
+    </q-chip>
 
+    <q-chip clickable @click="restoreSelectedCity" color="primary" text-color="white" size="1rem">
+      Worldwide
+    </q-chip>
+  </aside>
+
+  <div style="padding-top: 10px">
     <van-search
       v-model="citySearchValue"
       placeholder="Buscar ciudad"
@@ -61,7 +39,8 @@
       />
       <div slot="action" @click="citiesSearchFound = []">Cerrar</div>
     </van-search>
-<!-- 
+  </div>
+    <!--
     <div class="w-full flex justify-center">
       <div class="button-group flex">
         <div class="q-pa-sm"
@@ -69,7 +48,8 @@
         <div class="q-pa-sm selected"
           @click="showQuestions  = true">Preguntas</div>
       </div>
-    </div> -->
+    </div>
+    -->
 
     <aside v-if="citiesSearchFound.length" class="citiesFound full-width">
       <div class="full-width q-px-md">
@@ -257,7 +237,8 @@ export default {
     selectHotCity(citySelected) {
       const cities = [
         {"cityId":3996663,"name":"Manzanillo","altName":"","country":"MX","featureCode":"PPLA2","adminCode":"08","population":110735,"loc":{"type":"Point","coordinates":[-104.34214,19.11695]},"countryName":"Mexico","flag":"🇲🇽"},
-        {"cityId":4013516,"name":"Colima","altName":"","country":"MX","featureCode":"PPLA","adminCode":"08","population":127235,"loc":{"type":"Point","coordinates":[-103.72714,19.24997]},"countryName":"Mexico","flag":"🇲🇽"}
+        {"cityId":4013516,"name":"Colima","altName":"","country":"MX","featureCode":"PPLA","adminCode":"08","population":127235,"loc":{"type":"Point","coordinates":[-103.72714,19.24997]},"countryName":"Mexico","flag":"🇲🇽"},
+        {"cityId":4005539,"name":"Guadalajara","altName":"","country":"MX","featureCode":"PPLA","adminCode":"14","population":1640589,"loc":{"type":"Point","coordinates":[-103.39182,20.66682]},"countryName":"Mexico","flag":"🇲🇽"}
       ]
 
       this.restoreCitiesParams()

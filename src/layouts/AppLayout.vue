@@ -13,15 +13,15 @@
         v-if="!showBackButton"
         class="row justify-center"
         slot="left">
-        <van-icon color="#49AFC4" :size="22" info="30" name="bullhorn-o" />
       </div>
 
       <div class="row justify-center" slot="right">
         <van-icon color="#49AFC4" v-if="showBackButton" :size="22" name="bullhorn-o" />
-        <van-icon color="#49AFC4" v-else @click="goPublish" :size="24" name="edit" />
+        <van-icon color="#49AFC4" v-else @click="goPublish" :size="28" name="edit" />
       </div>
 
-      <div slot="title" style="padding-top: 8px">
+      <div slot="title" style="padding-top: 8px; font-size: 2rem; font-weight: 600">
+        <!-- {{ currentViewName }} -->
         <img width="100" src="statics/white-logo.png" />
       </div>
     </van-nav-bar>
@@ -32,20 +32,6 @@
 <script>
 export default {
   name: "app-layout",
-  data() {
-    return {};
-  },
-  methods: {
-    goPublish() {
-      // TODO: fix this because publish isnt detect Implement to
-      this.$router.push({ name: 'Publish'})
-    },
-    hideMenu() {
-    },
-    toggleNotifications() {},
-  },
-  mounted() {
-  },
   props: {
     isLoading: {
       type: Boolean,
@@ -62,8 +48,29 @@ export default {
     title: {
       default: ""
     }
-  }
-};
+  },
+  data() {
+    return {};
+  },
+  computed: {
+    currentViewName() {
+      // console.log(this.$route)
+      return this.$route.name
+    }
+  },
+  methods: {
+    goPublish() {
+      // TODO: fix this because publish isnt detect Implement to
+      this.$router.push({ name: 'Publish'})
+    },
+    hideMenu() {
+    },
+    toggleNotifications() {},
+  },
+  mounted() {
+    console.log(this.$route.name)
+  },
+}
 </script>
 <style lang="scss" scoped>
 

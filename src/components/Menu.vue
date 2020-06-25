@@ -4,6 +4,7 @@
       <van-tabbar
         class="has-text-weight-bolds"
         active-color="#239bce"
+        style="border-radius: 20px 20px 0 0; height: 50px; padding-top: 5px"
         v-model="active">
         <van-tabbar-item :to="{ name: 'Home' }">
           <template #icon>
@@ -14,6 +15,9 @@
           <template #icon>
             <van-icon name="location-o" size="32"/>
           </template>
+        </van-tabbar-item>
+        <van-tabbar-item @click="active = 1" :to="{ name: 'Notifications' }" class="opacity-3">
+            <q-icon name="las la-bell" size="35px" />
         </van-tabbar-item>
         <van-tabbar-item @click="showArentAvailable = true, active = 0" :to="{ name: 'Home' }" class="opacity-3">
           <template #icon>
@@ -68,6 +72,9 @@
         </div>
       </div>
     </van-dialog>
+
+    <JoinUs :openJoinUs="openJoinUs"></JoinUs>
+
   </section>
 </template>
 
@@ -75,24 +82,46 @@
 import { mapActions } from 'vuex'
 import ShareMixin from 'src/mixins/share'
 import Share from 'components/Share'
+import JoinUs from 'src/components/JoinUs'
+import { isLogged } from '../store/user/getters'
+
+import { mapGetters } from 'vuex'
+
+const userOptions = [
+    {
+    name: 'Configuración',
+    action: 'setting',
+    disabled: true
+    },
+    {
+      name: 'Cerrar sesión',
+      action: 'goLogout',
+      color: '#D32F30'
+    },
+  ]
 
 export default {
   name: 'Menu',
-  components: { Share },
+  components: { Share, JoinUs },
   mixins: [ShareMixin],
   data() {
     return {
       active: 0,
       showArentAvailable: false,
+      openJoinUs: false,
       showSettings: false,
       settingsMenu: [
         { name: 'Ayuda', action: 'goContact',  },
         { name: 'Contactanos', action: 'goContact' },
-        { name: 'Compartir con tus amigos', action: 'share' },
-        { name: 'Configuración', action: 'setting', disabled: true },
-        { name: 'Cerrar sesión', action: 'goLogout', color: '#D32F30' },
+        { name: 'Compartir con tus amigos', action: 'share' }
       ]
     };
+  },
+  computed: {
+    ...mapGetters('User', ['isLogged'])
+  },
+  mounted() {
+    if (this.isLogged) userOptions.forEach(option => this.settingsMenu.push(option)) 
   },
   methods: {
     selectedMenu(menu) {

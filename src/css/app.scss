@@ -56,3 +56,17 @@
   border-radius: 30px;
   padding: 6px 15px;
 }
+
+.text-roboto {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.scrolling-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+
+  .q-chip {
+    flex: 0 0 auto;
+  }
+}
