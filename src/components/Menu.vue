@@ -143,8 +143,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// @import "@/styles/main.scss";
-
 .menu {
   position: fixed;
   display: flex;
