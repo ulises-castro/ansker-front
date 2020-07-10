@@ -16,7 +16,8 @@
         size="large"
         loading-text="Iniciando sesión..."
       >
-        <span class="text-h5 text-weight-bolder">Unirme</span>
+        <span class="text-h
+        5 text-weight-bolder">Unirme</span>
       </van-button>
       <div 
         @click="openJoinUs = true"
