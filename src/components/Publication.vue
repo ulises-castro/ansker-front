@@ -124,7 +124,6 @@
 
   </section>
 </template>
-
 <script>
 import { backgroundGradientColor } from 'src/utils'
 import Publication from 'src/services/PublicationService'
@@ -199,8 +198,6 @@ export default {
     },
     selectedAction(menu) {
       this[menu.action]()
-    },
-    onCancel() {
     },
     async sendComment() {
       const content = this.newComment
